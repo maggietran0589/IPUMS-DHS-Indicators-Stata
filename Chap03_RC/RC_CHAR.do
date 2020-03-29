@@ -80,155 +80,110 @@ drop dummy
 
 gen rc_edu_median=round(sp50-1+(.5-sL)/(sU-sL),.01)
 label var rc_edu_median	"Median years of education"
-******************************************************************************************
+
 //Literacy level
-recode v155 (2=1 ) (1=2) (0=3) (3=4) (4=5), gen(rc_litr_cats)
-replace rc_litr_cats=0 if v106==3 *****(v106 is level of education)
-label define rc_litr_cats 0"Higher than secondary education" 1"Can read a whole sentence"2 "Can read part of a sentence" 3 "Cannot read at all" ///
-4 "No card with required language" 5 "Blind/visually impaired"
-label values rc_litr_cats rc_litr_cats
-label var rc_litr_cats	"Level of literacy"
+Lit2 "Level of literacy"
 
-//Literate 
-gen rc_litr=0
-replace rc_litr=1 if v106==3 | v155==1 | v155==2	
+********** //Literate ******
+gen lityn=0
+replace lityn=1 if educlvl==3 | Lit2==11 | Lit2==12	
 label values rc_litr yesno
-label var rc_litr "Literate - higher than secondary or can read part or whole sentence"
+label var lityn "Literate - higher than secondary or can read part or whole sentence"
 
-*** Media exposure ***
+Media exposure
 
 //Media exposure - newspaper
-recode v157 (2/3=1 "Yes") (0/1=0 "No"), gen(rc_media_newsp)
-label var rc_media_newsp "Reads a newspaper at least once a week"
+Newswk "Reads a newspaper at least once a week"
 
 //Media exposure - TV
-recode v159 (2/3=1 "Yes") (0/1=0 "No"), gen(rc_media_tv)
-label var rc_media_tv "Watches television at least once a week"
+tvwk "Watches television at least once a week"
 
 //Media exposure - Radio
-recode v158 (2/3=1 "Yes") (0/1=0 "No"), gen(rc_media_radio)
-label var rc_media_radio "Listens to radio at least once a week"
+radiowk "Listens to radio at least once a week"
 
-*****************************//Media exposure - all three****************************
-gen rc_media_allthree=0
-replace rc_media_allthree=1 if inlist(v157,2,3) & inlist(v158,2,3) & inlist(v159,2,3) 
-label values rc_media_allthree yesno
-label var rc_media_allthree "Accesses to all three media at least once a week"
+******//Media exposure - all three******
+gen media_all=0
+replace media_all=1 if newswk==1 & tvwk==1 & radiowk==1
+label values media_all yesno
+label var media_all "Access to newspaper, TV, and radio once a week"
 
-******************************//Media exposure - none**************************************
-gen rc_media_none=0
-replace rc_media_none=1 if (v157!=2 & v157!=3) & (v158!=2 & v158!=3) & (v159!=2 & v159!=3) 
+*****//Media exposure - none******
+gen media_none=0
+replace media_none=1 if newswk==0 & tvwk==0 & radiowk==0 
 label values rc_media_none yesno
 label var rc_media_none "Accesses none of the three media at least once a week"
 
 //Ever used internet
-recode v171a (0=0 "No") (1/3=1 "Yes"), gen(rc_intr_ever) 
-label var rc_intr_ever "Ever used the internet"
+internetevyr==10 "Ever used the internet"
 
 //Used interent in the past 12 months
-recode v171a (0 2/3=0 "No") (1=1 "Yes"), gen(rc_intr_use12mo) 
-label var rc_intr_use12mo "Used the internet in the past 12 months"
+internetevyr==11 "Used the internet in the past 12 months"
 
 //Internet use frequency
-gen rc_intr_usefreq= v171b if v171a==1
-label values rc_intr_usefreq V171B
-label var rc_intr_usefreq "Internet use frequency in the past month - among users in the past 12 months"
+Internetmo "Internet use frequency in the past month - among users in the past 12 months"
 
 *** Employment ***
 //Employment status
-recode v731 (0=0 "Not employed in last 12 months") (1=1 "Not curcently working but was employed in last 12 months") (2/3=2 "Curcently employed") (8=9 "Don't know/missing"), gen(rc_empl)
-label var rc_empl "Employment status"
+wkworklastyr "Employment status"
 
 //Occupation
-recode v717 (1=1 "Professional") (2=2 "Clerical") (3 7=3 "Sales and services") (8=4 "Skilled manual") (9=5 "Unskilled manual") (6=6 "Domestic service") (4/5=7 "Agriculture") (96/99 .=9 "Don't know/missing") if inlist(v731,1,2,3), gen(rc_occup)
-label var rc_occup "Occupation among those employed in the past 12 months"
+wkcurrjob "Occupation among those employed in the past 12 months"
 
 //Type of employer
-gen rc_empl_type=v719 if inlist(v731,1,2,3)
-label values rc_empl_type V719
-label var rc_empl_type "Type of employer among those employed in the past 12 months"
+whoworkfor "Type of employer among those employed in the past 12 months"
 
 //Type of earnings
-gen rc_empl_earn=v741 if inlist(v731,1,2,3)
-label values rc_empl_earn V741
-label var rc_empl_earn "Type of earnings among those employed in the past 12 months"
+Wkearntype "Type of earnings among those employed in the past 12 months"
 
 //Continuity of employment
-gen rc_empl_cont=v732 if inlist(v731,1,2,3)
-label values rc_empl_cont V732
-label var rc_empl_cont "Continuity of employment among those employed in the past 12 months"
+Wkworklastyr==11 & Wkworklastyr==12 & Wkworklastyr==13 "Continuity of employment among those employed in the past 12 months"
 
 *** Health insurance ***
-* Note: The different types of health insurance can be country specific. Please check the v481* variables to see which ones you need.
-* In addition, some surveys report this for all women/men and some report it among those that have heard of insurance. Please check what the population of interest is for reporting these indicators.
-//Health insurance - Social security
-gen rc_hins_ss = v481c==1
-label var rc_hins_ss "Health insurance coverage - social security"
+inssocs "Health insurance coverage - social security"
 
 //Health insurance - Other employer-based insurance
-gen rc_hins_empl = v481b==1
-label var rc_hins_empl "Health insurance coverage - other employer-based insurance"
+insemployer "Health insurance coverage - other employer-based insurance"
 
 //Health insurance - Mutual Health Organization or community-based insurance
-gen rc_hins_comm = v481a==1
-label var rc_hins_comm "Health insurance coverage - mutual health org. or community-based insurance"
+insorg "Health insurance coverage - mutual health org. or community-based insurance"
 
 //Health insurance - Privately purchased commercial insurance
-gen rc_hins_priv = v481d==1
-label var rc_hins_priv "Health insurance coverage - privately purchased commercial insurance"
+insprivate "Health insurance coverage - privately purchased commercial insurance"
 
-//Health insrance - Other
-gen rc_hins_other=0
-	foreach i in e f g h x {
-	replace rc_hins_other=1 if v481`i'==1
-	} 
-label var rc_hins_other "Health insurance coverage - other type of insurance"
+//Health insuanqnrance - Other
+insother "Health insurance coverage - other type of insurance"
 
 //Health insurance - Any
-gen rc_hins_any=0
-	foreach i in a b c d e f g h x {
-	replace rc_hins_any=1 if v481`i'==1
-	}
-label var rc_hins_any "Have any health insurance"
+inscoveryn
 
 *** Tobacco use ***
 
 //Smokes cigarettes
-gen rc_tobc_cig=inlist(v463aa,1,2) | v463e==1
-label var rc_tobc_cig "Smokes cigarettes"
+tosmoke "Smokes cigarettes"
 
 //Smokes other type of tobacco
-gen rc_tobc_other= v463b==1 | v463f==1 | v463g==1 
-label var rc_tobc_other "Smokes other type of tobacco"
+touseoth "Smokes other type of tobacco"
 
 //Smokes any type of tobacco
-gen rc_tobc_smk_any= inlist(v463aa,1,2) | v463e==1 | v463b==1 | v463f==1 | v463g==1 
-label var rc_tobc_smk_any "Smokes any type of tobacco"
+tosome "Smokes any type of tobacco"
 
 //Snuff by mouth
-gen rc_tobc_snuffm = v463h==1
-label values rc_tobc_snuffm yesno
-label var rc_tobc_snuffm "Uses snuff smokeless tobacco by mouth"
+tosnuffm "Uses snuff smokeless tobacco by mouth"
 
 //Snuff by nose
-gen rc_tobc_snuffn = v463d==1
-label values rc_tobc_snuffn yesno
-label var rc_tobc_snuffn "Uses snuff smokeless tobacco by nose"
+tosnuffn "Uses snuff smokeless tobacco by nose"
 
 //Chewing tobacco
-gen rc_tobc_chew = v463c==1
-label values rc_tobc_chew yesno
-label var rc_tobc_chew "Chews tobacco"
+tochew "Chews tobacco"
 
 //Betel quid with tobacco
-gen rc_tobv_betel = v463i==1
-label values rc_tobv_betel yesno
-label var rc_tobv_betel "Uses betel quid with tobacco"
+toghutka "Uses betel quid with tobacco"
 
 //Other type of smokeless tobacco
-*Note: there may be other types of smokeless tobacco, please check all v463* variables. 
-gen rc_tobc_osmkless = v463l==1
-label values rc_tobc_osmkless yesno
+
+gen tosmokeless=0
+replace tosmokeless==1 if tochew==1 | tosnuffm==1 | tosnuffn==1 | toghutka==1
+label values tosmokeless yesno
 label var rc_tobc_osmkless "Uses other type of smokeless tobacco"
 
 //Any smokeless tobacco
@@ -411,12 +366,7 @@ gen rc_tobc_cig=0
 label var rc_tobc_cig "Smokes cigarettes"
 
 //Smokes other type of tobacco
-gen rc_tobc_other= 0
-	foreach i in d e f g {
-	replace rc_tobc_other= 1 if mv464`i'>0 & mv464`i'<=888
-	replace rc_tobc_other= 1 if mv484`i'>0 & mv464`i'<=888
-	}
-label var rc_tobc_other "Smokes other type of tobacco"
+ "Smokes other type of tobacco"
 
 //Smokes any type of tobacco
 gen rc_tobc_smk_any= 0
