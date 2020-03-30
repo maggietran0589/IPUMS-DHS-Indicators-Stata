@@ -1,52 +1,52 @@
 /*****************************************************************************************************
 Program: 			RC_CHAR.do
 Purpose: 			Code to compute respondent characteristics in men and women
-Data inputs: 		IR or MR survey list
-Data outputs:		coded variables
-Author:			
-Date last modified: 
-Note:				The indicators below can be computed for men and women. 
-					For women and men the indicator is computed for age 15-49 in line 55 and 262. This can be commented out if the indicators are required for all women/men.
-					Please check the note on health insurance. This can be country specific and also reported for specific populations. 
+Data inputs: 			IR or MR survey list
+Data outputs:			coded variables
+Author:				Faduma Shaba		
+Date last modified:		March 2020
+Note:				The indicators below can be computed for women for men add 'mn' to the end of the variable 
+				For women and men the indicator is computed for age 15-49 in line 55 and 262. This can be commented out if the indicators are required for all women/men.
+				Please check the note on health insurance. This can be country specific and also reported for specific populations. 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
-Variables created in this file:
-rc_edu				"Highest level of schooling attended or completed"
-rc_edu_median		"Median years of education"
-rc_litr_cats		"Level of literacy"
-rc_litr				"Literate - higher than secondary or can read part or whole sentence"
-rc_media_newsp		"Reads a newspaper at least once a week"
-rc_media_tv			"Watches television at least once a week"
-rc_media_radio		"Listens to radio at least once a week"
-rc_media_allthree	"Accesses to all three media at least once a week"
-rc_media_none		"Accesses none of the three media at least once a week"
-rc_intr_ever		"Ever used the internet"
-rc_intr_use12mo		"Used the internet in the past 12 months"
-rc_intr_usefreq		"Internet use frequency in the past month - among users in the past 12 months"
-rc_empl				"Employment status"
-rc_occup			"Occupation among those employed in the past 12 months"
-rc_empl_type		"Type of employer among those employed in the past 12 months"
-rc_empl_earn		"Type of earnings among those employed in the past 12 months"
-rc_empl_cont		"Continuity of employment among those employed in the past 12 months"
-rc_hins_ss			"Health insurance coverage - social security"
-rc_hins_empl		"Health insurance coverage - other employer-based insurance"
-rc_hins_comm		"Health insurance coverage - mutual health org. or community-based insurance"
-rc_hins_priv		"Health insurance coverage - privately purchased commercial insurance"
-rc_hins_other		"Health insurance coverage - other type of insurance"
-rc_hins_any			"Have any health insurance"
-rc_tobc_cig			"Smokes cigarettes"
-rc_tobc_other		"Smokes other type of tobacco"
-rc_tobc_smk_any		"Smokes any type of tobacco"
-rc_smk_freq			"Smoking frequency"
-rc_cig_day			"Average number of cigarettes smoked per day"
-rc_tobc_snuffm		"Uses snuff smokeless tobacco by mouth"
-rc_tobc_snuffn		"Uses snuff smokeless tobacco by nose"
-rc_tobc_chew		"Chews tobacco"
-rc_tobv_betel		"Uses betel quid with tobacco"
-rc_tobc_osmkless	"Uses other type of smokeless tobacco"
-rc_tobc_anysmkless	"Uses any type of smokeless tobacco"
-rc_tobc_any			"Uses any type of tobacco - smoke or smokeless"
+Variables used in this file:
+educlvl			"Highest level of schooling attended or completed"
+edu_median		"Median years of education"
+Lit2			"Level of literacy"
+Lityn			"Literate - higher than secondary or can read part or whole sentence"
+Newswk			"Reads a newspaper at least once a week"
+Tvwk			"Watches television at least once a week"
+radiowk			"Listens to radio at least once a week"
+media_all		"Accesses to all three media at least once a week"
+media_none		"Accesses none of the three media at least once a week"
+internetevyr		"Ever used the internet"
+internetevyr		"Used the internet in the past 12 months"
+internetmo		"Internet use frequency in the past month - among users in the past 12 months"
+wkworklastyr		"Employment status"
+wkcurrjob		"Occupation among those employed in the past 12 months"
+whoworkfor		"Type of employer among those employed in the past 12 months"
+Wkearntype		"Type of earnings among those employed in the past 12 months"
+Wkworklastyr		"Continuity of employment among those employed in the past 12 months"
+inssocs			"Health insurance coverage - social security"
+insemployer		"Health insurance coverage - other employer-based insurance"
+insorg			"Health insurance coverage - mutual health org. or community-based insurance"
+insprivate		"Health insurance coverage - privately purchased commercial insurance"
+insother		"Health insurance coverage - other type of insurance"
+inscoveryn		"Have any health insurance"
+tosmoke			"Smokes cigarettes"
+touseoth		"Smokes other type of tobacco"
+tosmoke			"Smokes any type of tobacco"
+tosmokefq		"Smoking frequency"
+tocigdayno		"Average number of cigarettes smoked per day"
+tosnuffm		"Uses snuff smokeless tobacco by mouth"
+tosnuffn		"Uses snuff smokeless tobacco by nose"
+tochew			"Chews tobacco"
+toghutka		"Uses betel quid with tobacco"
+tosmokeless		"Uses other type of smokeless tobacco"
+tosmokeless		"Uses any type of smokeless tobacco"
+tonosmoke		"Uses any type of tobacco - smoke or smokeless"
 ----------------------------------------------------------------------------*/
 
 *Limiting to women age 15-49
@@ -81,7 +81,7 @@ scalar sU=r(mean)
 drop dummy
 
 gen rc_edu_median=round(sp50-1+(.5-sL)/(sU-sL),.01)
-label var rc_edu_median	"Median years of education"
+label var edu_median	"Median years of education"
 
 //Literacy level
 Lit2 "Level of literacy"
@@ -112,8 +112,8 @@ label var media_all "Access to newspaper, TV, and radio once a week"
 *****//Media exposure - none******
 gen media_none=0
 replace media_none=1 if newswk==0 & tvwk==0 & radiowk==0 
-label values rc_media_none yesno
-label var rc_media_none "Accesses none of the three media at least once a week"
+label values media_none yesno
+label var media_none "Accesses none of the three media at least once a week"
 
 //Ever used internet
 internetevyr==10 "Ever used the internet"
@@ -167,7 +167,13 @@ tosmoke "Smokes cigarettes"
 touseoth "Smokes other type of tobacco"
 
 //Smokes any type of tobacco
-tosome "Smokes any type of tobacco"
+tosmoke "Smokes any type of tobacco"
+
+//Smoke frequency
+tosmokefq "Smoking frequency"
+
+//Smokes daily
+tocigdayno "Average number of cigarettes smoked per day"
 
 //Snuff by mouth
 tosnuffm "Uses snuff smokeless tobacco by mouth"
@@ -182,14 +188,13 @@ tochew "Chews tobacco"
 toghutka "Uses betel quid with tobacco"
 
 //Other type of smokeless tobacco
-
 gen tosmokeless=0
 replace tosmokeless==1 if tochew==1 | tosnuffm==1 | tosnuffn==1 | toghutka==1
 label values tosmokeless yesno
 label var tosmokeless "Uses other type of smokeless tobacco"
 
 //Any smokeless tobacco
-to smokeless "Uses other type of smokeless tobacco"
+tosmokeless "Uses other type of smokeless tobacco"
 
 //Any tobacco 
 tonosmoke==0 "Uses any type of tobacco - smoke or smokeless"
