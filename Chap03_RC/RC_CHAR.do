@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 Program: 			RC_CHAR.do
 Purpose: 			Code to compute respondent characteristics in men and women
-Data inputs: 			IR or MR survey list
+Data inputs: 			IPUMS DHS Respondent Characteristics
 Data outputs:			coded variables
 Author:				Faduma Shaba		
 Date last modified:		March 2020
