@@ -1,8 +1,8 @@
 /*****************************************************************************************************
 Program: 			RC_tables.do
 Purpose: 			produce tables for indicators
-Author:				Shireen Assaf
-Date last modified: October 3 2019 by Shireen Assaf 
+Author:				Faduma SHaba
+Date last modified: March 2020 
 *Note this do file will produce the following tables in excel:
 	1. 	Tables_background_wm:		Contains the tables for background variables for women
 	2. 	Tables_background_mn:		Contains the tables for background variables for men
@@ -1139,27 +1139,27 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_cig_day using Tables_tobac_mn.xls [iw=wt
 * Smokeless tobacco use
 
 //Snuff by mouth
-tab rc_tobc_snuffm [iw=perwt]
+tab tosnuffm [iw=perwt]
 
 //Snuff by nose
-tab rc_tobc_snuffn [iw=perwt]
+tab tosnuffn [iw=perwt]
 
 //Chews tobacco
-tab rc_tobc_chew [iw=perwt]
+tab tochew [iw=perwt]
 
 //Betel quid with tobacco
-tab rc_tobv_betel [iw=perwt]
+tab toghutka [iw=perwt]
 
 //Other type of smokless tobacco
-tab rc_tobc_osmkless [iw=perwt]
+tab tosmokeless if tosmokeless==1 [iw=perwt]
 
 //Any smokeless tobacco
 tab rc_tobc_anysmkless [iw=perwt]
 
 //Uses any type of tobacco
-tab rc_tobc_any [iw=perwt]
+tab tonosmoke if tonosmoke==0 [iw=perwt]
 
 * output to excel
-tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmkless rc_tobc_anysmkless rc_tobc_any using Tables_tobac_mn.xls [iw=wt] , oneway cells(cell freq) append 
+tabout snuffm tosnuffn tochew toghutka tosmokeless tobc_anysmkless tonosmoke if tonosmoke==0 using Tables_tobac_mn.xls [iw=wt] , oneway cells(cell freq) append 
 
 }
