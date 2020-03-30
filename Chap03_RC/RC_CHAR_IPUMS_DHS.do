@@ -1,23 +1,27 @@
 /*****************************************************************************************************
-Program: 			RC_CHAR.do
-Purpose: 			Code to compute respondent characteristics in men and women
+Program: 			RC_CHAR_IPUMS_DHS.do
+Purpose: 			Code to compute respondent characteristics in men and women using IPUMS DHS variables
+Credits:			This file replaces files created by The DHS Program, for use with IPUMS DHS
+				https://github.com/DHSProgram/DHS-Indicators-Stata/blob/master/Chap03_RC/RC_CHAR.do
 Data inputs: 			IPUMS DHS Respondent Characteristics
 Data outputs:			coded variables
 Author:				Faduma Shaba		
 Date last modified:		March 2020
-Note:				The indicators below can be computed for women for men add 'mn' to the end of the variable 
-				For women and men the indicator is computed for age 15-49 in line 55 and 262. This can be commented out if the indicators are required for all women/men.
-				Please check the note on health insurance. This can be country specific and also reported for specific populations. 
+Note:				The indicators below can be computed for women. For men add 'mn' to the end of the 
+				variable names. For women and men the indicator is computed for age 15-49 in line 55 and 262. 
+				This can be commented out if the indicators are required for all women/men.
+				Please check the note on health insurance. This can be country specific and also 
+				reported for specific populations. 
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
-Variables used in this file:
+IPUMS DHS variables used in this file:
 educlvl			"Highest level of schooling attended or completed"
-edu_median		"Median years of education"
-Lit2			"Level of literacy"
-Lityn			"Literate - higher than secondary or can read part or whole sentence"
-Newswk			"Reads a newspaper at least once a week"
-Tvwk			"Watches television at least once a week"
+edyrtotal		"
+lit2			"Level of literacy"
+delete non ipums variables. lityn			"Literate - higher than secondary or can read part or whole sentence"
+newswk			"Reads a newspaper at least once a week"
+tvwk			"Watches television at least once a week"
 radiowk			"Listens to radio at least once a week"
 media_all		"Accesses to all three media at least once a week"
 media_none		"Accesses none of the three media at least once a week"
@@ -47,36 +51,41 @@ toghutka		"Uses betel quid with tobacco"
 tosmokeless		"Uses other type of smokeless tobacco"
 tosmokeless		"Uses any type of smokeless tobacco"
 tonosmoke		"Uses any type of tobacco - smoke or smokeless"
+----------------------------------------------------------------------------
+Variables created in this file:
+rc_edu_median		"Median years of education"
+
 ----------------------------------------------------------------------------*/
 
 *Limiting to women age 15-49
 drop if age > 49 & age < 15
 
 *** Education ***
+
 //Highest level of education
-educlvl "Highest level of schooling attended or completed"
+replace educlvl...
 
 //Median years of education  
-replace edyrtotal=20 if edyrtotal>20 
+replace edyrtotal=20 if edyrtotal>20 & edyrtotal<95
 
 summarize edyrtotal [iw=perweight], detail
 *summarize saves the data in the r()store
 scalar sp50=r(p50)
 *This saves a scalar-sp50- as the 50th percentile in the edyrtotal r store.
 
-gen dummy=.
-replace dummy=0
-replace dummy=1 if edyrtotal<sp50
-*This makes all edyrtotal over the median (sp50) = the categorical binary 1
-summarize dummy [iw=perweight]
-scalar sL=r(mean)
-*This saves a scalar-sL- as the mean in the edyrtotal r store.
-drop dummy
+	gen dummy=.
+	replace dummy=0
+	replace dummy=1 if edyrtotal<sp50
+	*This makes all edyrtotal over the median (sp50) = the categorical binary 1
+	summarize dummy [iw=perweight]
+	scalar sL=r(mean)
+	*This saves a scalar-sL- as the mean in the edyrtotal r store.
+	drop dummy
 
-gen dummy=.
-replace dummy=0
-replace dummy=1 if eduyr <=sp50
-summarize dummy iw=perweight]
+	gen dummy=.
+	replace dummy=0
+	replace dummy=1 if eduyr <=sp50
+summarize dummy [iw=perweight]
 scalar sU=r(mean)
 drop dummy
 
@@ -86,13 +95,14 @@ label var edu_median	"Median years of education"
 //Literacy level
 Lit2 "Level of literacy"
 
-********** //Literate ******
+MAKE HEADINGS AND INDENTATIONS SAME AS IN OTHER FILE
+//Literate 
 gen lityn=0
 replace lityn=1 if educlvl==3 | Lit2==11 | Lit2==12	
 label values rc_litr yesno
 label var lityn "Literate - higher than secondary or can read part or whole sentence"
 
-Media exposure
+********* Media exposure *************
 
 //Media exposure - newspaper
 Newswk "Reads a newspaper at least once a week"
@@ -152,7 +162,7 @@ insorg "Health insurance coverage - mutual health org. or community-based insura
 //Health insurance - Privately purchased commercial insurance
 insprivate "Health insurance coverage - privately purchased commercial insurance"
 
-//Health insuanqnrance - Other
+//Health insurance - Other
 insother "Health insurance coverage - other type of insurance"
 
 //Health insurance - Any
