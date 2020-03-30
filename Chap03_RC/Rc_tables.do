@@ -97,19 +97,19 @@ tabout age urban defactores wealthq lit2 using Tables_educ_wm.xls [iw=perwt] , c
 //Literate 
 
 *age
-tab v013 rc_litr [iw=wt], row nofreq 
+tab age lityn [iw=wt], row nof 
 
 *residence
-tab v025 rc_litr [iw=wt], row nofreq 
+tab urban lityn [iw=wt], row nof 
 
 *region
-tab v024 rc_litr [iw=wt], row nofreq 
+tab defactores lityn [iw=wt], row nof 
 
 *wealth
-tab v190 rc_litr [iw=wt], row nofreq 
+tab wealthq lityn [iw=wt], row nof 
 
 * output to excel
-tabout v013 v025 v024 v190 rc_litr using Tables_educ_wm.xls [iw=wt] , c(row) f(1) append 
+tabout age urban defactores wealthq lityn using Tables_educ_wm.xls [iw=perwt] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for media exposure and internet use: excel file Tables_media_wm will be produced
@@ -117,19 +117,19 @@ tabout v013 v025 v024 v190 rc_litr using Tables_educ_wm.xls [iw=wt] , c(row) f(1
 //Reads a newspaper
 
 *age
-tab v013 rc_media_newsp [iw=wt], row nofreq 
+tab v013 newswk [iw=wt], row nof 
 
 *residence
-tab v025 rc_media_newsp [iw=wt], row nofreq 
+tab v025 rc_media_newsp [iw=wt], row nof 
 
 *region
-tab v024 rc_media_newsp [iw=wt], row nofreq 
+tab v024 rc_media_newsp [iw=wt], row nof 
 
 *education
-tab v106 rc_media_newsp [iw=wt], row nofreq 
+tab v106 rc_media_newsp [iw=wt], row nof 
 
 *wealth
-tab v190 rc_media_newsp [iw=wt], row nofreq 
+tab v190 rc_media_newsp [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_media_newsp using Tables_media_wm.xls [iw=wt] , c(row) f(1) replace 
@@ -138,19 +138,19 @@ tabout v013 v025 v024 v106 v190 rc_media_newsp using Tables_media_wm.xls [iw=wt]
 //Watches TV
 
 *age
-tab v013 rc_media_tv [iw=wt], row nofreq 
+tab v013 rc_media_tv [iw=wt], row nof 
 
 *residence
-tab v025 rc_media_tv [iw=wt], row nofreq 
+tab v025 rc_media_tv [iw=wt], row nof 
 
 *region
-tab v024 rc_media_tv [iw=wt], row nofreq 
+tab v024 rc_media_tv [iw=wt], row nof 
 
 *education
-tab v106 rc_media_tv [iw=wt], row nofreq 
+tab v106 rc_media_tv [iw=wt], row nof 
 
 *wealth
-tab v190 rc_media_tv [iw=wt], row nofreq 
+tab v190 rc_media_tv [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_media_tv using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
@@ -159,19 +159,19 @@ tabout v013 v025 v024 v106 v190 rc_media_tv using Tables_media_wm.xls [iw=wt] , 
 //Listens to radio
 
 *age
-tab v013 rc_media_radio [iw=wt], row nofreq 
+tab v013 rc_media_radio [iw=wt], row nof 
 
 *residence
-tab v025 rc_media_radio [iw=wt], row nofreq 
+tab v025 rc_media_radio [iw=wt], row nof 
 
 *region
-tab v024 rc_media_radio [iw=wt], row nofreq 
+tab v024 rc_media_radio [iw=wt], row nof 
 
 *education
-tab v106 rc_media_radio [iw=wt], row nofreq 
+tab v106 rc_media_radio [iw=wt], row nof 
 
 *wealth
-tab v190 rc_media_radio [iw=wt], row nofreq 
+tab v190 rc_media_radio [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_media_radio using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
@@ -180,19 +180,19 @@ tabout v013 v025 v024 v106 v190 rc_media_radio using Tables_media_wm.xls [iw=wt]
 //All three media
 
 *age
-tab v013 rc_media_allthree [iw=wt], row nofreq 
+tab v013 rc_media_allthree [iw=wt], row nof 
 
 *residence
-tab v025 rc_media_allthree [iw=wt], row nofreq 
+tab v025 rc_media_allthree [iw=wt], row nof 
 
 *region
-tab v024 rc_media_allthree [iw=wt], row nofreq 
+tab v024 rc_media_allthree [iw=wt], row nof 
 
 *education
-tab v106 rc_media_allthree [iw=wt], row nofreq 
+tab v106 rc_media_allthree [iw=wt], row nof 
 
 *wealth
-tab v190 rc_media_allthree [iw=wt], row nofreq 
+tab v190 rc_media_allthree [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_media_allthree using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
@@ -201,19 +201,19 @@ tabout v013 v025 v024 v106 v190 rc_media_allthree using Tables_media_wm.xls [iw=
 //None of the media forms
 
 *age
-tab v013 rc_media_none [iw=wt], row nofreq 
+tab v013 rc_media_none [iw=wt], row nof 
 
 *residence
-tab v025 rc_media_none [iw=wt], row nofreq 
+tab v025 rc_media_none [iw=wt], row nof 
 
 *region
-tab v024 rc_media_none [iw=wt], row nofreq 
+tab v024 rc_media_none [iw=wt], row nof 
 
 *education
-tab v106 rc_media_none [iw=wt], row nofreq 
+tab v106 rc_media_none [iw=wt], row nof 
 
 *wealth
-tab v190 rc_media_none [iw=wt], row nofreq 
+tab v190 rc_media_none [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_media_none using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
@@ -222,19 +222,19 @@ tabout v013 v025 v024 v106 v190 rc_media_none using Tables_media_wm.xls [iw=wt] 
 //Ever used the internet
 
 *age
-tab v013 rc_intr_ever [iw=wt], row nofreq 
+tab v013 rc_intr_ever [iw=wt], row nof 
 
 *residence
-tab v025 rc_intr_ever [iw=wt], row nofreq 
+tab v025 rc_intr_ever [iw=wt], row nof 
 
 *region
-tab v024 rc_intr_ever [iw=wt], row nofreq 
+tab v024 rc_intr_ever [iw=wt], row nof 
 
 *education
-tab v106 rc_intr_ever [iw=wt], row nofreq 
+tab v106 rc_intr_ever [iw=wt], row nof 
 
 *wealth
-tab v190 rc_intr_ever [iw=wt], row nofreq 
+tab v190 rc_intr_ever [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_intr_ever using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
@@ -243,19 +243,19 @@ tabout v013 v025 v024 v106 v190 rc_intr_ever using Tables_media_wm.xls [iw=wt] ,
 //Internet use in the last 12 months
 
 *age
-tab v013 rc_intr_use12mo [iw=wt], row nofreq 
+tab v013 rc_intr_use12mo [iw=wt], row nof 
 
 *residence
-tab v025 rc_intr_use12mo [iw=wt], row nofreq 
+tab v025 rc_intr_use12mo [iw=wt], row nof 
 
 *region
-tab v024 rc_intr_use12mo [iw=wt], row nofreq 
+tab v024 rc_intr_use12mo [iw=wt], row nof 
 
 *education
-tab v106 rc_intr_use12mo [iw=wt], row nofreq 
+tab v106 rc_intr_use12mo [iw=wt], row nof 
 
 *wealth
-tab v190 rc_intr_use12mo [iw=wt], row nofreq 
+tab v190 rc_intr_use12mo [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_intr_use12mo using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
@@ -263,19 +263,19 @@ tabout v013 v025 v024 v106 v190 rc_intr_use12mo using Tables_media_wm.xls [iw=wt
 //Internet use frequency
 
 *age
-tab v013 rc_intr_usefreq [iw=wt], row nofreq 
+tab v013 rc_intr_usefreq [iw=wt], row nof 
 
 *residence
-tab v025 rc_intr_usefreq [iw=wt], row nofreq 
+tab v025 rc_intr_usefreq [iw=wt], row nof 
 
 *region
-tab v024 rc_intr_usefreq [iw=wt], row nofreq 
+tab v024 rc_intr_usefreq [iw=wt], row nof 
 
 *education
-tab v106 rc_intr_usefreq [iw=wt], row nofreq 
+tab v106 rc_intr_usefreq [iw=wt], row nof 
 
 *wealth
-tab v190 rc_intr_usefreq [iw=wt], row nofreq 
+tab v190 rc_intr_usefreq [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_intr_usefreq using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
@@ -286,22 +286,22 @@ tabout v013 v025 v024 v106 v190 rc_intr_usefreq using Tables_media_wm.xls [iw=wt
 //Employment status
 
 *age
-tab v013 rc_empl [iw=wt], row nofreq 
+tab v013 rc_empl [iw=wt], row nof 
 
 *marital status
-tab v502 rc_empl [iw=wt], row nofreq 
+tab v502 rc_empl [iw=wt], row nof 
 
 *residence
-tab v025 rc_empl [iw=wt], row nofreq 
+tab v025 rc_empl [iw=wt], row nof 
 
 *region
-tab v024 rc_empl [iw=wt], row nofreq 
+tab v024 rc_empl [iw=wt], row nof 
 
 *education
-tab v106 rc_empl [iw=wt], row nofreq 
+tab v106 rc_empl [iw=wt], row nof 
 
 *wealth
-tab v190 rc_empl [iw=wt], row nofreq 
+tab v190 rc_empl [iw=wt], row nof 
 
 * output to excel
 tabout v013 v502 v025 v024 v106 v190 rc_empl using Tables_employ_wm.xls [iw=wt] , c(row) f(1) replace 
@@ -310,22 +310,22 @@ tabout v013 v502 v025 v024 v106 v190 rc_empl using Tables_employ_wm.xls [iw=wt] 
 //Occupation
 
 *age
-tab v013 rc_occup [iw=wt], row nofreq 
+tab v013 rc_occup [iw=wt], row nof 
 
 *marital status
-tab v502 rc_occup [iw=wt], row nofreq 
+tab v502 rc_occup [iw=wt], row nof 
 
 *residence
-tab v025 rc_occup [iw=wt], row nofreq 
+tab v025 rc_occup [iw=wt], row nof 
 
 *region
-tab v024 rc_occup [iw=wt], row nofreq 
+tab v024 rc_occup [iw=wt], row nof 
 
 *education
-tab v106 rc_occup [iw=wt], row nofreq 
+tab v106 rc_occup [iw=wt], row nof 
 
 *wealth
-tab v190 rc_occup [iw=wt], row nofreq 
+tab v190 rc_occup [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_occup using Tables_employ_wm.xls [iw=wt] , c(row) f(1) append 
@@ -335,13 +335,13 @@ tabout v013 v025 v024 v106 v190 rc_occup using Tables_employ_wm.xls [iw=wt] , c(
 recode v717 (1/3 6/9 96/99 .=0 "Non-Agriculture") (4/5=1 "Agriculture") if inlist(v731,1,2,3), gen(agri)
 
 //Type of employer
-tab rc_empl_type agri [iw=wt], col nofreq 
+tab rc_empl_type agri [iw=wt], col nof 
 
 //Type of earnings
-tab rc_empl_earn agri [iw=wt], col nofreq 
+tab rc_empl_earn agri [iw=wt], col nof 
 
 *Continuity of employment
-tab rc_empl_cont agri [iw=wt], col nofreq 
+tab rc_empl_cont agri [iw=wt], col nof 
 
 * output to excel
 cap tabout rc_empl_type rc_empl_earn rc_empl_cont agri using Tables_employ_wm.xls [iw=wt], c(col) f(1) append 
@@ -352,19 +352,19 @@ cap tabout rc_empl_type rc_empl_earn rc_empl_cont agri using Tables_employ_wm.xl
 //Social security
 
 *age
-tab v013 rc_hins_ss [iw=wt], row nofreq 
+tab v013 rc_hins_ss [iw=wt], row nof 
 
 *residence
-tab v025 rc_hins_ss [iw=wt], row nofreq 
+tab v025 rc_hins_ss [iw=wt], row nof 
 
 *region
-tab v024 rc_hins_ss [iw=wt], row nofreq 
+tab v024 rc_hins_ss [iw=wt], row nof 
 
 *education
-tab v106 rc_hins_ss [iw=wt], row nofreq 
+tab v106 rc_hins_ss [iw=wt], row nof 
 
 *wealth
-tab v190 rc_hins_ss [iw=wt], row nofreq 
+tab v190 rc_hins_ss [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_hins_ss using Tables_insurance_wm.xls [iw=wt] , c(row) f(1) replace 
@@ -373,19 +373,19 @@ tabout v013 v025 v024 v106 v190 rc_hins_ss using Tables_insurance_wm.xls [iw=wt]
 //Other employer based insurance
 
 *age
-tab v013 rc_hins_empl [iw=wt], row nofreq 
+tab v013 rc_hins_empl [iw=wt], row nof 
 
 *residence
-tab v025 rc_hins_empl [iw=wt], row nofreq 
+tab v025 rc_hins_empl [iw=wt], row nof 
 
 *region
-tab v024 rc_hins_empl [iw=wt], row nofreq 
+tab v024 rc_hins_empl [iw=wt], row nof 
 
 *education
-tab v106 rc_hins_empl [iw=wt], row nofreq 
+tab v106 rc_hins_empl [iw=wt], row nof 
 
 *wealth
-tab v190 rc_hins_empl [iw=wt], row nofreq 
+tab v190 rc_hins_empl [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_hins_empl using Tables_insurance_wm.xls [iw=wt] , c(row) f(1) append 
@@ -394,19 +394,19 @@ tabout v013 v025 v024 v106 v190 rc_hins_empl using Tables_insurance_wm.xls [iw=w
 //Community-based insurance
 
 *age
-tab v013 rc_hins_comm [iw=wt], row nofreq 
+tab v013 rc_hins_comm [iw=wt], row nof 
 
 *residence
-tab v025 rc_hins_comm [iw=wt], row nofreq 
+tab v025 rc_hins_comm [iw=wt], row nof 
 
 *region
-tab v024 rc_hins_comm [iw=wt], row nofreq 
+tab v024 rc_hins_comm [iw=wt], row nof 
 
 *education
-tab v106 rc_hins_comm [iw=wt], row nofreq 
+tab v106 rc_hins_comm [iw=wt], row nof 
 
 *wealth
-tab v190 rc_hins_comm [iw=wt], row nofreq 
+tab v190 rc_hins_comm [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_hins_comm using Tables_insurance_wm.xls [iw=wt] , c(row) f(1) append 
@@ -415,19 +415,19 @@ tabout v013 v025 v024 v106 v190 rc_hins_comm using Tables_insurance_wm.xls [iw=w
 //Private insurance
 
 *age
-tab v013 rc_hins_priv [iw=wt], row nofreq 
+tab v013 rc_hins_priv [iw=wt], row nof 
 
 *residence
-tab v025 rc_hins_priv [iw=wt], row nofreq 
+tab v025 rc_hins_priv [iw=wt], row nof 
 
 *region
-tab v024 rc_hins_priv [iw=wt], row nofreq 
+tab v024 rc_hins_priv [iw=wt], row nof 
 
 *education
-tab v106 rc_hins_priv [iw=wt], row nofreq 
+tab v106 rc_hins_priv [iw=wt], row nof 
 
 *wealth
-tab v190 rc_hins_priv [iw=wt], row nofreq 
+tab v190 rc_hins_priv [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_hins_priv using Tables_insurance_wm.xls [iw=wt] , c(row) f(1) append 
@@ -436,19 +436,19 @@ tabout v013 v025 v024 v106 v190 rc_hins_priv using Tables_insurance_wm.xls [iw=w
 //Other type of insurance
 
 *age
-tab v013 rc_hins_other [iw=wt], row nofreq 
+tab v013 rc_hins_other [iw=wt], row nof 
 
 *residence
-tab v025 rc_hins_other [iw=wt], row nofreq 
+tab v025 rc_hins_other [iw=wt], row nof 
 
 *region
-tab v024 rc_hins_other [iw=wt], row nofreq 
+tab v024 rc_hins_other [iw=wt], row nof 
 
 *education
-tab v106 rc_hins_other [iw=wt], row nofreq 
+tab v106 rc_hins_other [iw=wt], row nof 
 
 *wealth
-tab v190 rc_hins_other [iw=wt], row nofreq 
+tab v190 rc_hins_other [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_hins_other using Tables_insurance_wm.xls [iw=wt] , c(row) f(1) append 
@@ -457,19 +457,19 @@ tabout v013 v025 v024 v106 v190 rc_hins_other using Tables_insurance_wm.xls [iw=
 //Have any insurance
 
 *age
-tab v013 rc_hins_any [iw=wt], row nofreq 
+tab v013 rc_hins_any [iw=wt], row nof 
 
 *residence
-tab v025 rc_hins_any [iw=wt], row nofreq 
+tab v025 rc_hins_any [iw=wt], row nof 
 
 *region
-tab v024 rc_hins_any [iw=wt], row nofreq 
+tab v024 rc_hins_any [iw=wt], row nof 
 
 *education
-tab v106 rc_hins_any [iw=wt], row nofreq 
+tab v106 rc_hins_any [iw=wt], row nof 
 
 *wealth
-tab v190 rc_hins_any [iw=wt], row nofreq 
+tab v190 rc_hins_any [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_hins_any using Tables_insurance_wm.xls [iw=wt] , c(row) f(1) append 
@@ -480,19 +480,19 @@ tabout v013 v025 v024 v106 v190 rc_hins_any using Tables_insurance_wm.xls [iw=wt
 //Smokes cigarettes
 
 *age
-tab v013 rc_tobc_cig [iw=wt], row nofreq 
+tab v013 rc_tobc_cig [iw=wt], row nof 
 
 *residence
-tab v025 rc_tobc_cig [iw=wt], row nofreq 
+tab v025 rc_tobc_cig [iw=wt], row nof 
 
 *region
-tab v024 rc_tobc_cig [iw=wt], row nofreq 
+tab v024 rc_tobc_cig [iw=wt], row nof 
 
 *education
-tab v106 rc_tobc_cig [iw=wt], row nofreq 
+tab v106 rc_tobc_cig [iw=wt], row nof 
 
 *wealth
-tab v190 rc_tobc_cig [iw=wt], row nofreq 
+tab v190 rc_tobc_cig [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_tobc_cig using Tables_tobac_wm.xls [iw=wt] , c(row) f(1) replace 
@@ -501,19 +501,19 @@ tabout v013 v025 v024 v106 v190 rc_tobc_cig using Tables_tobac_wm.xls [iw=wt] , 
 //Smokes other type of tobacco
 
 *age
-tab v013 rc_tobc_other [iw=wt], row nofreq 
+tab v013 rc_tobc_other [iw=wt], row nof 
 
 *residence
-tab v025 rc_tobc_other [iw=wt], row nofreq 
+tab v025 rc_tobc_other [iw=wt], row nof 
 
 *region
-tab v024 rc_tobc_other [iw=wt], row nofreq 
+tab v024 rc_tobc_other [iw=wt], row nof 
 
 *education
-tab v106 rc_tobc_other [iw=wt], row nofreq 
+tab v106 rc_tobc_other [iw=wt], row nof 
 
 *wealth
-tab v190 rc_tobc_other [iw=wt], row nofreq 
+tab v190 rc_tobc_other [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_tobc_other using Tables_tobac_wm.xls [iw=wt] , c(row) f(1) append 
@@ -522,19 +522,19 @@ tabout v013 v025 v024 v106 v190 rc_tobc_other using Tables_tobac_wm.xls [iw=wt] 
 //Smokes any tobacco
 
 *age
-tab v013 rc_tobc_smk_any [iw=wt], row nofreq 
+tab v013 rc_tobc_smk_any [iw=wt], row nof 
 
 *residence
-tab v025 rc_tobc_smk_any [iw=wt], row nofreq 
+tab v025 rc_tobc_smk_any [iw=wt], row nof 
 
 *region
-tab v024 rc_tobc_smk_any [iw=wt], row nofreq 
+tab v024 rc_tobc_smk_any [iw=wt], row nof 
 
 *education
-tab v106 rc_tobc_smk_any [iw=wt], row nofreq 
+tab v106 rc_tobc_smk_any [iw=wt], row nof 
 
 *wealth
-tab v190 rc_tobc_smk_any [iw=wt], row nofreq 
+tab v190 rc_tobc_smk_any [iw=wt], row nof 
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_tobc_smk_any using Tables_tobac_wm.xls [iw=wt] , c(row) f(1) append 
@@ -607,16 +607,16 @@ tabout mv013 mv501 mv025 mv106 mv024 mv190 using Tables_background_mn.xls [iw=wt
 //Highest level of schooling
 
 *age
-tab mv013 rc_edu [iw=wt], row nofreq 
+tab mv013 rc_edu [iw=wt], row nof 
 
 *residence
-tab mv025 rc_edu [iw=wt], row nofreq 
+tab mv025 rc_edu [iw=wt], row nof 
 
 *region
-tab mv024 rc_edu [iw=wt], row nofreq 
+tab mv024 rc_edu [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_edu [iw=wt], row nofreq 
+tab mv190 rc_edu [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv190 rc_edu using Tables_educ_mn.xls [iw=wt] , c(row) f(1) replace 
@@ -630,16 +630,16 @@ tabout rc_edu_median using Tables_educ_mn.xls [iw=wt] , oneway cells(cell) appen
 //Literacy levels
 
 *age
-tab mv013 rc_litr_cats [iw=wt], row nofreq 
+tab mv013 rc_litr_cats [iw=wt], row nof 
 
 *residence
-tab mv025 rc_litr_cats [iw=wt], row nofreq 
+tab mv025 rc_litr_cats [iw=wt], row nof 
 
 *region
-tab mv024 rc_litr_cats [iw=wt], row nofreq 
+tab mv024 rc_litr_cats [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_litr_cats [iw=wt], row nofreq 
+tab mv190 rc_litr_cats [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv190 rc_litr_cats using Tables_educ_mn.xls [iw=wt] , c(row) f(1) append 
@@ -648,16 +648,16 @@ tabout mv013 mv025 mv024 mv190 rc_litr_cats using Tables_educ_mn.xls [iw=wt] , c
 //Literate 
 
 *age
-tab mv013 rc_litr [iw=wt], row nofreq 
+tab mv013 rc_litr [iw=wt], row nof 
 
 *residence
-tab mv025 rc_litr [iw=wt], row nofreq 
+tab mv025 rc_litr [iw=wt], row nof 
 
 *region
-tab mv024 rc_litr [iw=wt], row nofreq 
+tab mv024 rc_litr [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_litr [iw=wt], row nofreq 
+tab mv190 rc_litr [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv190 rc_litr using Tables_educ_mn.xls [iw=wt] , c(row) f(1) append 
@@ -668,19 +668,19 @@ tabout mv013 mv025 mv024 mv190 rc_litr using Tables_educ_mn.xls [iw=wt] , c(row)
 //Reads a newspaper
 
 *age
-tab mv013 rc_media_newsp [iw=wt], row nofreq 
+tab mv013 rc_media_newsp [iw=wt], row nof 
 
 *residence
-tab mv025 rc_media_newsp [iw=wt], row nofreq 
+tab mv025 rc_media_newsp [iw=wt], row nof 
 
 *region
-tab mv024 rc_media_newsp [iw=wt], row nofreq 
+tab mv024 rc_media_newsp [iw=wt], row nof 
 
 *education
-tab mv106 rc_media_newsp [iw=wt], row nofreq 
+tab mv106 rc_media_newsp [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_media_newsp [iw=wt], row nofreq 
+tab mv190 rc_media_newsp [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_media_newsp using Tables_media_mn.xls [iw=wt] , c(row) f(1) replace 
@@ -689,19 +689,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_media_newsp using Tables_media_mn.xls [i
 //Watches TV
 
 *age
-tab mv013 rc_media_tv [iw=wt], row nofreq 
+tab mv013 rc_media_tv [iw=wt], row nof 
 
 *residence
-tab mv025 rc_media_tv [iw=wt], row nofreq 
+tab mv025 rc_media_tv [iw=wt], row nof 
 
 *region
-tab mv024 rc_media_tv [iw=wt], row nofreq 
+tab mv024 rc_media_tv [iw=wt], row nof 
 
 *education
-tab mv106 rc_media_tv [iw=wt], row nofreq 
+tab mv106 rc_media_tv [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_media_tv [iw=wt], row nofreq 
+tab mv190 rc_media_tv [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_media_tv using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
@@ -710,19 +710,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_media_tv using Tables_media_mn.xls [iw=w
 //Listens to radio
 
 *age
-tab mv013 rc_media_radio [iw=wt], row nofreq 
+tab mv013 rc_media_radio [iw=wt], row nof 
 
 *residence
-tab mv025 rc_media_radio [iw=wt], row nofreq 
+tab mv025 rc_media_radio [iw=wt], row nof 
 
 *region
-tab mv024 rc_media_radio [iw=wt], row nofreq 
+tab mv024 rc_media_radio [iw=wt], row nof 
 
 *education
-tab mv106 rc_media_radio [iw=wt], row nofreq 
+tab mv106 rc_media_radio [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_media_radio [iw=wt], row nofreq 
+tab mv190 rc_media_radio [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_media_radio using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
@@ -731,19 +731,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_media_radio using Tables_media_mn.xls [i
 //All three media
 
 *age
-tab mv013 rc_media_allthree [iw=wt], row nofreq 
+tab mv013 rc_media_allthree [iw=wt], row nof 
 
 *residence
-tab mv025 rc_media_allthree [iw=wt], row nofreq 
+tab mv025 rc_media_allthree [iw=wt], row nof 
 
 *region
-tab mv024 rc_media_allthree [iw=wt], row nofreq 
+tab mv024 rc_media_allthree [iw=wt], row nof 
 
 *education
-tab mv106 rc_media_allthree [iw=wt], row nofreq 
+tab mv106 rc_media_allthree [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_media_allthree [iw=wt], row nofreq 
+tab mv190 rc_media_allthree [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_media_allthree using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
@@ -752,19 +752,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_media_allthree using Tables_media_mn.xls
 //None of the media forms
 
 *age
-tab mv013 rc_media_none [iw=wt], row nofreq 
+tab mv013 rc_media_none [iw=wt], row nof 
 
 *residence
-tab mv025 rc_media_none [iw=wt], row nofreq 
+tab mv025 rc_media_none [iw=wt], row nof 
 
 *region
-tab mv024 rc_media_none [iw=wt], row nofreq 
+tab mv024 rc_media_none [iw=wt], row nof 
 
 *education
-tab mv106 rc_media_none [iw=wt], row nofreq 
+tab mv106 rc_media_none [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_media_none [iw=wt], row nofreq 
+tab mv190 rc_media_none [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_media_none using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
@@ -773,19 +773,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_media_none using Tables_media_mn.xls [iw
 //Ever used the internet
 
 *age
-tab mv013 rc_intr_ever [iw=wt], row nofreq 
+tab mv013 rc_intr_ever [iw=wt], row nof 
 
 *residence
-tab mv025 rc_intr_ever [iw=wt], row nofreq 
+tab mv025 rc_intr_ever [iw=wt], row nof 
 
 *region
-tab mv024 rc_intr_ever [iw=wt], row nofreq 
+tab mv024 rc_intr_ever [iw=wt], row nof 
 
 *education
-tab mv106 rc_intr_ever [iw=wt], row nofreq 
+tab mv106 rc_intr_ever [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_intr_ever [iw=wt], row nofreq 
+tab mv190 rc_intr_ever [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_intr_ever using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
@@ -794,19 +794,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_intr_ever using Tables_media_mn.xls [iw=
 //Internet use in the last 12 months
 
 *age
-tab mv013 rc_intr_use12mo [iw=wt], row nofreq 
+tab mv013 rc_intr_use12mo [iw=wt], row nof 
 
 *residence
-tab mv025 rc_intr_use12mo [iw=wt], row nofreq 
+tab mv025 rc_intr_use12mo [iw=wt], row nof 
 
 *region
-tab mv024 rc_intr_use12mo [iw=wt], row nofreq 
+tab mv024 rc_intr_use12mo [iw=wt], row nof 
 
 *education
-tab mv106 rc_intr_use12mo [iw=wt], row nofreq 
+tab mv106 rc_intr_use12mo [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_intr_use12mo [iw=wt], row nofreq 
+tab mv190 rc_intr_use12mo [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_intr_use12mo using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
@@ -814,19 +814,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_intr_use12mo using Tables_media_mn.xls [
 //Internet use frequency
 
 *age
-tab mv013 rc_intr_usefreq [iw=wt], row nofreq 
+tab mv013 rc_intr_usefreq [iw=wt], row nof 
 
 *residence
-tab mv025 rc_intr_usefreq [iw=wt], row nofreq 
+tab mv025 rc_intr_usefreq [iw=wt], row nof 
 
 *region
-tab mv024 rc_intr_usefreq [iw=wt], row nofreq 
+tab mv024 rc_intr_usefreq [iw=wt], row nof 
 
 *education
-tab mv106 rc_intr_usefreq [iw=wt], row nofreq 
+tab mv106 rc_intr_usefreq [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_intr_usefreq [iw=wt], row nofreq 
+tab mv190 rc_intr_usefreq [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_intr_usefreq using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
@@ -837,22 +837,22 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_intr_usefreq using Tables_media_mn.xls [
 //Employment status
 
 *age
-tab mv013 rc_empl [iw=wt], row nofreq 
+tab mv013 rc_empl [iw=wt], row nof 
 
 *marital status
-tab mv502 rc_empl [iw=wt], row nofreq 
+tab mv502 rc_empl [iw=wt], row nof 
 
 *residence
-tab mv025 rc_empl [iw=wt], row nofreq 
+tab mv025 rc_empl [iw=wt], row nof 
 
 *region
-tab mv024 rc_empl [iw=wt], row nofreq 
+tab mv024 rc_empl [iw=wt], row nof 
 
 *education
-tab mv106 rc_empl [iw=wt], row nofreq 
+tab mv106 rc_empl [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_empl [iw=wt], row nofreq 
+tab mv190 rc_empl [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv502 mv025 mv024 mv106 mv190 rc_empl using Tables_employ_mn.xls [iw=wt] , c(row) f(1) replace 
@@ -861,22 +861,22 @@ tabout mv013 mv502 mv025 mv024 mv106 mv190 rc_empl using Tables_employ_mn.xls [i
 //Occupation
 
 *age
-tab mv013 rc_occup [iw=wt], row nofreq 
+tab mv013 rc_occup [iw=wt], row nof 
 
 *marital status
-tab mv502 rc_occup [iw=wt], row nofreq 
+tab mv502 rc_occup [iw=wt], row nof 
 
 *residence
-tab mv025 rc_occup [iw=wt], row nofreq 
+tab mv025 rc_occup [iw=wt], row nof 
 
 *region
-tab mv024 rc_occup [iw=wt], row nofreq 
+tab mv024 rc_occup [iw=wt], row nof 
 
 *education
-tab mv106 rc_occup [iw=wt], row nofreq 
+tab mv106 rc_occup [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_occup [iw=wt], row nofreq 
+tab mv190 rc_occup [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_occup using Tables_employ_mn.xls [iw=wt] , c(row) f(1) append 
@@ -886,13 +886,13 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_occup using Tables_employ_mn.xls [iw=wt]
 recode mv717 (1/3 6/9 96/99 .=0 "Non-Agriculture") (4/5=1 "Agriculture") if inlist(mv731,1,2,3), gen(agri)
 
 //Type of employer
-tab rc_empl_type agri [iw=wt], col nofreq 
+tab rc_empl_type agri [iw=wt], col nof 
 
 //Type of earnings
-tab rc_empl_earn agri [iw=wt], col nofreq 
+tab rc_empl_earn agri [iw=wt], col nof 
 
 *Continuity of employment
-tab rc_empl_cont agri [iw=wt], col nofreq 
+tab rc_empl_cont agri [iw=wt], col nof 
 
 * output to excel
 cap tabout rc_empl_type rc_empl_earn rc_empl_cont agri using Tables_employ_mn.xls [iw=wt], c(col) f(1) append 
@@ -904,19 +904,19 @@ cap tabout rc_empl_type rc_empl_earn rc_empl_cont agri using Tables_employ_mn.xl
 //Social security
 
 *age
-tab mv013 rc_hins_ss [iw=wt], row nofreq 
+tab mv013 rc_hins_ss [iw=wt], row nof 
 
 *residence
-tab mv025 rc_hins_ss [iw=wt], row nofreq 
+tab mv025 rc_hins_ss [iw=wt], row nof 
 
 *region
-tab mv024 rc_hins_ss [iw=wt], row nofreq 
+tab mv024 rc_hins_ss [iw=wt], row nof 
 
 *education
-tab mv106 rc_hins_ss [iw=wt], row nofreq 
+tab mv106 rc_hins_ss [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_hins_ss [iw=wt], row nofreq 
+tab mv190 rc_hins_ss [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_hins_ss using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) replace 
@@ -925,19 +925,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_hins_ss using Tables_insurance_mn.xls [i
 //Other employer based insurance
 
 *age
-tab mv013 rc_hins_empl [iw=wt], row nofreq 
+tab mv013 rc_hins_empl [iw=wt], row nof 
 
 *residence
-tab mv025 rc_hins_empl [iw=wt], row nofreq 
+tab mv025 rc_hins_empl [iw=wt], row nof 
 
 *region
-tab mv024 rc_hins_empl [iw=wt], row nofreq 
+tab mv024 rc_hins_empl [iw=wt], row nof 
 
 *education
-tab mv106 rc_hins_empl [iw=wt], row nofreq 
+tab mv106 rc_hins_empl [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_hins_empl [iw=wt], row nofreq 
+tab mv190 rc_hins_empl [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_hins_empl using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
@@ -946,19 +946,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_hins_empl using Tables_insurance_mn.xls 
 //Community-based insurance
 
 *age
-tab mv013 rc_hins_comm [iw=wt], row nofreq 
+tab mv013 rc_hins_comm [iw=wt], row nof 
 
 *residence
-tab mv025 rc_hins_comm [iw=wt], row nofreq 
+tab mv025 rc_hins_comm [iw=wt], row nof 
 
 *region
-tab mv024 rc_hins_comm [iw=wt], row nofreq 
+tab mv024 rc_hins_comm [iw=wt], row nof 
 
 *education
-tab mv106 rc_hins_comm [iw=wt], row nofreq 
+tab mv106 rc_hins_comm [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_hins_comm [iw=wt], row nofreq 
+tab mv190 rc_hins_comm [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_hins_comm using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
@@ -967,19 +967,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_hins_comm using Tables_insurance_mn.xls 
 //Private insurance
 
 *age
-tab mv013 rc_hins_priv [iw=wt], row nofreq 
+tab mv013 rc_hins_priv [iw=wt], row nof 
 
 *residence
-tab mv025 rc_hins_priv [iw=wt], row nofreq 
+tab mv025 rc_hins_priv [iw=wt], row nof 
 
 *region
-tab mv024 rc_hins_priv [iw=wt], row nofreq 
+tab mv024 rc_hins_priv [iw=wt], row nof 
 
 *education
-tab mv106 rc_hins_priv [iw=wt], row nofreq 
+tab mv106 rc_hins_priv [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_hins_priv [iw=wt], row nofreq 
+tab mv190 rc_hins_priv [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_hins_priv using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
@@ -988,19 +988,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_hins_priv using Tables_insurance_mn.xls 
 //Other type of insurance
 
 *age
-tab mv013 rc_hins_other [iw=wt], row nofreq 
+tab mv013 rc_hins_other [iw=wt], row nof 
 
 *residence
-tab mv025 rc_hins_other [iw=wt], row nofreq 
+tab mv025 rc_hins_other [iw=wt], row nof 
 
 *region
-tab mv024 rc_hins_other [iw=wt], row nofreq 
+tab mv024 rc_hins_other [iw=wt], row nof 
 
 *education
-tab mv106 rc_hins_other [iw=wt], row nofreq 
+tab mv106 rc_hins_other [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_hins_other [iw=wt], row nofreq 
+tab mv190 rc_hins_other [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_hins_other using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
@@ -1009,19 +1009,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_hins_other using Tables_insurance_mn.xls
 //Have any insurance
 
 *age
-tab mv013 rc_hins_any [iw=wt], row nofreq 
+tab mv013 rc_hins_any [iw=wt], row nof 
 
 *residence
-tab mv025 rc_hins_any [iw=wt], row nofreq 
+tab mv025 rc_hins_any [iw=wt], row nof 
 
 *region
-tab mv024 rc_hins_any [iw=wt], row nofreq 
+tab mv024 rc_hins_any [iw=wt], row nof 
 
 *education
-tab mv106 rc_hins_any [iw=wt], row nofreq 
+tab mv106 rc_hins_any [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_hins_any [iw=wt], row nofreq 
+tab mv190 rc_hins_any [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_hins_any using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
@@ -1032,19 +1032,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_hins_any using Tables_insurance_mn.xls [
 //Smokes cigarettes
 
 *age
-tab mv013 rc_tobc_cig [iw=wt], row nofreq 
+tab mv013 rc_tobc_cig [iw=wt], row nof 
 
 *residence
-tab mv025 rc_tobc_cig [iw=wt], row nofreq 
+tab mv025 rc_tobc_cig [iw=wt], row nof 
 
 *region
-tab mv024 rc_tobc_cig [iw=wt], row nofreq 
+tab mv024 rc_tobc_cig [iw=wt], row nof 
 
 *education
-tab mv106 rc_tobc_cig [iw=wt], row nofreq 
+tab mv106 rc_tobc_cig [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_tobc_cig [iw=wt], row nofreq 
+tab mv190 rc_tobc_cig [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_cig using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) replace 
@@ -1053,19 +1053,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_cig using Tables_tobac_mn.xls [iw=w
 //Smokes other type of tobacco
 
 *age
-tab mv013 rc_tobc_other [iw=wt], row nofreq 
+tab mv013 rc_tobc_other [iw=wt], row nof 
 
 *residence
-tab mv025 rc_tobc_other [iw=wt], row nofreq 
+tab mv025 rc_tobc_other [iw=wt], row nof 
 
 *region
-tab mv024 rc_tobc_other [iw=wt], row nofreq 
+tab mv024 rc_tobc_other [iw=wt], row nof 
 
 *education
-tab mv106 rc_tobc_other [iw=wt], row nofreq 
+tab mv106 rc_tobc_other [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_tobc_other [iw=wt], row nofreq 
+tab mv190 rc_tobc_other [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_other using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
@@ -1074,19 +1074,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_other using Tables_tobac_mn.xls [iw
 //Smokes any tobacco
 
 *age
-tab mv013 rc_tobc_smk_any [iw=wt], row nofreq 
+tab mv013 rc_tobc_smk_any [iw=wt], row nof 
 
 *residence
-tab mv025 rc_tobc_smk_any [iw=wt], row nofreq 
+tab mv025 rc_tobc_smk_any [iw=wt], row nof 
 
 *region
-tab mv024 rc_tobc_smk_any [iw=wt], row nofreq 
+tab mv024 rc_tobc_smk_any [iw=wt], row nof 
 
 *education
-tab mv106 rc_tobc_smk_any [iw=wt], row nofreq 
+tab mv106 rc_tobc_smk_any [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_tobc_smk_any [iw=wt], row nofreq 
+tab mv190 rc_tobc_smk_any [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_smk_any using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
@@ -1095,19 +1095,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_smk_any using Tables_tobac_mn.xls [
 //Smoking frequency
 
 *age
-tab mv013 rc_smk_freq [iw=wt], row nofreq 
+tab mv013 rc_smk_freq [iw=wt], row nof 
 
 *residence
-tab mv025 rc_smk_freq [iw=wt], row nofreq 
+tab mv025 rc_smk_freq [iw=wt], row nof 
 
 *region
-tab mv024 rc_smk_freq [iw=wt], row nofreq 
+tab mv024 rc_smk_freq [iw=wt], row nof 
 
 *education
-tab mv106 rc_smk_freq [iw=wt], row nofreq 
+tab mv106 rc_smk_freq [iw=wt], row nof 
 
 *wealth
-tab mv190 rc_smk_freq [iw=wt], row nofreq 
+tab mv190 rc_smk_freq [iw=wt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_smk_freq using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
@@ -1116,19 +1116,19 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_smk_freq using Tables_tobac_mn.xls [iw=w
 //Average number of cigarettes per day
 
 *age
-tab mv013 rc_cig_day [iw=wt], row nofreq 
+tab mv013 rc_cig_day [iw=perwt], row nof 
 
 *residence
-tab mv025 rc_cig_day [iw=wt], row nofreq 
+tab mv025 rc_cig_day [iw=perwt], row nof 
 
 *region
-tab mv024 rc_cig_day [iw=wt], row nofreq 
+tab mv024 rc_cig_day [iw=perwt], row nof 
 
 *education
-tab mv106 rc_cig_day [iw=wt], row nofreq 
+tab mv106 rc_cig_day [iw=perwt], row nof 
 
 *wealth
-tab mv190 rc_cig_day [iw=wt], row nofreq 
+tab mv190 rc_cig_day [iw=perwt], row nof 
 
 * output to excel
 tabout mv013 mv025 mv024 mv106 mv190 rc_cig_day using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
@@ -1137,25 +1137,25 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_cig_day using Tables_tobac_mn.xls [iw=wt
 * Smokeless tobacco use
 
 //Snuff by mouth
-tab rc_tobc_snuffm [iw=wt]
+tab rc_tobc_snuffm [iw=perwt]
 
 //Snuff by nose
-tab rc_tobc_snuffn [iw=wt]
+tab rc_tobc_snuffn [iw=perwt]
 
 //Chews tobacco
-tab rc_tobc_chew [iw=wt]
+tab rc_tobc_chew [iw=perwt]
 
 //Betel quid with tobacco
-tab rc_tobv_betel [iw=wt]
+tab rc_tobv_betel [iw=perwt]
 
 //Other type of smokless tobacco
-tab rc_tobc_osmkless [iw=wt]
+tab rc_tobc_osmkless [iw=perwt]
 
 //Any smokeless tobacco
-tab rc_tobc_anysmkless [iw=wt]
+tab rc_tobc_anysmkless [iw=perwt]
 
 //Uses any type of tobacco
-tab rc_tobc_any [iw=wt]
+tab rc_tobc_any [iw=perwt]
 
 * output to excel
 tabout rc_tobc_snuffm rc_tobc_snuffn rc_tobc_chew rc_tobv_betel rc_tobc_osmkless rc_tobc_anysmkless rc_tobc_any using Tables_tobac_mn.xls [iw=wt] , oneway cells(cell freq) append 
