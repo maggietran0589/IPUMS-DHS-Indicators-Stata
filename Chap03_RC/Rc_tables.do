@@ -56,60 +56,60 @@ tabout age marstat urban defactores educlvl wealthq using Tables_background_wm.x
 //Highest level of schooling
 
 *age
-tab age educlvl [iw=perwt], row nofreq 
+tab age educlvl [iw=perweight], row nofreq 
 
 *residence
-tab urban educlvl [iw=perwt], row nofreq 
+tab urban educlvl [iw=perweight], row nofreq 
 
 *region
-tab defactores educlvl [iw=perwt], row nofreq 
+tab defactores educlvl [iw=perweight], row nofreq 
 
 *wealth
-tab wealthq educlvl [iw=perwt], row nofreq 
+tab wealthq educlvl [iw=perweight], row nofreq 
 
 * output to excel
-tabout age urban defactores wealthq educlvl using Tables_educ_wm.xls [iw=perwt] , c(row) f(1) replace 
+tabout age urban defactores wealthq educlvl using Tables_educ_wm.xls [iw=perweight], c(row) f(1) replace 
 
 //Median years of schooling
 tab edu_median 
 
-tabout edu_median using Tables_educ_wm.xls [iw=wt] , oneway cells(cell) append 
+tabout edu_median using Tables_educ_wm.xls [iw=perweight] , oneway cells(cell) append 
 
 ****************************************************
 //Literacy levels
 
 *age
-tab age lit2 [iw=perwt], row nof
+tab age lit2 [iw=perweight], row nof
 
 *residence
-tab urban lit2 [iw=perwt], row nof 
+tab urban lit2 [iw=perweight], row nof 
 
 *region
-tab defactores lit2 [iw=perwt], row nof
+tab defactores lit2 [iw=perweight], row nof
 
 *wealth
-tab wealthq lit2 [iw=perwt], row nof 
+tab wealthq lit2 [iw=perweight], row nof 
 
 * output to excel
-tabout age urban defactores wealthq lit2 using Tables_educ_wm.xls [iw=perwt] , c(row) f(1) append 
+tabout age urban defactores wealthq lit2 using Tables_educ_wm.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Literate 
 
 *age
-tab age lityn [iw=perwt], row nof 
+tab age lityn [iw=perweight], row nof 
 
 *residence
-tab urban lityn [iw=perwt], row nof 
+tab urban lityn [iw=perweight], row nof 
 
 *region
-tab defactores lityn [iw=perwt], row nof 
+tab defactores lityn [iw=perweight], row nof 
 
 *wealth
-tab wealthq lityn [iw=perwt], row nof 
+tab wealthq lityn [iw=perweight], row nof 
 
 * output to excel
-tabout age urban defactores wealthq lityn using Tables_educ_wm.xls [iw=perwt] , c(row) f(1) append 
+tabout age urban defactores wealthq lityn using Tables_educ_wm.xls [iw=perweight] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for media exposure and internet use: excel file Tables_media_wm will be produced
@@ -117,145 +117,156 @@ tabout age urban defactores wealthq lityn using Tables_educ_wm.xls [iw=perwt] , 
 //Reads a newspaper
 
 *age
-tab age newswk [iw=perwt], row nof 
+tab age newswk [iw=perweight], row nof 
 
 *residence
-tab urban newswk [iw=perwt], row nof 
+tab urban newswk [iw=perweight], row nof 
 
 *region
-tab defactores newswk [iw=perwt], row nof 
+tab defactores newswk [iw=perweight], row nof 
 
 *education
-tab educlvl newswk [iw=perwt], row nof 
+tab educlvl newswk [iw=perweight], row nof 
 
 *wealth
-tab wealthq newswk [iw=perwt], row nof 
+tab wealthq newswk [iw=perweight], row nof 
 
 * output to excel
-tabout age urban defactores educlvl wealthq newswk using Tables_media_wm.xls [iw=wt] , c(row) f(1) replace 
+tabout age urban defactores educlvl wealthq newswk using Tables_media_wm.xls [iw=perweight] , c(row) f(1) replace 
 
 ****************************************************
 //Watches TV
 
 *age
-tab age tvwk [iw=perwt], row nof 
+tab age tvwk [iw=perweight], row nof 
 
 *residence
-tab urban tvwk [iw=perwt], row nof 
+tab urban tvwk [iw=perweight], row nof 
 
 *region
-tab defactores tvwk [iw=perwt], row nof 
+tab defactores tvwk [iw=perweight], row nof 
 
 *education
-tab educlvl tvwk [iw=perwt], row nof 
+tab educlvl tvwk [iw=perweight], row nof 
 
 *wealth
-tab wealthq tvwk [iw=perwt], row nof 
+tab wealthq tvwk [iw=perweight], row nof 
 
 * output to excel
-tabout age urban defactores educlvl wealthq tvwk using Tables_media_wm.xls [iw=perwt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq tvwk using Tables_media_wm.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Listens to radio
 
 *age
-tab age radiowk [iw=perwt], row nof 
+tab age radiowk [iw=perweight], row nof 
 
 *residence
-tab urban radiowk [iw=perwt], row nof 
+tab urban radiowk [iw=perweight], row nof 
 
 *region
-tab defactores radiowk [iw=perwt], row nof 
+tab defactores radiowk [iw=perweight], row nof 
 
 *education
-tab educlvl radiowk [iw=perwt], row nof 
+tab educlvl radiowk [iw=perweight], row nof 
 
 *wealth
-tab wealthq radiowk [iw=perwt], row nof  
+tab wealthq radiowk [iw=perweight], row nof  
 
 * output to excel
-tabout age urban defactores educlvl wealthq radiowk using Tables_media_wm.xls [iw=perwt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq radiowk using Tables_media_wm.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //All three media
 
 *age
-tab age media_all [iw=perwt], row nof 
+tab age media_all [iw=perweight], row nof 
 
 *residence
-tab urban media_all [iw=perwt], row nof 
+tab urban media_all [iw=perweight], row nof 
 
 *region
-tab defactores media_all [iw=perwt], row nof 
+tab defactores media_all [iw=perweight], row nof 
 
 *education
-tab educlvl media_all [iw=perwt], row nof 
+tab educlvl media_all [iw=perweight], row nof 
 
 *wealth
-tab wealthq media_all [iw=perwt], row nof   
+tab wealthq media_all [iw=perweight], row nof   
 
 * output to excel
-tabout age urban defactores educlvl wealthq media_all using Tables_media_wm.xls [iw=perwt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq media_all using Tables_media_wm.xls [iw=perweight], c(row) f(1) append 
 
 ****************************************************
 //None of the media forms
 
 *age
-tab age media_none [iw=perwt], row nof 
+tab age media_none [iw=perweight], row nof 
 
 *residence
-tab urban media_none [iw=perwt], row nof 
+tab urban media_none [iw=perweight], row nof 
 
 *region
-tab defactores media_none [iw=perwt], row nof 
+tab defactores media_none [iw=perweight], row nof 
 
 *education
-tab educlvl media_none [iw=perwt], row nof 
+tab educlvl media_none [iw=perweight], row nof 
 
 *wealth
-tab wealthq media_none [iw=perwt], row nof 
+tab wealthq media_none [iw=perweight], row nof 
 
 * output to excel
-tabout age urban defactores educlvl wealthq media_none using Tables_media_wm.xls [iw=perwt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq media_none using Tables_media_wm.xls [iw=perweight], c(row) f(1) append 
 
 ****************************************************
 //Ever used the internet
 
+replace internetevyr=. if internetevyr>97
+replace internetevyr=1 if internetevyr==11 | internetevyr==12 | internetevyr==12
+label define internetevyr 0 "No" 1 "Yes"
+label values internetevyr internetevyr
+
 *age
-tab age media_none [iw=perwt], row nof 
+tab age internetevyr [iw=perweight], row nof 
 
 *residence
-tab urban media_none [iw=perwt], row nof 
+tab urban internetevyr [iw=perweight], row nof 
 
 *region
-tab defactores media_none [iw=perwt], row nof 
+tab defactores internetevyr [iw=perweight], row nof 
 
 *education
-tab educlvl media_none [iw=perwt], row nof 
+tab educlvl internetevyr [iw=perweight], row nof 
 
 *wealth
-tab wealthq media_none [iw=perwt], row nof
+tab wealthq internetevyr [iw=perweight], row nof
 
 * output to excel
-tabout v013 v025 v024 v106 v190 rc_intr_ever using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq internetevyr using Tables_media_wm.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Internet use in the last 12 months
 
+replace internetevyr=. if internetevyr>97
+replace internetevyr=0 if internetevyr==0 | internetevyr==12 | internetevyr==13
+replace internetevyr=1 if internetevyr==11 
+label define internetevyr 0 "No" 1 "Yes"
+label values internetevyr internetevyr
+
 *age
-tab v013 rc_intr_use12mo [iw=wt], row nof 
+tab age internetevyr [iw=perweight], row nof 
 
 *residence
-tab v025 rc_intr_use12mo [iw=wt], row nof 
+tab urban internetevyr [iw=perweight], row nof 
 
 *region
-tab v024 rc_intr_use12mo [iw=wt], row nof 
+tab defactores internetevyr [iw=perweight], row nof 
 
 *education
-tab v106 rc_intr_use12mo [iw=wt], row nof 
+tab educlvl internetevyr [iw=perweight], row nof 
 
 *wealth
-tab v190 rc_intr_use12mo [iw=wt], row nof 
+tab wealthq internetevyr [iw=perweight], row nof
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_intr_use12mo using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
@@ -263,19 +274,19 @@ tabout v013 v025 v024 v106 v190 rc_intr_use12mo using Tables_media_wm.xls [iw=wt
 //Internet use frequency
 
 *age
-tab v013 rc_intr_usefreq [iw=wt], row nof 
+tab age internetevyr [iw=perweight], row nof 
 
 *residence
-tab v025 rc_intr_usefreq [iw=wt], row nof 
+tab urban internetevyr [iw=perweight], row nof 
 
 *region
-tab v024 rc_intr_usefreq [iw=wt], row nof 
+tab defactores internetevyr [iw=perweight], row nof 
 
 *education
-tab v106 rc_intr_usefreq [iw=wt], row nof 
+tab educlvl internetevyr [iw=perweight], row nof 
 
 *wealth
-tab v190 rc_intr_usefreq [iw=wt], row nof 
+tab wealthq internetevyr [iw=perweight], row nof
 
 * output to excel
 tabout v013 v025 v024 v106 v190 rc_intr_usefreq using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
