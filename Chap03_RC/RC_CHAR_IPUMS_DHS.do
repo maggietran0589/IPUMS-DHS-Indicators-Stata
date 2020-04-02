@@ -126,15 +126,19 @@ label values media_none yesno
 label var media_none "Accesses none of the three media at least once a week"
 
 //Ever used internet
-
 replace internetevyr=. if internetevyr>97
-replace internetevyr=1 if internetevyr==11 | internetevyr==12
+replace internetevyr=1 if internetevyr==11 | internetevyr==12 | internetevyr==13
 label define internetevyr 0 "No" 1 "Yes"
 label values internetevyr internetevyr
 
 
 //Used interent in the past 12 months
-internetevyr==11 "Used the internet in the past 12 months"
+replace internetevyr=. if internetevyr>97
+replace internetevyr=0 if internetevyr==0 | internetevyr==12 | internetevyr==13
+replace internetevyr=1 if internetevyr==11 
+label define internetevyr 0 "No" 1 "Yes"
+label values internetevyr internetevyr
+
 
 //Internet use frequency
 Internetmo "Internet use frequency in the past month - among users in the past 12 months"
