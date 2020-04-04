@@ -269,7 +269,7 @@ tab educlvl internetevyr [iw=perweight], row nof
 tab wealthq internetevyr [iw=perweight], row nof
 
 * output to excel
-tabout age urban defactores educlvl wealthq internetevyr using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq internetevyr using Tables_media_wm.xls [iw=perweight] , c(row) f(1) append 
 ****************************************************
 //Internet use frequency
 
@@ -289,7 +289,7 @@ tab educlvl internetmo [iw=perweight], row nof
 tab wealthq internetmo [iw=perweight], row nof
 
 * output to excel
-tabout age urban defactores educlvl wealthq internetmo using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq internetmo using Tables_media_wm.xls [iw=perweight] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for employment and occupation: excel file Tables_employ_wm will be produced
@@ -312,7 +312,7 @@ tab educlvl wkworklastyr [iw=perweight], row nof
 tab wealthq wkworklastyr [iw=perweight], row nof
 
 * output to excel
-tabout age urban defactores educlvl wealthq wkworklastyr using Tables_employ_wm.xls [iw=wt] , c(row) f(1) replace 
+tabout age urban defactores educlvl wealthq wkworklastyr using Tables_employ_wm.xls [iw=perweight] , c(row) f(1) replace 
 
 ****************************************************************************
 //Occupation
@@ -333,23 +333,27 @@ tab educlvl wkcurrjob [iw=perweight], row nof
 tab wealthq wkcurrjob [iw=perweight], row nof
 
 * output to excel
-tabout age urban defactores educlvl wealthq wkcurrjob using Tables_employ_wm.xls [iw=wt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq wkcurrjob using Tables_employ_wm.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************************************
+//Agriculture
 
-replace wkcurrjob=0 if wkcurrjob==0 | wkcurrjob==0(1/3 6/9 96/99 .=0 "Non-Agriculture") (4/5=1 "Agriculture") if inlist(v731,1,2,3), gen(agri)
+gen agri=.
+replace agri=0 if wkcurrjob==0 | wkcurrjob==10 | wkcurrjob==20| wkcurrjob==21| wkcurrjob==22| wkcurrjob==40| wkcurrjob==41| wkcurrjob==42| wkcurrjob==50| wkcurrjob==51| wkcurrjob==52| wkcurrjob==60| wkcurrjob==96| wkcurrjob==97
+replace agri=1 if wkcurrjob==30 | wkcurrjob==31 | wkcurrjob==32 
+label define 0 "Non-Agriculture" 1 "Agriculture"
 
 //Type of employer
-tab whoworkfor agri [iw=wt], col nof 
+tab whoworkfor agri [iw=perweight], col nof 
 
 //Type of earnings
-tab rc_empl_earn agri [iw=wt], col nof 
+tab wkearntype agri [iw=perweight], col nof 
 
 *Continuity of employment
-tab rc_empl_cont agri [iw=wt], col nof 
+tab wkworklastyr agri [iw=perweight], col nof 
 
 * output to excel
-cap tabout rc_empl_type rc_empl_earn rc_empl_cont agri using Tables_employ_wm.xls [iw=wt], c(col) f(1) append 
+cap tabout whoworkfor wkearntype wkworklastyr agri using Tables_employ_wm.xls [iw=perweight], c(col) f(1) append 
 
 **************************************************************************************************
 * Indicators for health insurance: excel file Tables_insurance_wm will be produced
@@ -372,7 +376,7 @@ tab v106 rc_hins_ss [iw=wt], row nof
 tab v190 rc_hins_ss [iw=wt], row nof 
 
 * output to excel
-tabout v013 v025 v024 v106 v190 rc_hins_ss using Tables_insurance_wm.xls [iw=wt] , c(row) f(1) replace 
+tabout v013 v025 v024 v106 v190 rc_hins_ss using Tables_insurance_wm.xls [iw=wt] , c(row) f(1)
 
 ****************************************************
 //Other employer based insurance
