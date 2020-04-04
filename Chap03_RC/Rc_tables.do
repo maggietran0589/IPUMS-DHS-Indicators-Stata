@@ -71,9 +71,9 @@ tab wealthq educlvl [iw=perweight], row nofreq
 tabout age urban defactores wealthq educlvl using Tables_educ_wm.xls [iw=perweight], c(row) f(1) replace 
 
 //Median years of schooling
-tab edu_median 
+tab edyrtotal 
 
-tabout edu_median using Tables_educ_wm.xls [iw=perweight] , oneway cells(cell) append 
+tabout edyrtotal using Tables_educ_wm.xls [iw=perweight] , oneway cells(cell) append 
 
 ****************************************************
 //Literacy levels
@@ -593,25 +593,25 @@ gen wt=mv005/1000000
 **************************************************************************************************
 
 *age
-tab mv013 [iw=wt] 
+tab agemn [iw=perweight] 
 
 *marital status
-tab mv501 [iw=wt] 
+tab marstatmn [iw=perweight] 
 
 *residence
-tab mv025 [iw=wt] 
+tab urbanmn [iw=perweight] 
 
 *region
-tab mv024 [iw=wt] 
+tab mv024 [iw=perweight] 
 
 *education
-tab mv106 [iw=wt] 
+tab educlvlmn [iw=perweight] 
 
 *wealth
-tab mv190 [iw=wt] 
+tab wealthqmn [iw=perweight]
 
 * output to excel
-tabout mv013 mv501 mv025 mv106 mv024 mv190 using Tables_background_mn.xls [iw=wt] , oneway cells(cell freq) replace 
+tabout agemn marstatmn urbanmn mv024 educlvlmn wealthqmn using Tables_background_mn.xls [iw=perweight] , oneway cells(cell freq) replace 
 */
 **************************************************************************************************
 * Indicators for education and literacy: excel file Tables_educ_mn will be produced
@@ -619,22 +619,22 @@ tabout mv013 mv501 mv025 mv106 mv024 mv190 using Tables_background_mn.xls [iw=wt
 //Highest level of schooling
 
 *age
-tab mv013 rc_edu [iw=wt], row nof 
+tab agemn educlvlmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_edu [iw=wt], row nof 
+tab urbanmn educlvlmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_edu [iw=wt], row nof 
+tab mv024 educlvlmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_edu [iw=wt], row nof 
+tab wealthqmn educlvlmn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv190 rc_edu using Tables_educ_mn.xls [iw=wt] , c(row) f(1) replace 
+tabout agemn marstatmn urbanmn mv024 wealthqmn educlvlmn using Tables_educ_mn.xls [iw=perweight] , c(row) f(1) replace 
 
 //Median years of schooling
-tab rc_edu_median 
+tab edyrtotalmn 
 
 tabout rc_edu_median using Tables_educ_mn.xls [iw=wt] , oneway cells(cell) append 
 
@@ -642,37 +642,37 @@ tabout rc_edu_median using Tables_educ_mn.xls [iw=wt] , oneway cells(cell) appen
 //Literacy levels
 
 *age
-tab mv013 rc_litr_cats [iw=wt], row nof 
+tab age lit2mn [iw=perweight], row nof
 
 *residence
-tab mv025 rc_litr_cats [iw=wt], row nof 
+tab urban lit2mn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_litr_cats [iw=wt], row nof 
+tab mv024 lit2mn [iw=perweight], row nof
 
 *wealth
-tab mv190 rc_litr_cats [iw=wt], row nof 
+tab wealthq lit2mn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv190 rc_litr_cats using Tables_educ_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 wealthqmn lit2mn using Tables_educ_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Literate 
 
 *age
-tab mv013 rc_litr [iw=wt], row nof 
+tab agemn litynmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_litr [iw=wt], row nof 
+tab urbanmn litynmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_litr [iw=wt], row nof 
+tab mv024 litynmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_litr [iw=wt], row nof 
+tab wealthqmn litynmn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv190 rc_litr using Tables_educ_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 wealthqmn litynmn using Tables_educ_mn.xls [iw=perweight] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for media exposure and internet use: excel file Tables_media_mn will be produced
@@ -680,168 +680,180 @@ tabout mv013 mv025 mv024 mv190 rc_litr using Tables_educ_mn.xls [iw=wt] , c(row)
 //Reads a newspaper
 
 *age
-tab mv013 rc_media_newsp [iw=wt], row nof 
+tab agemn newswkmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_media_newsp [iw=wt], row nof 
+tab urbanmn newswkmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_media_newsp [iw=wt], row nof 
+tab mv024 newswkmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_media_newsp [iw=wt], row nof 
+tab educlvlmn newswkmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_media_newsp [iw=wt], row nof 
+tab wealthqmn newswkmn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_media_newsp using Tables_media_mn.xls [iw=wt] , c(row) f(1) replace 
+tabout agemn urbanmn mv024 wealthqmn litynmn using Tables_media_mn.xls [iw=perweight] , c(row) f(1) replace 
 
 ****************************************************
 //Watches TV
 
 *age
-tab mv013 rc_media_tv [iw=wt], row nof 
+tab agemn tvwkmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_media_tv [iw=wt], row nof 
+tab urbanmn tvwkmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_media_tv [iw=wt], row nof 
+tab mv024 tvwkmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_media_tv [iw=wt], row nof 
+tab educlvlmn tvwkmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_media_tv [iw=wt], row nof 
+tab wealthqmn tvwkmn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_media_tv using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn tvwkmn using Tables_media_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Listens to radio
 
 *age
-tab mv013 rc_media_radio [iw=wt], row nof 
+tab agemn radiowkmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_media_radio [iw=wt], row nof 
+tab urbanmn radiowkmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_media_radio [iw=wt], row nof 
+tab mv024 radiowkmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_media_radio [iw=wt], row nof 
+tab educlvlmn radiowkmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_media_radio [iw=wt], row nof 
+tab wealthqmn radiowkmn [iw=perweight], row nof  
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_media_radio using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn defactores educlvlmn wealthqmn radiowkmn using Tables_media_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //All three media
 
 *age
-tab mv013 rc_media_allthree [iw=wt], row nof 
+tab agemn media_allmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_media_allthree [iw=wt], row nof 
+tab urbanmn media_allmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_media_allthree [iw=wt], row nof 
+tab mv024 media_allmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_media_allthree [iw=wt], row nof 
+tab educlvlmn media_allmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_media_allthree [iw=wt], row nof 
+tab wealthqmn media_allmn [iw=perweight], row nof   
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_media_allthree using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn media_allmn using Tables_media_mn.xls [iw=perweight], c(row) f(1) append 
 
 ****************************************************
 //None of the media forms
 
 *age
-tab mv013 rc_media_none [iw=wt], row nof 
+tab agemn media_nonemn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_media_none [iw=wt], row nof 
+tab urbanmn media_nonemn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_media_none [iw=wt], row nof 
+tab mv024 media_nonemn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_media_none [iw=wt], row nof 
+tab educlvlmn media_nonemn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_media_none [iw=wt], row nof 
+tab wealthqmn media_nonemn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_media_none using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn media_nonemn using Tables_media_mn.xls [iw=perweight], c(row) f(1) append 
 
 ****************************************************
 //Ever used the internet
 
+replace internetevyrmn=. if internetevyrmn>97
+replace internetevyrmn=1 if internetevyrmn==11 | internetevyrmn==12 | internetevyrmn==12
+label define internetevyrmn 0 "No" 1 "Yes"
+label values internetevyrmn internetevyrmn
+
 *age
-tab mv013 rc_intr_ever [iw=wt], row nof 
+tab agemn internetevyrmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_intr_ever [iw=wt], row nof 
+tab urbanmn internetevyrmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_intr_ever [iw=wt], row nof 
+tab mv024 internetevyrmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_intr_ever [iw=wt], row nof 
+tab educlvlmn internetevyrmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_intr_ever [iw=wt], row nof 
+tab wealthqmn internetevyrmn [iw=perweight], row nof
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_intr_ever using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn internetevyrmn using Tables_media_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Internet use in the last 12 months
 
+replace internetevyrmn=. if internetevyrmn>97
+replace internetevyrmn=0 if internetevyrmn==0 | internetevyrmn==12 | internetevyrmn==13
+replace internetevyrmn=1 if internetevyrmn==11 
+label define internetevyrmn 0 "No" 1 "Yes"
+label values internetevyrmn internetevyrmn
+
 *age
-tab mv013 rc_intr_use12mo [iw=wt], row nof 
+tab agemn internetevyrmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_intr_use12mo [iw=wt], row nof 
+tab urbanmn internetevyrmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_intr_use12mo [iw=wt], row nof 
+tab mv024 internetevyrmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_intr_use12mo [iw=wt], row nof 
+tab educlvlmn internetevyrmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_intr_use12mo [iw=wt], row nof 
+tab wealthqmn internetevyrmn [iw=perweight], row nof
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_intr_use12mo using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn internetevyrmn using Tables_media_mn.xls [iw=perweight] , c(row) f(1) append 
+
 ****************************************************
 //Internet use frequency
 
 *age
-tab mv013 rc_intr_usefreq [iw=wt], row nof 
+tab agemn internetmomn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_intr_usefreq [iw=wt], row nof 
+tab urbanmn internetmomn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_intr_usefreq [iw=wt], row nof 
+tab mv024 internetmomn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_intr_usefreq [iw=wt], row nof 
+tab educlvlmn internetmomn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_intr_usefreq [iw=wt], row nof 
+tab wealthqmn internetmomn [iw=perweight], row nof
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_intr_usefreq using Tables_media_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn internetmomn using Tables_media_mn.xls [iw=perweight] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for employment and occupation: excel file Tables_employ_mn will be produced
@@ -849,68 +861,63 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_intr_usefreq using Tables_media_mn.xls [
 //Employment status
 
 *age
-tab mv013 rc_empl [iw=wt], row nof 
-
-*marital status
-tab mv502 rc_empl [iw=wt], row nof 
+tab agemn wkworklastyrmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_empl [iw=wt], row nof 
+tab urbanmn wkworklastyrmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_empl [iw=wt], row nof 
+tab mv024 wkworklastyrmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_empl [iw=wt], row nof 
+tab educlvlmn wkworklastyrmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_empl [iw=wt], row nof 
+tab wealthqmn wkworklastyrmn [iw=perweight], row nof
 
 * output to excel
-tabout mv013 mv502 mv025 mv024 mv106 mv190 rc_empl using Tables_employ_mn.xls [iw=wt] , c(row) f(1) replace 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn wkworklastyrmn using Tables_employ_mn.xls [iw=perweight] , c(row) f(1) replace 
 
 ****************************************************************************
 //Occupation
 
 *age
-tab mv013 rc_occup [iw=wt], row nof 
-
-*marital status
-tab mv502 rc_occup [iw=wt], row nof 
+tab agemn wkcurrjobmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_occup [iw=wt], row nof 
+tab urbanmn wkcurrjobmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_occup [iw=wt], row nof 
+tab mv024 wkcurrjobmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_occup [iw=wt], row nof 
+tab educlvlmn wkcurrjobmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_occup [iw=wt], row nof 
+tab wealthqmn wkcurrjobmn [iw=perweight], row nof
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_occup using Tables_employ_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn wkcurrjobmn using Tables_employ_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************************************
-*
-recode mv717 (1/3 6/9 96/99 .=0 "Non-Agriculture") (4/5=1 "Agriculture") if inlist(mv731,1,2,3), gen(agri)
+//Agriculture
+
+gen agrimn=.
+replace agrimn=0 if wkcurrjobmn==0 | wkcurrjobmn==10 | wkcurrjobmn==20| wkcurrjobmn==21| wkcurrjobmn==22| wkcurrjobmn==40| wkcurrjobmn==41| wkcurrjobmn==42| wkcurrjobmn==50| wkcurrjobmn==51| wkcurrjobmn==52| wkcurrjobmn==60| wkcurrjobmn==96| wkcurrjobmn==97
+replace agri=1 if wkcurrjobmn==30 | wkcurrjobmn==31 | wkcurrjobmn==32 
+label define 0 "Non-Agriculture" 1 "Agriculture"
 
 //Type of employer
-tab rc_empl_type agri [iw=wt], 
-
-nof 
+tab whoworkformn agrimn [iw=perweight], col nof 
 
 //Type of earnings
-tab rc_empl_earn agri [iw=wt], col nof 
+tab wkearntypemn agrimn [iw=perweight], col nof 
 
 *Continuity of employment
-tab rc_empl_cont agri [iw=wt], col nof 
+tab wkworklastyrmn agrimn [iw=perweight], col nof 
 
 * output to excel
-cap tabout rc_empl_type rc_empl_earn rc_empl_cont agri using Tables_employ_mn.xls [iw=wt], c(col) f(1) append 
-*/
+cap tabout whoworkformn wkearntypemn wkworklastyrmn agrimn using Tables_employ_mn.xls [iw=perweight], c(col) f(1) append 
 
 **************************************************************************************************
 * Indicators for health insurance: excel file Tables_insurance_wm will be produced
