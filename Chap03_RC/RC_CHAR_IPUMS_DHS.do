@@ -183,7 +183,8 @@ inscoveryn
 tosmoke "Smokes cigarettes"
 
 //Smokes other type of tobacco
-touseoth "Smokes other type of tobacco"
+gen tosmokeoth= topipe==1 | tocigar==1 | toshisha==1
+label var tosmokeoth "Smokes other type of tobacco"
 
 //Smokes any type of tobacco
 tosmoke "Smokes any type of tobacco"
