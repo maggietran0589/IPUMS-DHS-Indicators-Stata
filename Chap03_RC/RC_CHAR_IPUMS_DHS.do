@@ -48,8 +48,8 @@ tosnuffm		"Uses snuff smokeless tobacco by mouth"
 tosnuffn		"Uses snuff smokeless tobacco by nose"
 tochew			"Chews tobacco"
 toghutka		"Uses betel quid with tobacco"
-tosmokeless		"Uses other type of smokeless tobacco"
-tosmokeless		"Uses any type of smokeless tobacco"
+tosmokelessoth		"Uses other type of smokeless tobacco"
+tosmokelessany		"Uses any type of smokeless tobacco"
 tonosmoke		"Uses any type of tobacco - smoke or smokeless"
 ----------------------------------------------------------------------------
 Variables created in this file:
@@ -209,13 +209,17 @@ tochew "Chews tobacco"
 toghutka "Uses betel quid with tobacco"
 
 //Other type of smokeless tobacco
-gen tosmokeless=0
-replace tosmokeless==1 if tochew==1 | tosnuffm==1 | tosnuffn==1 | toghutka==1
-label values tosmokeless yesno
-label var tosmokeless "Uses other type of smokeless tobacco"
+*Note: there may be other types of smokeless tobacco, please check all v463* variables. 
+gen tosmokelessoth=0
+replace tosmokelessoth==1 if toshisha==1
+label values tosmokelessoth yesno
+label var tosmokelessoth "Uses other type of smokeless tobacco"
 
 //Any smokeless tobacco
-tosmokeless "Uses other type of smokeless tobacco"
+gen tosmokelessany=0
+replace tosmokelessany=1 if tosnuff==1 | tosnuffm==1 | tosnuffn==1 | tochew==1 | toghutka==1 | toshisha==1 
+label values tosmokelessany yesno
+label var tosmokelessany "Uses other type of smokeless tobacco"
 
 //Any tobacco 
 tonosmoke==0 "Uses any type of tobacco - smoke or smokeless"
