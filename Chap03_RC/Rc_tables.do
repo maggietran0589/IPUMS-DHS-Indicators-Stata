@@ -269,27 +269,27 @@ tab educlvl internetevyr [iw=perweight], row nof
 tab wealthq internetevyr [iw=perweight], row nof
 
 * output to excel
-tabout v013 v025 v024 v106 v190 rc_intr_use12mo using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq internetevyr using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
 ****************************************************
 //Internet use frequency
 
 *age
-tab age internetevyr [iw=perweight], row nof 
+tab age internetmo [iw=perweight], row nof 
 
 *residence
-tab urban internetevyr [iw=perweight], row nof 
+tab urban internetmo [iw=perweight], row nof 
 
 *region
-tab defactores internetevyr [iw=perweight], row nof 
+tab defactores internetmo [iw=perweight], row nof 
 
 *education
-tab educlvl internetevyr [iw=perweight], row nof 
+tab educlvl internetmo [iw=perweight], row nof 
 
 *wealth
-tab wealthq internetevyr [iw=perweight], row nof
+tab wealthq internetmo [iw=perweight], row nof
 
 * output to excel
-tabout v013 v025 v024 v106 v190 rc_intr_usefreq using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq internetmo using Tables_media_wm.xls [iw=wt] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for employment and occupation: excel file Tables_employ_wm will be produced
@@ -297,56 +297,50 @@ tabout v013 v025 v024 v106 v190 rc_intr_usefreq using Tables_media_wm.xls [iw=wt
 //Employment status
 
 *age
-tab v013 rc_empl [iw=wt], row nof 
-
-*marital status
-tab v502 rc_empl [iw=wt], row nof 
+tab age wkworklastyr [iw=perweight], row nof 
 
 *residence
-tab v025 rc_empl [iw=wt], row nof 
+tab urban wkworklastyr [iw=perweight], row nof 
 
 *region
-tab v024 rc_empl [iw=wt], row nof 
+tab defactores wkworklastyr [iw=perweight], row nof 
 
 *education
-tab v106 rc_empl [iw=wt], row nof 
+tab educlvl wkworklastyr [iw=perweight], row nof 
 
 *wealth
-tab v190 rc_empl [iw=wt], row nof 
+tab wealthq wkworklastyr [iw=perweight], row nof
 
 * output to excel
-tabout v013 v502 v025 v024 v106 v190 rc_empl using Tables_employ_wm.xls [iw=wt] , c(row) f(1) replace 
+tabout age urban defactores educlvl wealthq wkworklastyr using Tables_employ_wm.xls [iw=wt] , c(row) f(1) replace 
 
 ****************************************************************************
 //Occupation
 
 *age
-tab v013 rc_occup [iw=wt], row nof 
-
-*marital status
-tab v502 rc_occup [iw=wt], row nof 
+tab age wkcurrjob [iw=perweight], row nof 
 
 *residence
-tab v025 rc_occup [iw=wt], row nof 
+tab urban wkcurrjob [iw=perweight], row nof 
 
 *region
-tab v024 rc_occup [iw=wt], row nof 
+tab defactores wkcurrjob [iw=perweight], row nof 
 
 *education
-tab v106 rc_occup [iw=wt], row nof 
+tab educlvl wkcurrjob [iw=perweight], row nof 
 
 *wealth
-tab v190 rc_occup [iw=wt], row nof 
+tab wealthq wkcurrjob [iw=perweight], row nof
 
 * output to excel
-tabout v013 v025 v024 v106 v190 rc_occup using Tables_employ_wm.xls [iw=wt] , c(row) f(1) append 
+tabout age urban defactores educlvl wealthq wkcurrjob using Tables_employ_wm.xls [iw=wt] , c(row) f(1) append 
 
 ****************************************************************************
 
-recode v717 (1/3 6/9 96/99 .=0 "Non-Agriculture") (4/5=1 "Agriculture") if inlist(v731,1,2,3), gen(agri)
+replace wkcurrjob=0 if wkcurrjob==0 | wkcurrjob==0(1/3 6/9 96/99 .=0 "Non-Agriculture") (4/5=1 "Agriculture") if inlist(v731,1,2,3), gen(agri)
 
 //Type of employer
-tab rc_empl_type agri [iw=wt], col nof 
+tab whoworkfor agri [iw=wt], col nof 
 
 //Type of earnings
 tab rc_empl_earn agri [iw=wt], col nof 
