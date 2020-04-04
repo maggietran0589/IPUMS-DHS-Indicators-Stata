@@ -41,7 +41,7 @@ insother		"Health insurance coverage - other type of insurance"
 inscoveryn		"Have any health insurance"
 tosmoke			"Smokes cigarettes"
 touseoth		"Smokes other type of tobacco"
-tosmoke			"Smokes any type of tobacco"
+tosmokeany		"Smokes any type of tobacco"
 tosmokefq		"Smoking frequency"
 tocigdayno		"Average number of cigarettes smoked per day"
 tosnuffm		"Uses snuff smokeless tobacco by mouth"
@@ -187,7 +187,8 @@ gen tosmokeoth= topipe==1 | tocigar==1 | toshisha==1
 label var tosmokeoth "Smokes other type of tobacco"
 
 //Smokes any type of tobacco
-tosmoke "Smokes any type of tobacco"
+gen tosmokeany= tosmoke==1 | topipe==1 | tocigar==1 | toshisha==1 
+label var tosmokeany "Smokes any type of tobacco" 
 
 //Smoke frequency
 tosmokefq "Smoking frequency"
