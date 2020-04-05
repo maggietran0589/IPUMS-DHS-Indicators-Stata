@@ -925,127 +925,127 @@ cap tabout whoworkformn wkearntypemn wkworklastyrmn agrimn using Tables_employ_m
 //Social security
 
 *age
-tab mv013 rc_hins_ss [iw=wt], row nof 
+tab agemn inssocsmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_hins_ss [iw=wt], row nof 
+tab urbanmn insscosmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_hins_ss [iw=wt], row nof 
+tab mv024 insscosmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_hins_ss [iw=wt], row nof 
+tab educlvlmn inssocsmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_hins_ss [iw=wt], row nof 
+tab wealthqmn inssocsmn [iw=perweight], row nof
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_hins_ss using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) replace 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn inssocsmn using Tables_insurance_mn.xls [iw=perweight] , c(row) f(1)
 
 ****************************************************
 //Other employer based insurance
 
 *age
-tab mv013 rc_hins_empl [iw=wt], row nof 
+tab agemn insemployermn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_hins_empl [iw=wt], row nof 
+tab urbanmn insemployermn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_hins_empl [iw=wt], row nof 
+tab mv024 insemployermn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_hins_empl [iw=wt], row nof 
+tab educlvlmn insemployermn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_hins_empl [iw=wt], row nof 
+tab wealthqmn insemployermn [iw=perweight], row nof
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_hins_empl using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn insemployermn using Tables_insurance_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Community-based insurance
 
 *age
-tab mv013 rc_hins_comm [iw=wt], row nof 
+tab agemn insorgmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_hins_comm [iw=wt], row nof 
+tab urbanmn insorgmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_hins_comm [iw=wt], row nof 
+tab mv024 insorgmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_hins_comm [iw=wt], row nof 
+tab educlvlmn insorgmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_hins_comm [iw=wt], row nof 
+tab wealthqmn insorgmn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_hins_comm using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn insorgmn using Tables_insurance_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Private insurance
 
 *age
-tab mv013 rc_hins_priv [iw=wt], row nof 
+tab agemn insprivatemn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_hins_priv [iw=wt], row nof 
+tab urbanmn insprivatemn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_hins_priv [iw=wt], row nof 
+tab mv024 insprivatemn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_hins_priv [iw=wt], row nof 
+tab educlvlmn insprivatemn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_hins_priv [iw=wt], row nof 
+tab wealthqmn insprivatemn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_hins_priv using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn insprivatemn using Tables_insurance_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Other type of insurance
 
 *age
-tab mv013 rc_hins_other [iw=wt], row nof 
+tab agemn insothermn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_hins_other [iw=wt], row nof 
+tab urbanmn insothermn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_hins_other [iw=wt], row nof 
+tab mv024 insothermn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_hins_other [iw=wt], row nof 
+tab educlvlmn insothermn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_hins_other [iw=wt], row nof 
+tab wealthqmn insothermn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_hins_other using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn insothermn using Tables_insurance_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Have any insurance
 
 *age
-tab mv013 rc_hins_any [iw=wt], row nof 
+tab agemn inscoverynmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_hins_any [iw=wt], row nof 
+tab urbanmn inscoverynmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_hins_any [iw=wt], row nof 
+tab mv024 inscoverynmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_hins_any [iw=wt], row nof 
+tab educlvlmn inscoverynmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_hins_any [iw=wt], row nof 
+tab wealthqmn inscoverynmn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_hins_any using Tables_insurance_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn inscoverynmn using Tables_insurance_mn.xls [iw=perweight] , c(row) f(1) append 
 
 **************************************************************************************************
 * Indicators for tobacco use: excel file Tables_tobac_mn will be produced
@@ -1053,132 +1053,132 @@ tabout mv013 mv025 mv024 mv106 mv190 rc_hins_any using Tables_insurance_mn.xls [
 //Smokes cigarettes
 
 *age
-tab mv013 rc_tobc_cig [iw=wt], row nof 
+tab agemn tosmokemn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_tobc_cig [iw=wt], row nof 
+tab urbanmn tosmokemn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_tobc_cig [iw=wt], row nof 
+tab mv024 tosmokemn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_tobc_cig [iw=wt], row nof 
+tab educlvlmn tosmokemn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_tobc_cig [iw=wt], row nof 
+tab wealthqmn tosmokemn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_cig using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) replace 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn tosmokemn using Tables_tobac_mn.xls [iw=perweight] , c(row) f(1) replace 
 
 ****************************************************
 //Smokes other type of tobacco
 
 *age
-tab mv013 rc_tobc_other [iw=wt], row nof 
+tab agemn tosmokeothmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_tobc_other [iw=wt], row nof 
+tab urbanmn tosmokeothmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_tobc_other [iw=wt], row nof 
+tab mv024 tosmokeothmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_tobc_other [iw=wt], row nof 
+tab educlvlmn tosmokeothmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_tobc_other [iw=wt], row nof 
+tab wealthqmn tosmokeothmn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_other using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn tosmokeothmn using Tables_tobac_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Smokes any tobacco
 
+*gen tosmokeanymn= tosmoke==1 | topipe==1 | tocigar==1 | toshisha==1 
+label var tosmokeanymn "Smokes any type of tobacco"
+
 *age
-tab mv013 rc_tobc_smk_any [iw=wt], row nof 
+tab agemn tosmokeanymn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_tobc_smk_any [iw=wt], row nof 
+tab urbanmn tosmokeanymn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_tobc_smk_any [iw=wt], row nof 
+tab mv024 tosmokeanymn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_tobc_smk_any [iw=wt], row nof 
+tab educlvlmn tosmokeanymn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_tobc_smk_any [iw=wt], row nof 
+tab wealthqmn tosmokeanymn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_tobc_smk_any using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn tosmokeanymn using Tables_tobac_wm.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Smoking frequency
 
 *age
-tab mv013 rc_smk_freq [iw=wt], row nof 
+tab agemn tosmokefqmn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_smk_freq [iw=wt], row nof 
+tab urbanmn tosmokefqmn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_smk_freq [iw=wt], row nof 
+tab mv024 tosmokefqmn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_smk_freq [iw=wt], row nof 
+tab educlvlmn tosmokefqmn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_smk_freq [iw=wt], row nof 
+tab wealthqmn tosmokefqmn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_smk_freq using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn tosmokefqmn using Tables_tobac_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 //Average number of cigarettes per day
 
 *age
-tab mv013 rc_cig_day [iw=perwt], row nof 
+tab agemn tocigdaynomn [iw=perweight], row nof 
 
 *residence
-tab mv025 rc_cig_day [iw=perwt], row nof 
+tab urbanmn tocigdaynomn [iw=perweight], row nof 
 
 *region
-tab mv024 rc_cig_day [iw=perwt], row nof 
+tab mv024 tocigdaynomn [iw=perweight], row nof 
 
 *education
-tab mv106 rc_cig_day [iw=perwt], row nof 
+tab educlvlmn tocigdaynomn [iw=perweight], row nof 
 
 *wealth
-tab mv190 rc_cig_day [iw=perwt], row nof 
+tab wealthqmn tocigdaynomn [iw=perweight], row nof 
 
 * output to excel
-tabout mv013 mv025 mv024 mv106 mv190 rc_cig_day using Tables_tobac_mn.xls [iw=wt] , c(row) f(1) append 
+tabout agemn urbanmn mv024 educlvlmn wealthqmn tocigdaynomn using Tables_tobac_mn.xls [iw=perweight] , c(row) f(1) append 
 
 ****************************************************
 * Smokeless tobacco use
 
-//Snuff by mouth
-tab tosnuffm [iw=perwt]
-
-//Snuff by nose
-tab tosnuffn [iw=perwt]
+//Uses Snuff
+tab tosnuffmn [iw=perweight]
 
 //Chews tobacco
-tab tochew [iw=perwt]
+tab tochewmn [iw=perweight]
 
 //Betel quid with tobacco
-tab toghutka [iw=perwt]
+tab toghutkamn [iw=perweight]
 
 //Other type of smokless tobacco
-tab tosmokeless if tosmokeless==1 [iw=perwt]
+tab tosmokelessothmn if tosmokelessmn==1 [iw=perweight]
 
 //Any smokeless tobacco
-tab rc_tobc_anysmkless [iw=perwt]
+tab tosmokelessanymn [iw=perweight]
 
 //Uses any type of tobacco
-tab tonosmoke if tonosmoke==0 [iw=perwt]
+tab tonosmokemn if tonosmoke==0 [iw=perweight]
 
 * output to excel
-tabout snuffm tosnuffn tochew toghutka tosmokeless tobc_anysmkless tonosmoke if tonosmoke==0 using Tables_tobac_mn.xls [iw=wt] , oneway cells(cell freq) append 
+tabout snuffmn tochewmn toghutkamn tosmokelessothmn tosmokelessanymn tonosmokemn if tonosmokemn==0 using Tables_tobac_mn.xls [iw=perweight] , oneway cells(cell freq) append 
 
 }
