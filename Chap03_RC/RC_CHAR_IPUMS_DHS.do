@@ -54,7 +54,7 @@ tonosmoke		"Uses any type of tobacco - smoke or smokeless"
 ----------------------------------------------------------------------------
 Variables created in this file:
 rc_edu_median		"Median years of education"
-
+lityn "Literate - higher than secondary or can read part or whole sentence"
 ----------------------------------------------------------------------------*/
 
 *Limiting to women age 15-49
@@ -63,9 +63,10 @@ drop if age > 49 & age < 15
 *** Education ***
 
 //Highest level of education
-replace educlvl...
+replace educlvl=. if educlvl >8
 
 //Median years of education  
+replace edyrtotal=. if edyrtotal > 97
 replace edyrtotal=20 if edyrtotal>20 & edyrtotal<95
 
 summarize edyrtotal [iw=perweight], detail
@@ -85,15 +86,15 @@ scalar sp50=r(p50)
 	gen dummy=.
 	replace dummy=0
 	replace dummy=1 if eduyr <=sp50
-summarize dummy [iw=perweight]
-scalar sU=r(mean)
-drop dummy
+	summarize dummy [iw=perweight]
+	scalar sU=r(mean)
+	drop dummy
 
-gen rc_edu_median=round(sp50-1+(.5-sL)/(sU-sL),.01)
-label var edu_median	"Median years of education"
+	gen rc_edu_median=round(sp50-1+(.5-sL)/(sU-sL),.01)
+	label var edu_median	"Median years of education"
 
 //Literacy level
-Lit2 "Level of literacy"
+replace Lit2=. if lit2 >97
 
 MAKE HEADINGS AND INDENTATIONS SAME AS IN OTHER FILE
 //Literate 
@@ -211,7 +212,7 @@ toghutka "Uses betel quid with tobacco"
 //Other type of smokeless tobacco
 *Note: there may be other types of smokeless tobacco, please check all v463* variables. 
 gen tosmokelessoth=0
-replace tosmokelessoth==1 if toshisha==1
+replace tosmokelessoth=1 if toshisha==1
 label values tosmokelessoth yesno
 label var tosmokelessoth "Uses other type of smokeless tobacco"
 
