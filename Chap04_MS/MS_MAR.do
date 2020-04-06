@@ -1,31 +1,19 @@
 /*******************************************************************************
 Program: 			      MS_MAR.do
-Purpose: 			      Code to create marital indicators
-Data inputs: 		    IR and MR survey list
-Data outputs:		    coded variables and scalars
+Purpose: 			      Code to use marital indicators
+Data inputs:			      IPUMS DHS marriage and cohabitation variables
+Data outputs:		    	      Variables with no missing values
 Author:				      Faduma Shaba
-Date last modified: April 2020  
+Date last modified: 		      April 2020  
 Note:				
 *********************************************************************************/
 
 /*----------------------------------------------------------------------------
 Variables used in this file:
 	
-marstat		"Current marital status"
-ms_mar_union	"Currently in union"
-ms_mar_never	"Never in union"
-ms_afm_15		"First marriage by age 15"
-ms_afm_18		"First marriage by age 18"
-ms_afm_20		"First marriage by age 20"
-ms_afm_22		"First marriage by age 22"
-ms_afm_25		"First marriage by age 25"
-ms_mafm_20		"Median age at first marriage among age 20-49" (this is a scalar, not a variable)
-ms_mafm_25		"Median age at first marriage among age 25-49" (this is a scalar, not a variable)
-ONLY IN IR FILES:
-ms_cowives_num	"Number of co-wives"
-ms_cowives_any	"One or more co-wives"
-ONLY IN MR FILES:
-ms_wives_num	"Number of wives"
+marstat			"Current marital status"
+wifenum			"Number of other wives"
+agefrstmar		"Age at first marriage or cohabitation"
 ----------------------------------------------------------------------------*/
 
 /* NOTES
@@ -112,7 +100,7 @@ end
 
 
 
-if file=="IR" {
+Women's variables in IPUMS DHS
 
 //Median age at first marriage
 	//make subgroups here//
@@ -141,45 +129,44 @@ if file=="IR" {
 				}
 				
 //Marital status
-recode v501 (0=0 "Never married") (1=1 "Married") (2=2 "Living together") ///
-(3=3 "Widowed") (4=4 "Divorced") (5=5 "Separated"), gen(ms_mar_stat)
-label var ms_mar_stat "Current marital status"
-
-recode v501 (0 3/5 =0 "Not in union") (1/2=1 "In union"), gen(ms_mar_union)
-label var ms_mar_union "Currently in union"
-
-gen ms_mar_never = 0
-replace ms_mar_never = 1 if v501==0
-label var ms_mar_never "Never in union"
-
+replace marstat if marstat > 97
 
 //Co-wives
-recode v505 (0=0 "None") (1=1 "1") (2/97 = 2 "2+") (98=98 "Don't know"), gen(ms_cowives_num)
-label var ms_cowives_num "Number of co-wives"
+replace wifenum if wifenum > 98
 
-recode v505 (0 98 = 0 "None or DK") (1/97 = 1 "1+"), gen(ms_cowives_any)
-label var ms_cowives_any "One or more co-wives"
+***Married by specific ages***
 
+replace agefrstmar=. if agefrstmar > 49
 
-//Married by specific ages
-recode v511 (.=0) (0/14 = 1 "yes") (15/49 = 0 "no"), gen (ms_afm_15)
-label var ms_afm_15 "First marriage by age 15"
+//First marriage by age 15
+replace agefrstmar=1 if agefrstmar < 15
+replace agefrstmar=0 if agefrstmar > 14 & agefrstmar < 50
+label define 0 "yes" 1 "no"
+label values agefrstmar agefrstmar
 
-recode v511 (.=0) (0/17 = 1 "yes") (18/49 = 0 "no"), gen (ms_afm_18)
-replace ms_afm_18 = . if v012<18
-label var ms_afm_18 "First marriage by age 18"
+//First marriage by age 18
+replace agefrstmar=1 if agefrstmar < 18
+replace agefrstmar=0 if agefrstmar > 17 & agefrstmar < 50
+label define 0 "yes" 1 "no"
+label values agefrstmar agefrstmar
 
-recode v511 (.=0) (0/19 = 1 "yes") (20/49 = 0 "no"), gen (ms_afm_20)
-replace ms_afm_20 = . if v012<20
-label var ms_afm_20 "First marriage by age 20"
+//First marriage by age 20
+replace agefrstmar=1 if agefrstmar < 20
+replace agefrstmar=0 if agefrstmar > 19 & agefrstmar < 50
+label define 0 "yes" 1 "no"
+label values agefrstmar agefrstmar
 
-recode v511 (.=0) (0/21 = 1 "yes") (22/49 = 0 "no"), gen (ms_afm_22)
-replace ms_afm_22 = . if v012<22
-label var ms_afm_22 "First marriage by age 22"
+//First marriage by age 22
+replace agefrstmar=1 if agefrstmar < 22
+replace agefrstmar=0 if agefrstmar > 21 & agefrstmar < 50
+label define 0 "yes" 1 "no"
+label values agefrstmar agefrstmar
 
-recode v511 (.=0) (0/24 = 1 "yes") (25/49 = 0 "no"), gen (ms_afm_25)
-replace ms_afm_25 = . if v012<25
-label var ms_afm_25 "First marriage by age 25"
+//First marriage by age 25
+replace agefrstmar=1 if agefrstmar < 25
+replace agefrstmar=0 if agefrstmar > 24 & agefrstmar < 50
+label define 0 "yes" 1 "no"
+label values agefrstmar agefrstmar
 
 drop all region residence education wealth age agevar weightvar
 label drop NA
@@ -193,8 +180,7 @@ label drop NA
 
 
 
-* indicators from MR file
-if file=="MR" {
+Men's variables in IPUMS DHS
 
 //Median age at first marriage
 	//make subgroups here//
@@ -226,42 +212,45 @@ if file=="MR" {
 
 	
 //Marital status
-recode mv501 (0=0 "Never married") (1=1 "Married") (2=2 "Living together") ///
-(3=3 "Widowed") (4=4 "Divorced") (5=5 "Separated"), gen(ms_mar_stat)
-label var ms_mar_stat "Current marital status"
-
-recode mv501 (0 3/5 =0 "Not in union") (1/2=1 "In union"), gen(ms_mar_union)
-label var ms_mar_union "Currently in union"
-
-gen ms_mar_never = 0
-replace ms_mar_never = 1 if mv501==0
-label var ms_mar_never "Never in union"
+replace marstatmn if marstatmn > 97
 
 
 //Number of wives
-recode mv505 (1=1 "1") (2/97 = 2 "2+") (98=98 "Don't know"), gen(ms_wives_num)
-label var ms_wives_num "Number of wives"
+replace wifenummn if wifenummn > 98
 
+***Married by specific ages***
 
-//Married by specific ages
-recode mv511 (.=0) (0/14 = 1 "yes") (15/max = 0 "no"), gen (ms_afm_15)
-label var ms_afm_15 "First marriage by age 15"
+replace agefrstmar=. if agefrstmar > 49
 
-recode mv511 (.=0) (0/17 = 1 "yes") (18/max = 0 "no"), gen (ms_afm_18)
-replace ms_afm_18 = . if mv012<18
-label var ms_afm_18 "First marriage by age 18"
+//First marriage by age 15
+replace agefrstmarmn=1 if agefrstmarmn < 15
+replace agefrstmarmn=0 if agefrstmarmn > 14 & agefrstmarmn < 50
+label define 0 "yes" 1 "no"
+label values agefrstmarmn agefrstmarmn
 
-recode mv511 (.=0) (0/19 = 1 "yes") (20/max = 0 "no"), gen (ms_afm_20)
-replace ms_afm_20 = . if mv012<20
-label var ms_afm_20 "First marriage by age 20"
+//First marriage by age 18
+replace agefrstmarmn=1 if agefrstmarmn < 18
+replace agefrstmarmn=0 if agefrstmarmn > 17 & agefrstmarmn < 50
+label define 0 "yes" 1 "no"
+label values agefrstmarmn agefrstmarmn
 
-recode mv511 (.=0) (0/21 = 1 "yes") (22/max = 0 "no"), gen (ms_afm_22)
-replace ms_afm_22 = . if mv012<22
-label var ms_afm_22 "First marriage by age 22"
+//First marriage by age 20
+replace agefrstmarmn=1 if agefrstmarmn < 20
+replace agefrstmarmn=0 if agefrstmarmn > 19 & agefrstmarmn < 50
+label define 0 "yes" 1 "no"
+label values agefrstmarmn agefrstmarmn
 
-recode mv511 (.=0) (0/24 = 1 "yes") (25/max = 0 "no"), gen (ms_afm_25)
-replace ms_afm_25 = . if mv012<25
-label var ms_afm_25 "First marriage by age 25"
+//First marriage by age 22
+replace agefrstmarmn=1 if agefrstmarmn < 22
+replace agefrstmarmn=0 if agefrstmarmn > 21 & agefrstmarmn < 50
+label define 0 "yes" 1 "no"
+label values agefrstmarmn agefrstmarmn
+
+//First marriage by age 25
+replace agefrstmarmn=1 if agefrstmarmn < 25
+replace agefrstmarmn=0 if agefrstmarmn > 24 & agefrstmarmn < 50
+label define 0 "yes" 1 "no"
+label values agefrstmarmn agefrstmarmn
 
 drop all region residence education wealth age agevar weightvar
 label drop NA
