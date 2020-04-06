@@ -38,15 +38,12 @@ insprivate		"Health insurance coverage - privately purchased commercial insuranc
 insother		"Health insurance coverage - other type of insurance"
 inscoveryn		"Have any health insurance"
 tosmoke			"Smokes cigarettes"
-
 tosmokefq		"Smoking frequency"
 tocigdayno		"Average number of cigarettes smoked per day"
 tosnuffm		"Uses snuff smokeless tobacco by mouth"
 tosnuffn		"Uses snuff smokeless tobacco by nose"
 tochew			"Chews tobacco"
 toghutka		"Uses betel quid with tobacco"
-tosmokelessoth		"Uses other type of smokeless tobacco"
-tosmokelessany		"Uses any type of smokeless tobacco"
 tonosmoke		"Uses any type of tobacco - smoke or smokeless"
 ----------------------------------------------------------------------------
 Variables created in this file:
