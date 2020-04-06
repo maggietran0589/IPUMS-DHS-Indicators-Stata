@@ -23,8 +23,6 @@ delete non ipums variables. lityn			"Literate - higher than secondary or can rea
 newswk			"Reads a newspaper at least once a week"
 tvwk			"Watches television at least once a week"
 radiowk			"Listens to radio at least once a week"
-media_all		"Accesses to all three media at least once a week"
-media_none		"Accesses none of the three media at least once a week"
 internetevyr		"Ever used the internet"
 internetevyr		"Used the internet in the past 12 months"
 internetmo		"Internet use frequency in the past month - among users in the past 12 months"
@@ -40,8 +38,7 @@ insprivate		"Health insurance coverage - privately purchased commercial insuranc
 insother		"Health insurance coverage - other type of insurance"
 inscoveryn		"Have any health insurance"
 tosmoke			"Smokes cigarettes"
-touseoth		"Smokes other type of tobacco"
-tosmokeany		"Smokes any type of tobacco"
+
 tosmokefq		"Smoking frequency"
 tocigdayno		"Average number of cigarettes smoked per day"
 tosnuffm		"Uses snuff smokeless tobacco by mouth"
@@ -53,8 +50,14 @@ tosmokelessany		"Uses any type of smokeless tobacco"
 tonosmoke		"Uses any type of tobacco - smoke or smokeless"
 ----------------------------------------------------------------------------
 Variables created in this file:
-rc_edu_median		"Median years of education"
-lityn "Literate - higher than secondary or can read part or whole sentence"
+edu_median		"Median years of education"
+lityn 			"Literate - higher than secondary or can read part or whole sentence"
+media_all 		"Access to newspaper, TV, and radio once a week"
+media_none		"Accesses none of the three media at least once a week"
+tosmokeoth 		"Smokes other type of tobacco"
+tosmokeany 		"Smokes any type of tobacco" 
+tosmokelessoth		"Uses other type of smokeless tobacco"
+tosmokelessany 		"Uses other type of smokeless tobacco"
 ----------------------------------------------------------------------------*/
 
 *Limiting to women age 15-49
@@ -103,24 +106,24 @@ replace lityn=1 if educlvl==3 | Lit2==11 | Lit2==12
 label values rc_litr yesno
 label var lityn "Literate - higher than secondary or can read part or whole sentence"
 
-********* Media exposure *************
+*** Media exposure ***
 
 //Media exposure - newspaper
-Newswk "Reads a newspaper at least once a week"
+replace newswk=. if newswk > 7
 
 //Media exposure - TV
-tvwk "Watches television at least once a week"
+replce tvwk=. if tvwk >7
 
 //Media exposure - Radio
-radiowk "Listens to radio at least once a week"
+replace radiowk=. if radiowk >7
 
-******//Media exposure - all three******
+//Media exposure - all three
 gen media_all=0
 replace media_all=1 if newswk==1 & tvwk==1 & radiowk==1
 label values media_all yesno
 label var media_all "Access to newspaper, TV, and radio once a week"
 
-*****//Media exposure - none******
+//Media exposure - none
 gen media_none=0
 replace media_none=1 if newswk==0 & tvwk==0 & radiowk==0 
 label values media_none yesno
@@ -132,7 +135,6 @@ replace internetevyr=1 if internetevyr==11 | internetevyr==12 | internetevyr==13
 label define internetevyr 0 "No" 1 "Yes"
 label values internetevyr internetevyr
 
-
 //Used interent in the past 12 months
 replace internetevyr=. if internetevyr>97
 replace internetevyr=0 if internetevyr==0 | internetevyr==12 | internetevyr==13
@@ -140,48 +142,53 @@ replace internetevyr=1 if internetevyr==11
 label define internetevyr 0 "No" 1 "Yes"
 label values internetevyr internetevyr
 
-
 //Internet use frequency
-Internetmo "Internet use frequency in the past month - among users in the past 12 months"
+replace internetmo=. if internetmo >7 
 
 *** Employment ***
+
 //Employment status
-wkworklastyr "Employment status"
+replace wkworklastyr=. if wkworklastyr > 97
 
 //Occupation
-wkcurrjob "Occupation among those employed in the past 12 months"
+replace wkcurrjob=. if wkcurrjob >97 
 
 //Type of employer
-whoworkfor "Type of employer among those employed in the past 12 months"
+replace whoworkfor=. if whoworkfor >97
 
 //Type of earnings
-Wkearntype "Type of earnings among those employed in the past 12 months"
+replace wkearntype=. if wkearntype >97
 
 //Continuity of employment
-Wkworklastyr==11 & Wkworklastyr==12 & Wkworklastyr==13 "Continuity of employment among those employed in the past 12 months"
+replace wkworklastyr=. if wkworklastyr > 97
+replace wkworklastyr=1 if wkworklastyr > 10 & wkworklastyr < 14
+label define wkworklastyr 0 "No" 1 "Yes"
+label values wkworklastyr wkworklastyr
 
 *** Health insurance ***
-inssocs "Health insurance coverage - social security"
+
+//Health insurance - Social security
+replace inssocs=. if inssocs >7 
 
 //Health insurance - Other employer-based insurance
-insemployer "Health insurance coverage - other employer-based insurance"
+replace insemployer=. if insemployer >7 
 
 //Health insurance - Mutual Health Organization or community-based insurance
-insorg "Health insurance coverage - mutual health org. or community-based insurance"
+replace insorg=. if insorg >7 
 
 //Health insurance - Privately purchased commercial insurance
-insprivate "Health insurance coverage - privately purchased commercial insurance"
+replace insprivate=. if insprivate >7
 
 //Health insurance - Other
-insother "Health insurance coverage - other type of insurance"
+replace insother=. if insother >7 
 
 //Health insurance - Any
-inscoveryn
+replace inscoveryn=. if inscoveryn >7
 
 *** Tobacco use ***
 
 //Smokes cigarettes
-tosmoke "Smokes cigarettes"
+replace tosmoke=. if tosmoke >7
 
 //Smokes other type of tobacco
 gen tosmokeoth= topipe==1 | tocigar==1 | toshisha==1
@@ -192,22 +199,22 @@ gen tosmokeany= tosmoke==1 | topipe==1 | tocigar==1 | toshisha==1
 label var tosmokeany "Smokes any type of tobacco" 
 
 //Smoke frequency
-tosmokefq "Smoking frequency"
+replace tosmokefq=. if tosmokefq >7 
 
 //Smokes daily
-tocigdayno "Average number of cigarettes smoked per day"
+replace tocigdayno if tocigdayno >97
 
 //Snuff by mouth
-tosnuffm "Uses snuff smokeless tobacco by mouth"
+replace tosnuffm if tosnuffm >7
 
 //Snuff by nose
-tosnuffn "Uses snuff smokeless tobacco by nose"
+replace tosnuffn if tosnuffn >7
 
 //Chewing tobacco
-tochew "Chews tobacco"
+replace tochew if tochew >7
 
 //Betel quid with tobacco
-toghutka "Uses betel quid with tobacco"
+replace toghutka if toghutka >7
 
 //Other type of smokeless tobacco
 *Note: there may be other types of smokeless tobacco, please check all v463* variables. 
@@ -223,7 +230,8 @@ label values tosmokelessany yesno
 label var tosmokelessany "Uses other type of smokeless tobacco"
 
 //Any tobacco 
-tonosmoke==0 "Uses any type of tobacco - smoke or smokeless"
-
-
-
+replace tonosmoke=. if tonosmoke >7
+replace tonosmoke=0 if tonosmoke==1
+replace tonosmoke=1 if tonosmoke==0
+label values tonosmoke yesno
+label var tonosmoke "Uses any type of tobacco - smoke or smokeless"
