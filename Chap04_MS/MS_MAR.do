@@ -19,10 +19,10 @@ agefrstmar		"Age at first marriage or cohabitation"
 Women's variables in IPUMS DHS
 				
 //Marital status
-replace marstat if marstat > 97
+replace marstat=. if marstat > 97
 
 //Co-wives
-replace wifenum if wifenum > 98
+replace wifenum=. if wifenum > 98
 
 ***Married by specific ages***
 
