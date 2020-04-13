@@ -3,8 +3,8 @@ Program: 			FE_births.do
 Purpose: 			Code fertility indicators from birth history
 Data inputs: 		BR data files
 Data outputs:		coded variables
-Author:				Courtney Allen 
-Date last modified: October 21 2019
+Author:				Faduma Shaba 
+Date last modified: 		April 2020
 *****************************************************************************************************/
 
 /*______________________________________________________________________________
@@ -45,53 +45,25 @@ ______________________________________________________________________________*/
 	replace cheb=. if cheb > 97
 	replace cheb=10 if cheb > 10 & cheb < 51
 
-	//Mean number of children ever born (CEB)
-			/*-------------------------------------------------------
-			NOTE: Though this gives you the mean estimate, ignore 
-			standard errors and confidence intervals because this data
-			has not been survey set. Whenever standard errors are needed, 
-			survey data must be survey set for approproate standard
-			error estimates.
-			-------------------------------------------------------*/
-		  
+	//Mean number of children ever born 
+	mean cheb iw=perweight
+	
 	//Completed fertility, mean number of CEB among women age 40-49
 	mean cheb if age5year>=70 & age5year<=80 [iw=perweight]
-
 		
 	//Mean number of CEB among all women
 	mean cheb [iw=perweight]
 	
-
 	//Mean number of CEB among all women, by age group
-	levelsof v013
-	local levels `r(levels)'
-	foreach y of local levels {
-		mean v201 if v013==`y' [iw=wt]
-		gen fe_ceb_mean_age`y' = e(b)[1,1]
-	
-		//label variable and subgroups
-		local lab_val: value label v013
-		local lab_cat : label `lab_val' `y'
-		label var fe_ceb_mean_age`y' "Mean number of CEB, agegroup: `lab_cat'"
-		}
+	mean cheb, by(age5year) [iw=perweight]
 			
 	//Mean number of living children among all women
-	mean v218 [iw=wt]
-	gen fe_live_mean = e(b)[1,1]
-	label var fe_live_mean "Mean number of living children"
+	replace chebalive=. if chebalive > 97
+	mean chebalive [iw=perweight]
 	
 	//Mean number of living children among all women, by age group
-	levelsof v013
-	local levels `r(levels)'
-	foreach y of local levels {
-		mean v218 if v013==`y' [iw=wt]
-		gen fe_live_mean_age`y' = e(b)[1,1]
+	mean chebalive, by(age5year) [iw=perweight]
 
-		//label variable and subgroups
-		local lab_val: value label v013
-		local lab_cat : label `lab_val' `y'
-		label var fe_live_mean_age`y' "Mean number of CEB, agegroup: `lab_cat'"
-		}
 		
 **TEENAGE PREGNANCY AND MOTHERHOOD
 
