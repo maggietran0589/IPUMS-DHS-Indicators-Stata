@@ -68,26 +68,25 @@ ______________________________________________________________________________*/
 **TEENAGE PREGNANCY AND MOTHERHOOD
 
 	//Teens (women age 15-19) who have had a live birth
-	*gen fe_teen_birth = v201 if v013==1
-	recode v201 (0=0 "No") (1/max=1 "Yes") if v013==1, gen(fe_teen_birth)
-	label var fe_teen_birth "Teens who have had a live birth"
+	gen teen_birth = chebalive if age5year==20
+	label var teen_birth "Teens who have had a live birth"
 	
 	//Teens (women age 15-19) pregnant with first child
-	gen fe_teen_preg = 0 if v013==1
-	replace fe_teen_preg = 1 if v201==0 & v213==1 & v013==1
-	label val fe_teen_preg yesnolabel 
-	label var fe_teen_preg "Teens pregnant with first child"
+	gen teen_preg = 0 if age5year==20
+	replace teen_preg = 1 if cheb==0 & pregnant==1 & age5year==20
+	label val teen_preg yesnolabel 
+	label var teen_preg "Teens pregnant with first child"
 
 	//Teens (women age 15-19) who have begun childbearing
-	gen fe_teen_beg = 0 if v013==1
-	replace fe_teen_beg = 1 if (v201>0 | v213==1) & v013==1
-	label val fe_teen_beg yesnolabel 
-	label var fe_teen_beg "Teens who have begun childbearing"
+	gen teen_beg = 0 if age5year==20
+	replace teen_beg = 1 if (cheb>0 | pregnant==1) & age5year==20
+	label val teen_beg yesnolabel 
+	label var teen_beg "Teens who have begun childbearing"
 
 **MENOPAUSE
 	
 	//Women age 30-49 experiencing menopause (exclude pregnant or those with postpartum amenorrhea) 
-	gen fe_meno = 0 if  v013>3
+	gen fe_meno = 0 if  age5year>=50 & age5year
 	replace fe_meno = 1 if (v226>5 & v226<997) & v213==0 & v405==0  & v013>3
 	label val fe_meno yesnolabel 
 	label var fe_meno "Experienced menopause"
