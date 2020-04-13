@@ -35,31 +35,15 @@ ______________________________________________________________________________*/
 
 *-->EDIT subgroups here if other subgroups are needed. 
 ****Subgroups currently include: Residence, region, education, and wealth.
-	gen all = 1
-	clonevar residence = v025
-	clonevar region = v024
-	clonevar wealth = v190
-	clonevar education = v149
-	label define NA 0 "NA" //for sub groups where no median can be defined
-	label define yesnolabel 0 "no" 1 "yes" //for all yes/no binary variables
-
-	local subgroup residence region education wealth 
-
-	
-//generate weight variable
-cap drop wt
-gen wt = v005/1000000
 
 **FERTILITY VARIABLES
 
 	//Currently Pregnant
-	gen fe_preg = v213 
-	label val fe_preg yesnolabel 
-	label var fe_preg "Currently pregnant"
+	replace pregnant=. if pregnant=9
 		
-	//Number of children ever born (CEB)
-	recode v201 (10/max = 10 "10+"), gen(fe_ceb_num) 
-	label var fe_ceb_num "Number of children ever born"
+	//Number of children ever born 
+	replace cheb=. if cheb > 97
+	replace cheb=10 if cheb > 10 & cheb < 51
 
 	//Mean number of children ever born (CEB)
 			/*-------------------------------------------------------
@@ -71,32 +55,12 @@ gen wt = v005/1000000
 			-------------------------------------------------------*/
 		  
 	//Completed fertility, mean number of CEB among women age 40-49
-	mean v201 if v013>=6 [iw=wt]
-	gen fe_ceb_comp = e(b)[1,1]
-	label var fe_ceb_comp "Mean no. of CEB among women age 40-49"
+	mean cheb if age5year>=70 & age5year<=80 [iw=perweight]
 
-	//Completed fertility, mean number of CEB among women age 40-49 by subgroups
-	foreach x of local subgroup {
-	levelsof `x'
-	local levels `r(levels)'
-	foreach y of local levels {
-		mean v201 if `x'==`y' & v013>=6 [iw=wt]
-		gen fe_ceb_comp_`x'`y' = e(b)[1,1]
-		
-		//label variable and subgroup
-		label var fe_ceb_comp_`x'`y' "Mean no. of CEB among women age 40-49, `y'"
-		if "`y'" != "all" {
-		local lab_val: value label `x'
-		local lab_cat : label `lab_val' `y'
-		label var fe_ceb_comp_`x'`y' "Mean no. of CEB among women age 40-49, `x': `lab_cat'"
-		}
-		}
-	}
 		
 	//Mean number of CEB among all women
-	mean v201 [iw=wt]
-	gen fe_ceb_mean = e(b)[1,1]
-	label var fe_ceb_mean "Mean number of CEB"
+	mean cheb [iw=perweight]
+	
 
 	//Mean number of CEB among all women, by age group
 	levelsof v013
