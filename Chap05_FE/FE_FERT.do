@@ -85,20 +85,21 @@ ______________________________________________________________________________*/
 
 **MENOPAUSE
 	
-	//Women age 30-49 experiencing menopause (exclude pregnant or those with postpartum amenorrhea) 
-	gen fe_meno = 0 if  age5year>=50 & age5year
-	replace fe_meno = 1 if (v226>5 & v226<997) & v213==0 & v405==0  & v013>3
-	label val fe_meno yesnolabel 
-	label var fe_meno "Experienced menopause"
-
-	//Menopausal age group, 30-49, two-year intervals after 40
-	egen fe_meno_age = cut(v012), at(0 30 35 40 42 44 46 48)
-	label define menolabel 30 "30-34" 35 "35-39" 40 "40-41" ///
-						   42 "42-43" 44 "44-45" 46 "46-47" 48 "48-49"
-	label val fe_meno_age meno_label
-	label var fe_meno_age "Age groups for Menopause table"
+	//In Menopause
+	replace timemenscalc=. if timemenscalc > 997
+	replace timemenscalc=0 if timemenscalc==0 | timemenscalc==992 | timemenscalc > 993  
+	replace timemenscalc=1 if timemenscalc==991 | timemenscalc==993
+	label define 0 "yes" 1 "no"
+	label values timemenscalc timemenscalc
+	
 	
 **FIRST BIRTH
+
+//First marriage by age 15
+replace agefrstmar=1 if agefrstmar < 15
+replace agefrstmar=0 if agefrstmar > 14 & agefrstmar < 50
+label define 0 "yes" 1 "no"
+label values agefrstmar agefrstmar
 
 	//First birth by specific ages
 	recode v212 (.=0) (0/14 = 1 "yes") (15/49 = 0 "no"), gen (ms_afb_15)
