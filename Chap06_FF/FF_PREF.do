@@ -1,12 +1,11 @@
 /*****************************************************************************************************
 Program: 			FF_PREF.do
 Purpose: 			Code to compute fertility preferences in men and women
-Data inputs: 		IR or MR survey list
-Data outputs:		coded variables
-Author:				Shireen Assaf
-Date last modified: May 13, 2019 by Shireen Assaf 
+Data inputs: 			IPUMS DHS Fertility variables
+Data outputs:			coded variables
+Author:				Faduma Shaba
+Date last modified: 		April 2020 
 Note:				The five indicators below can be computed for men and women. 
-					For men the indicator is computed for age 15-49 in line 56. This can be commented out if the indicators are required for all men.
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
