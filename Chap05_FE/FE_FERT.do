@@ -33,7 +33,7 @@ ______________________________________________________________________________*/
 	replace cheb=10 if cheb > 10 & cheb < 51
 
 	//Mean number of children ever born 
-	mean cheb iw=perweight
+	mean cheb [iw=perweight]
 	
 	//Completed fertility, mean number of CEB among women age 40-49
 	mean cheb if age5year>=70 & age5year<=80 [iw=perweight]
