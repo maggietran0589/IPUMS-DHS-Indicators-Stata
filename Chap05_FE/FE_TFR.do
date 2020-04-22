@@ -1,10 +1,10 @@
 /*****************************************************************************************************
 Program: 			FE_TFR.do
 Purpose: 			Code to compute fertility rates
-Data inputs: 		IR survey list
-Data outputs:		coded variables
-Author:				Thomas Pullum and modified by Courtney Allen for the code share project
-Date last modified: September 25, 2019 by Courtney Allen
+Data inputs: 			IR survey list
+Data outputs:			coded variables
+Author:				Faduma Shaba
+Date last modified: 		April 2020
 Note:				Please see notes in lines 563, 573, and 800. 
 					This do file will produce a table of  TFRs by background variables as shown in final report (Table_TFR.xls). 
 *****************************************************************************************************/
@@ -34,22 +34,22 @@ program define start_month_end_month
 	(Remember that both are negative or 0.)
 	*/
 
-	gen start_month=doi+12*lw-12
-	gen end_month=doi+12*uw-1
+	gen start_month=indatecmc+12*lw-12
+	gen end_month=indatecmc+12*uw-1
 
-	replace end_month=min(end_month,doi)
+	replace end_month=min(end_month,indatecmc)
 
 	* calculate the reference date
-	summarize start_month [iweight=v005/1000000]
+	summarize start_month [iw=perweight]
 	scalar mean_start_month=r(mean)
 
-	summarize end_month [iweight=v005/1000000]
+	summarize end_month [iw=perweight]
 	scalar mean_end_month=r(mean)
 
 	scalar refdate=1900-(1/24)+((mean_start_month+mean_end_month)/2)/12
 
-	summarize doi [iweight=v005/1000000]
-	scalar mean_doi=1900-(1/24)+(r(mean))/12
+	summarize indatecmc [iw=perweight]
+	scalar mean_indatecmc=1900-(1/24)+(r(mean))/12
 end
 
 ******************************************************************************
