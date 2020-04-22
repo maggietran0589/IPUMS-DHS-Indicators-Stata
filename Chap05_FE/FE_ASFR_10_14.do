@@ -26,7 +26,8 @@ CRUCIAL VARIABLES USED (IN DHS NAMES)
 	caseid	        caseid       "Case Identification"
 	clusterno=      v001         "Cluster number"
 	perweight=      v005         "Sample weight for persons"
-	indatecmc=      v008         "Date of interview (CMC)"
+	indatecmc=      v008 (doi)   
+	"Date of interview (CMC)"
 	dobcmc=         v011         "Date of birth (CMC)"
 	kiddobcmc_all=  b3_*         "Date of birth (CMC)"
 	cheb=           v201         "Total children ever born"
@@ -61,6 +62,16 @@ ______________________________________________________________________________*/
 
 program drop _all
 program define make_ucmc_lcmc
+
+** The beginning part of this code (generating lower and upper century month codes) is being done to determine surveys between the last two years. 
+** The last two years starts with a year before the interview and a year after the interview. 
+** The first half of the cmc starting on line 74-lines 85 are about the year before the interview where the lower limit
+** => lcmc (lower century month code) is a year before the interview (-12)
+** => ucmc (upper century month code) is a month before the interview (-1)
+** The second half of the cmc starting on line 87-91 is a year after interview 
+** => lcmc is the first month after interview (+1)
+** => ucmc is a year after the interview (+12)
+
 	* convert lw and uw to cmc's
 
 	if lw<=0 {
@@ -84,10 +95,10 @@ program define make_ucmc_lcmc
 
 	* calculate the reference date
 
-	summarize lcmc [iweight=v005/1000000]
+	summarize lcmc [iw=perweight]
 	scalar mean_start_month=r(mean)
 
-	summarize ucmc [iweight=v005/1000000]
+	summarize ucmc [iw=perweight]
 	scalar mean_end_month=r(mean)
 
 	* Convert back to continuous time, which requires an adjustment of half a month (i.e. -1/24).
