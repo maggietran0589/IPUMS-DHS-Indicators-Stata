@@ -73,15 +73,14 @@ program define setup
 	* END SEGMENT TO CONSTRUCT VALUE LABELS
 	******************************************
 
-	rename v008 doi
-	rename v011 dob
-	rename v201 ceb
-	format ceb %5.3f
+	
+	replace cheb if cheb > 97
+	format cheb %5.3f
 
 	*renpfix b3_0 b3_
-	gen curageint=int((doi-dob)/60)-2
+	gen curageint=int((indatecmc-dobcmc)/60)-2
 
-	summarize ceb
+	summarize cheb
 	scalar maxceb=r(max) 
 	local k=maxceb+1 
 	while `k'<=20 {
