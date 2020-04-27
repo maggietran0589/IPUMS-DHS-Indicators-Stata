@@ -1,8 +1,8 @@
 /*****************************************************************************************************
 Program: 			FP_tables.do
 Purpose: 			produce tables for indicators
-Author:				Shireen Assaf
-Date last modified: Feb 5 2019 by Shireen Assaf 
+Author:				Faduma Shaba
+Date last modified:  		April 2020 
 *Note this do file will produce the following tables in excel:
 	1. 	Tables_Know_wm:		Contains the tables for knowledge indicators for women
 	2. 	Tables_Know_mn:		Contains the tables for knowledge indicators for men
@@ -25,9 +25,9 @@ Notes: 					For knowledge of contraceptive methods, ever use, current use, and u
 * comment out the tables or indicator section you do not want.
 ****************************************************
 
-* indicators from IR file
-if file=="IR" {
-gen wt=v005/1000000
+*******************
+***Women's Files***
+*******************
 
 ** Select population of interest
 
