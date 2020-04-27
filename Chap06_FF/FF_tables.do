@@ -44,7 +44,7 @@ tabout wealthq kiddesire using Tables_Pref_wm.xls [iw=perweight] , c(col) h1("hi
 //Ideal number of children
 
 * by number of living children
-tab	ff_ideal_num numch [iw=wt] , col
+tab	ff_ideal_num numch [iw=perweight] , col
 
 * output to excel
 tabout ff_ideal_num numch using Tables_Pref_wm.xls [iw=wt] , c(col) f(1) append 
