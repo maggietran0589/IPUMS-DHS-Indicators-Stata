@@ -16,7 +16,7 @@ Ch.	|Title |Ch. Acronym |	Began Stata code| Stata code Complete|
 |12|	Malaria	|ML|	
 |13|	HIV-AIDS Knowledge, Attitudes, & Behaviors	|HK	|	
 |14|	HIV Prevalence	|HV|	
-|15|	Women’s Empowerment	|WE| April 2020	|	
+|15|	Women’s Empowerment	|WE| April 2020	|	April 2020|
 |16|	Adult & Maternal Mortality	|AM|	
 |17|	Domestic Violence	|DV|		
 
