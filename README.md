@@ -1,7 +1,8 @@
 Completion list (this list will be updated periodically)
 Ch.	|Title	                          Ch. Acronym	Began Stata code	Stata code Complete	
 _|_____
-2|Population & Housing	PH	2020		2020	
+2|Population & Housing	PH	2020		2020
+_|________________________________________
 3|	Respondents’ Characteristics	RC		X		X
 4|	Marriage & Sexual Activity	MS		X		X
 5|	Fertility	FE		X	X	
