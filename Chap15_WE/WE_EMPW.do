@@ -47,7 +47,7 @@ dvaonereas		"Agree that husband is justified in hitting or beating his wife for 
 replace decfemhcare=. if decfemhcare > 7
 
 //Decides on household purchases
-replace decbighh=. if dechighh > 97
+replace decbighh=. if decbighh > 97
 
 //Decides on visits
 replace decfamvisit=. if decfamvisit > 7
@@ -125,88 +125,43 @@ drop if mv012>49
 
 cap label define yesno 0"No" 1"Yes"
 
-*** Deciion making ***
+*** Decision making ***
 
 //Decides on own health
-gen we_decide_health= mv743a if mv502==1
-label values we_decide_health MV743A
-label var we_decide_health "Decides on own health care"
+replace decmanhcare=. if decmanhcare > 7
 
 //Decides on household purchases
-gen we_decide_hhpurch= mv743b if mv502==1
-label values we_decide_hhpurch MV743B
-label var we_decide_hhpurch "Decides on large household purchases"
+replace decbighhmn=. if decbighhmn > 97
 
 //Decides on visits
-gen we_decide_visits= mv743d if mv502==1
-label values we_decide_visits MV743D
-label var we_decide_visits "Decides on visits to family or relatives"
+replace decfamvisitmn=. if decfamvisitmn > 7
 
-//Decides on own health either alone or jointly
-gen we_decide_health_self= inlist(mv743a,1,2) if mv502==1
-label values we_decide_health_self yesno
-label var we_decide_health_self "Decides on own health care either alone or jointly with partner"
-
-//Decides on household purchases either alone or jointly
-gen we_decide_hhpurch_self= inlist(mv743b,1,2) if mv502==1
-label values we_decide_hhpurch_self yesno
-label var we_decide_hhpurch_self "Decides on large household purchases either alone or jointly with partner"
-
-//Decides on visits either alone or jointly
-gen we_decide_visits_self= inlist(mv743d,1,2) if mv502==1
-label values we_decide_visits_self yesno
-label var we_decide_visits_self "Decides on visits to family or relatives either alone or jointly with partner"
-
-//Decides on both health and household purchases either alone or jointly
-gen we_decide_all= inlist(mv743a,1,2) & inlist(mv743b,1,2) if mv502==1
-label values we_decide_all yesno
-label var we_decide_all "Decides on both health and purchases either alone or jointly with partner"
-
-//Does not decide on health or household purchases
-gen we_decide_none= 0 if mv502==1
-replace we_decide_none=1 if (mv743a!=1 & mv743a!=2) & (mv743b!=1 & mv743b!=2) & mv502==1
-label values we_decide_none yesno
-label var we_decide_none "Does not decide on health or purchases either alone or jointly with partner"
 
 *** Justification of violence ***
 
 //Jusity violence - burned food
-gen we_dvjustify_burn= mv744e==1
-label values we_dvjustify_burn yesno
-label var we_dvjustify_burn "Agree that husband is justified in hitting or beating his wife if she burns food"
+replace dvaburnfoodmn=. if dvaburnfoodmn > 7
 
 //Jusity violence - argues
-gen we_dvjustify_argue= mv744c==1
-label values we_dvjustify_argue yesno
-label var we_dvjustify_argue "Agree that husband is justified in hitting or beating his wife if she argues with him"
+replace dvaarguemn=. if dvaarguemn > 7
 
 //Jusity violence - goes out without saying
-gen we_dvjustify_goout= mv744a==1
-label values we_dvjustify_goout yesno
-label var we_dvjustify_goout "Agree that husband is justified in hitting or beating his wife if she goes out without telling him"
+replace dvagooutmn=. if dvagooutmn > 7
 
 //Jusity violence - neglects children 
-gen we_dvjustify_neglect= mv744b==1
-label values we_dvjustify_neglect yesno
-label var we_dvjustify_neglect "Agree that husband is justified in hitting or beating his wife if she neglects the children"
+replace dvanegkidmn=. if dvanegkidmn > 7
 
 //Jusity violence - no sex
-gen we_dvjustify_refusesex= mv744d==1
-label values we_dvjustify_refusesex yesno
-label var we_dvjustify_refusesex "Agree that husband is justified in hitting or beating his wife if she refuses to have sexual intercourse with him"
+replace dvaifnosexmn=. if dvaifnosexmn > 7
 
 //Jusity violence - at least one reason
-gen we_dvjustify_onereas=0 
-replace we_dvjustify_onereas=1 if mv744a==1 | mv744b==1 | mv744c==1 | mv744d==1 | mv744e==1
-label values we_dvjustify_onereas yesno
-label var we_dvjustify_onereas "Agree that husband is justified in hitting or beating his wife for at least one of the reasons"
+gen dvaonereasmn=0 
+replace dvaonereasmn=1 if dvaburnfoodmn==1 | dvaarguemn==1 | dvagooutmn==1 | dvanegkidmn==1 | dvaifnosexmn==1
+label values dvaonereasmn yesno
+label var dvaonereasmn "Agree that husband is justified in hitting or beating his wife for at least one of the reasons"
 
 //Jusity to reuse sex - he's having sex with another woman
-gen we_justify_refusesex= mv633b==1
-label values we_justify_refusesex yesno
-label var we_justify_refusesex "Believe a woman is justified to refuse sex with her husband if she knows he's having sex with other women"
+replace nosexothwfmn=. if nosexothwfmn > 7
 
 //Jusity to ask to use condom - he has STI
-gen we_justify_cond= mv822==1
-label values we_justify_cond yesno
-label var we_justify_cond "Believe a women is justified in asking that her husband to use a condom if she knows that he has an STI"
+replace conaskparmn=. if conaskparmn > 7
