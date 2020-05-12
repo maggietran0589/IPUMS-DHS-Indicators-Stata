@@ -14,7 +14,7 @@ Date last modified: April 29, 2020 by Elizabeth Boyle
 
 1. Create a data extract at dhs.ipums.org that includes the variables listed below.
 	 
-2. On lines 121,370,389, 582  below, replace "GEO-REGION" with your sample's region variable name. 
+2. On lines 121,370,389, 582, 706, 724, 800  below, replace "GEO-REGION" with your sample's region variable name. 
 	In IPUMS DHS, each survey's region variable has a unique name to facilitate 
 	pooling data. These variables can be found in the IPUMS drop down menu under: 
 	
