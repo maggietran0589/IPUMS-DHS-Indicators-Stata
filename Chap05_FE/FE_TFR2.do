@@ -14,7 +14,7 @@ Date last modified: April 29, 2020 by Elizabeth Boyle
 
 1. Create a data extract at dhs.ipums.org that includes the variables listed below.
 	 
-2. On lines 121,370,389, 582, 706, 724, 800  below, replace "GEO-REGION" with your sample's region variable name. 
+2. On lines [121, 370, 389, 582, 706, 724, 800]  below, replace "GEO-REGION" with your sample's region variable name. 
 	In IPUMS DHS, each survey's region variable has a unique name to facilitate 
 	pooling data. These variables can be found in the IPUMS drop down menu under: 
 	
@@ -27,8 +27,8 @@ Date last modified: April 29, 2020 by Elizabeth Boyle
 	So, for example, the region variable for Afghanistan's 2015 survey is geo_af2015. 
 	The region variable for Tanzania's 1996 survey is geo_tz1996.
 	
-3. Change the paths on lines SPECIFY [563, 573, 800].
-	EXPLAIN. 
+3. Change the paths on lines [765, 784].
+	Save the file in the directory of your choosing. 
 	
 4. Run this .do file.
 
