@@ -17,9 +17,8 @@ Note:				The indicators below can be computed for women. For men add 'mn' to the
 /*----------------------------------------------------------------------------
 IPUMS DHS variables used in this file:
 educlvl			"Highest level of schooling attended or completed"
-edyrtotal		"
+edyrtotal		"Total years of education"
 lit2			"Level of literacy"
-delete non ipums variables. lityn			"Literate - higher than secondary or can read part or whole sentence"
 newswk			"Reads a newspaper at least once a week"
 tvwk			"Watches television at least once a week"
 radiowk			"Listens to radio at least once a week"
@@ -90,7 +89,7 @@ scalar sp50=r(p50)
 	scalar sU=r(mean)
 	drop dummy
 
-	gen rc_edu_median=round(sp50-1+(.5-sL)/(sU-sL),.01)
+	gen edu_median=round(sp50-1+(.5-sL)/(sU-sL),.01)
 	label var edu_median	"Median years of education"
 
 //Literacy level
