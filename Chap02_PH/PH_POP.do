@@ -12,11 +12,11 @@ Note:				In line 244 the code will collapse the data and therefore some indicato
 Variables created in this file:
 5yearagehh			"De facto population by five-year age groups"
 dependagehh		"De facto population by dependency age groups"
-ph_pop_cld_adlt		"De facto population by child and adult populations"
-ph_pop_adols		"De factor population that are adolesents"
+childagehh		"De facto population by child and adult populations"
+adolescentagehh		"De factor population that are adolesents"
 	
-ph_birthreg_cert	"Child under 5 with registered birth and birth certificate"
-ph_birthreg_nocert	"Child under 5 with registered birth and no birth certificate"
+birthrregcerthh		"Child under 5 with registered birth and birth certificate"
+birthnoregcerthh	"Child under 5 with registered birth and no birth certificate"
 ph_birthreg			"Child under 5 with registered birth"
 ph_highest_edu		"Highest level of schooling attended or completed among those age 6 or over"
 ph_median_eduyrs_wm "Median years of education among those age 6 or over - Females"
@@ -41,104 +41,104 @@ cap label define yesno 0"No" 1"Yes"
 gen ager=int(hhage/5)
 
 //Five year age groups
-recode ager	(0=0 " <5") (1=1 " 5-9") (2=2 " 10-14") (3=3  " 15-19") (4=4 " 20-24") (5=5 " 25-29") (6=6 "30-34") ///
-			(7=7 " 35-39") (8=8 " 40-44") (9=9 " 45-49") (10=10 " 50-54") (11=11 " 55-59") (12=12 " 60-64") ///
-			(13=13 " 65-69") (14=14 " 70-74") (15=15 " 75-79") (16/19=16 " 80+"), gen(5yearagehh)
+recode ager (0=0 " <5") (1=1 " 5-9") (2=2 " 10-14") (3=3  " 15-19") (4=4 " 20-24") (5=5 " 25-29") (6=6 "30-34") ///
+	    (7=7 " 35-39") (8=8 " 40-44") (9=9 " 45-49") (10=10 " 50-54") (11=11 " 55-59") (12=12 " 60-64") ///
+	    (13=13 " 65-69") (14=14 " 70-74") (15=15 " 75-79") (16/19=16 " 80+"), gen(5yearagehh)
 label var 5yearagehh "De facto population by five-year age groups"
 
 //Dependency age groups
-recode ager	(0/2=1 " 0-14") (3/12=2 " 15-64") (13/18=3 " 65+") (19/max=98 "Don't know/missing"), gen(dependagehh)
+recode ager(0/2=1 " 0-14") (3/12=2 " 15-64") (13/18=3 " 65+") (19/max=98 "Don't know/missing"), gen(dependagehh)
 label var dependagehh "De facto population by dependency age groups"
 
 //Child and adult populations
-recode hv105 (0/17=1 " 0-17") (18/97=2 " 18+") (98/max=98 "Don't know/missing") if hv103==1, gen(ph_pop_cld_adlt)
+recode hhage (0/17=1 " 0-17") (18/97=2 " 18+"), gen(childagehh)
 label var ph_pop_cld_adlt "De facto population by child and adult populations"
 
 //Adolescent population
-recode hv105 (10/19=1 " Adolescents") (else=0 " not adolesents") if hv103==1, gen(ph_pop_adols)
+recode adolescenthh (10/19=1 " Adolescents") (else=0 " not adolesents"), gen(adolescentagehh)
 label var ph_pop_adols "De factor population that are adolesents"
 
 *** Birth registration ***
 
 //Child registered and with birth certificate
-gen ph_birthreg_cert= hv140==1 if hv102==1 & hv105<5
-label values ph_birthreg_cert yesno	
-label var ph_birthreg_cert "Child under 5 with registered birth and birth certificate"
+gen birthregcerthh= hhbirthcert==11 if hhage < 5
+label values birthrregcerthh yesno	
+label var birthrregcerthh "Child under 5 with registered birth and birth certificate"
 
 //Child registered and with no birth certificate
-gen ph_birthreg_nocert= hv140==2 if hv102==1 & hv105<5
-label values ph_birthreg_nocert yesno
-label var ph_birthreg_nocert "Child under 5 with registered birth and no birth certificate"
+gen birthnoregcerthh= hhbirthcert==12 if hhage < 5
+label values birthnoregcerthh yesno
+label var birthregnocerthh "Child under 5 with registered birth and no birth certificate"
 
 //Child is registered
-gen ph_birthreg= inrange(hv140,1,2) if hv102==1 & hv105<5
-label values ph_birthreg yesno
-label var ph_birthreg "Child under 5 with registered birth"
+gen birthreghh= hhbirthcert if hhbirthcert== 11 | hhbirthcert==12 & if hhage < 5
+label values birthreghh yesno
+label var birthreghh "Child under 5 with registered birth"
 
 *** Wealth quintile ***
 
-gen ph_wealth_quint = hv270 if hv102==1
-label values ph_wealth_quint HV270
-label var ph_wealth_quint "Wealth quintile - dejure population"
+replace wealthqhh=. if wealthqhh > 7
 
 *** Education levels ***
 
 //Highest level of schooling attended or completed
-gen ph_highest_edu= hv109 if hv103==1 & inrange(hv105,6,99)
-label values ph_highest_edu HV109
-label var ph_highest_edu "Highest level of schooling attended or completed among those age 6 or over"
+replace edsumm=. if edsumm > 7
 
 //Median years of education - Females
-gen eduyr=hv108 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==2
+replace edyrtotal=. if edyrtotal > 97
+replace edyrtotal=20 if edyrtotal>20 & edyrtotal<95
 
-summarize eduyr [fweight=hv005], detail
-* 50% percentile
-	scalar sp50=r(p50)
-	
-	gen dummy=. 
-	replace dummy=0 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==2
-	replace dummy=1 if eduyr<sp50 
-	summarize dummy [fweight=hv005]
+summarize edyrtotal if sex==1 [iw=perweight], detail
+*summarize saves the data in the r()store
+scalar sp50=r(p50)
+*This saves a scalar-sp50- as the 50th percentile in the edyrtotal r store.
+
+	gen dummy=.
+	replace dummy=0
+	replace dummy=1 if edyrtotal<sp50
+	*This makes all edyrtotal over the median (sp50) = the categorical binary 1
+	summarize dummy [iw=perweight]
 	scalar sL=r(mean)
+	*This saves a scalar-sL- as the mean in the edyrtotal r store.
 	drop dummy
-	
-	gen dummy=. 
-	replace dummy=0 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==2
-	replace dummy=1 if eduyr <=sp50 
-	summarize dummy [fweight=hv005]
+
+	gen dummy=.
+	replace dummy=0
+	replace dummy=1 if eduyr <=sp50
+	summarize dummy [iw=perweight]
 	scalar sU=r(mean)
 	drop dummy
 
-	gen ph_median_eduyrs_wm=round(sp50-1+(.5-sL)/(sU-sL),.01)
-	label var ph_median_eduyrs_wm "Median years of education among those age 6 or over - Females"
-	
-	drop eduyr
+	gen edu_medianfm=round(sp50-1+(.5-sL)/(sU-sL),.01)
+	label var edu_medianfm	"Median years of education"
 	
 //Median years of education - Males
-gen eduyr=hv108 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==1
+replace edyrtotal=. if edyrtotal > 97
+replace edyrtotal=20 if edyrtotal>20 & edyrtotal<95
 
-qui summarize eduyr [fweight=hv005], detail
-* 50% percentile
-	scalar sp50=r(p50)
-	
-	gen dummy=. 
-	replace dummy=0 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==1
-	replace dummy=1 if eduyr<sp50 
-	qui summarize dummy [fweight=hv005]
+summarize edyrtotal if sex==1 [iw=perweight], detail
+*summarize saves the data in the r()store
+scalar sp50=r(p50)
+*This saves a scalar-sp50- as the 50th percentile in the edyrtotal r store.
+
+	gen dummy=.
+	replace dummy=0
+	replace dummy=1 if edyrtotal<sp50
+	*This makes all edyrtotal over the median (sp50) = the categorical binary 1
+	summarize dummy [iw=perweight]
 	scalar sL=r(mean)
+	*This saves a scalar-sL- as the mean in the edyrtotal r store.
 	drop dummy
-	
-	gen dummy=. 
-	replace dummy=0 if hv103==1 & inrange(hv105,6,99) & inrange(hv108,0,96) & hv104==1
-	replace dummy=1 if eduyr <=sp50 
-	qui summarize dummy [fweight=hv005]
+
+	gen dummy=.
+	replace dummy=0
+	replace dummy=1 if eduyr <=sp50
+	summarize dummy [iw=perweight]
 	scalar sU=r(mean)
 	drop dummy
 
-	gen ph_median_eduyrs_mn=round(sp50-1+(.5-sL)/(sU-sL),.01)
-	label var ph_median_eduyrs_mn "Median years of education among those age 6 or over - Males"
-
-	drop eduyr
+	gen edu_median=round(sp50-1+(.5-sL)/(sU-sL),.01)
+	label var edu_median	"Median years of education"
 
 *** Living arrangments ***
 
@@ -155,8 +155,8 @@ save PR_temp.dta, replace
 
 * Prepare a file of potential mothers
 use PR_temp.dta, clear
-drop if hv104==1
-drop if hv105<15
+drop if sex==1
+drop if hhage<15 & hhage > 97
 keep hv001 hv002 hvidx hv102
 gen in_mothers=1
 rename hv102 hv102_mo
