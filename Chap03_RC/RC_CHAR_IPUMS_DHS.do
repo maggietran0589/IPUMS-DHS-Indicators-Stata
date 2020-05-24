@@ -95,7 +95,6 @@ scalar sp50=r(p50)
 //Literacy level
 replace Lit2=. if lit2 >97
 
-MAKE HEADINGS AND INDENTATIONS SAME AS IN OTHER FILE
 //Literate 
 gen lityn=0
 replace lityn=1 if educlvl==3 | Lit2==11 | Lit2==12	
