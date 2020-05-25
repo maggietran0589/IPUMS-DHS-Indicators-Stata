@@ -17,12 +17,11 @@ adolescentagehh		"De factor population that are adolesents"
 	
 birthrregcerthh		"Child under 5 with registered birth and birth certificate"
 birthnoregcerthh	"Child under 5 with registered birth and no birth certificate"
-ph_birthreg			"Child under 5 with registered birth"
-ph_highest_edu		"Highest level of schooling attended or completed among those age 6 or over"
-ph_median_eduyrs_wm "Median years of education among those age 6 or over - Females"
-ph_median_eduyrs_mn "Median years of education among those age 6 or over - Males"
+ph_birthreg		"Child under 5 with registered birth"
+edsumm			"Highest level of schooling attended or completed among those age 6 or over"
+edu_medianfm 		"Median years of education among those age 6 or over - Females"
+edu_medianman 		"Median years of education among those age 6 or over - Males"
 ph_wealth_quint		"Wealth quintile - dejure population"
-ph_chld_liv_arrang	"Living arrangement and parents survival status for child under 18"
 ph_chld_liv_noprnt	"Child under 18 not living with a biological parent"
 ph_chld_orph		"Child under 18 with one or both parents dead"
 ph_hhhead_sex		"Sex of household head"
@@ -33,6 +32,20 @@ ph_orph_single		"Single orphans under age 18"
 ph_foster			"Foster children under age 18"
 ph_orph_foster		"Orphans and/or foster children under age 18"
 ----------------------------------------------------------------------------*/
+Created Variables
+ph_chld_liv_arrang	"Living arrangement and parents survival status for child under 18"
+
+
+----------------------------------------------------------------------------*/
+**********MAKE A NOTE ABOUT GEO-TYPE (HV024)***************
+
+
+/* DIRECTIONS
+1. Create a data extract at dhs.ipums.org that includes the variables listed below.
+	 
+2. On lines [SPECIFY]  below, replace "GEO-REGION" with your sample's region variable name. 
+	In IPUMS DHS, each survey's region variable has a unique name to facilitate 
+	pooling data. These variables can be found in the IPUMS drop down menu under: 
 
 cap label define yesno 0"No" 1"Yes"
 
@@ -137,8 +150,8 @@ scalar sp50=r(p50)
 	scalar sU=r(mean)
 	drop dummy
 
-	gen edu_median=round(sp50-1+(.5-sL)/(sU-sL),.01)
-	label var edu_median	"Median years of education"
+	gen edu_medianman=round(sp50-1+(.5-sL)/(sU-sL),.01)
+	label var edu_medianman	"Median years of education"
 
 *** Living arrangments ***
 
@@ -211,17 +224,17 @@ tab1 hv112r hv114r
 
 //Living arrangement for children under 18
 gen orphan_type=.
-replace orphan_type=1 if hv111==1 & hv113==1
-replace orphan_type=2 if hv111==1 & hv113==0
-replace orphan_type=3 if hv111==0 & hv113==1
-replace orphan_type=4 if hv111==0 & hv113==0
-replace orphan_type=5 if hv111>1  | hv113>1
+replace orphan_type=1 if motheralive==1 & fatheralive==1
+replace orphan_type=2 if motheralive==1 & fatheralive==0
+replace orphan_type=3 if motheralive==0 & fatheralive==1
+replace orphan_type=4 if motheralive==0 & fatheralive==0
+replace orphan_type=5 if motheralive==8  | fatheralive==8
 
 gen cores_type=.
-replace cores_type=1 if (hv112r>0  & hv112r<99)  & (hv114r>0  & hv114r<99)
-replace cores_type=2 if (hv112r>0  & hv112r<99)  & (hv114r==0 | hv114r==99)
-replace cores_type=3 if (hv112r==0 | hv112r==99) & (hv114r>0  & hv114r<99)
-replace cores_type=4 if (hv112r==0 | hv112r==99) & (hv114r==0 | hv114r==99)
+replace cores_type=1 if motherlineno==1  & fatherlineno==1
+replace cores_type=2 if motherlineno==1  & fatherlineno==0
+replace cores_type=3 if motherlineno==0 & fatherlineno==1
+replace cores_type=4 if motherlineno==0 & fatherlineno==0
 
 gen ph_chld_liv_arrang=.
 replace ph_chld_liv_arrang=1  if cores_type==1
@@ -237,7 +250,7 @@ replace ph_chld_liv_arrang=10 if orphan_type==5
 
 #delimit ;
 label define orphan_type 1 "Both parents alive" 2 "Mother alive, father dead" 
-3 "Father alive, mother dead" 4 "Both parents dead" 5 "Info missing";
+3 "Father alive, mother dead" 4 "Both parents dead" 5 "Missing";
 
 label define cores_type 1 "Living with both parents" 2 "With mother, not father" 
 3 "With father, not mother" 4 "Living with neither parent";
@@ -262,7 +275,7 @@ label var ph_chld_liv_noprnt	"Child under 18 not living with a biological parent
 
 //Child under 18 with one or both parents dead
 gen     ph_chld_orph=0
-replace ph_chld_orph=1 if hv111==0 | hv113==0
+replace ph_chld_orph=1 if motheralive==0 | fatheralive==0
 label values ph_chld_orph yesno
 label var ph_chld_orph "Child under 18 with one or both parents dead"
 
@@ -271,7 +284,7 @@ label var ph_chld_orph "Child under 18 with one or both parents dead"
 
 //Double orphan: both parents dead
 gen     ph_orph_double=0
-replace ph_orph_double=1 if hv111==0 & hv113==0
+replace ph_orph_double=1 if motheralive==0 & fatheralive==0
 
 //Single orphan: one parent dead 
 gen     ph_orph_single=0
@@ -285,34 +298,34 @@ replace ph_foster=1 if cores_type==4
 gen     ph_orph_foster=0
 replace ph_orph_foster=1 if ph_foster==1 | ph_orph_single==1 | ph_orph_double==1
 
-sort hv001 hv002 hvidx
+sort clusternoall hhnumall hhlineno
 save PR_temp_children.dta, replace
 
 *** Household characteristics *** 
 *  Warning, this code will collapse the data and therefore the indicators produced will be lost. However, they are saved in the file PR_temp2_children.dta 
 
 use PR_temp.dta, clear
-keep if hv102==1
-sort hv001 hv002 hvidx
-merge hv001 hv002 hvidx using PR_temp_children.dta
+keep if hhresident==1
+sort clusternoall hhnumall hhlineno
+merge clusternoall hhnumall hhlineno using PR_temp_children.dta
 drop _merge
 
 //Household size
 gen n=1
-egen hhsize=count(n), by(hv001 hv002)
+egen hhsize=count(n), by(clusternoall hhnumall)
 gen     ph_num_members=hhsize
 replace ph_num_members=9 if hhsize>9 
 
-* Sort to be sure that the head of the household (with hv101=1) is the first person listed in the household
-sort hv001 hv002 hv101
+* Sort to be sure that the head of the household (with hhrelate=1) is the first person listed in the household
+sort clusternoall hhnumall hhrelate
 
 * Reduce to one record per household, that of the hh head
-collapse (first) hv005 hhsize ph_num_members hv104 hv025 hv024 (sum) ph_orph_double ph_orph_single ph_foster ph_orph_foster, by(hv001 hv002)
+collapse (first) hhweight hhsize ph_num_members sex urbanhh GEO-REGION (sum) ph_orph_double ph_orph_single ph_foster ph_orph_foster, by(clusternoall hhnumall)
 
 * re-attach labels after collapse
-label values hv024 HV024
-label values hv025 HV025
-label values hv104 HV104
+label values GEO-REGION GEO-REGION
+label values urbanhh Urbanhh
+label values sex Sex
 
 label define ph_num_members 1"1" 2"2" 3"3" 4"4" 5"5" 6"6" 7"7" 8"8" 9"9+"
 label values ph_num_members ph_num_members
@@ -334,38 +347,38 @@ label var ph_foster "Foster children under age 18"
 label var ph_orph_single "Single orphans under age 18"
 label var ph_orph_double "Double orphans under age 18"
 
-label var hv025 "type of place of residence"
+label var urbanhh "type of place of residence"
 
 //Sex of household head
-rename hv104 ph_hhhead_sex
+rename sex ph_hhhead_sex
 label var ph_hhhead_sex "Sex of household head"
 
 ****************************************************
 
 *** Table for household composition ***
 
-gen wt = hv005/1000000
+gen wt = hhweight/1000000
 
 //Household headship and and 
-tab ph_hhhead_sex hv025 [iweight=wt], col
+tab ph_hhhead_sex urbanhh [iw=perweight], col
 * export to excel
-tabout ph_hhhead_sex hv025 using Tables_hh_comps.xls [iw=wt] , c(col) f(1) replace 
+tabout ph_hhhead_sex urbanhh using Tables_hh_comps.xls [iw=perweight] , c(col) f(1) replace 
 
 // Number of usual members
-tab ph_num_members hv025 [iweight=wt], col
+tab ph_num_members urbanhh [iw=perweight], col
 * export to excel
-tabout  ph_num_members hv025 using Tables_hh_comps.xls [iw=wt] , c(col) f(1) append 
+tabout  ph_num_members urbanhh using Tables_hh_comps.xls [iw=perweight] , c(col) f(1) append 
 
 //Mean household size; use fweight
-tab hv025 [fweight=hv005], summarize(hhsize) means
+tab urbanhh [fweight=hhweight], summarize(hhsize) means
 * export to excel
-tabout hv025 using Tables_hh_comps.xls [fweight=hv005], oneway cells(mean hhsize) sum append
+tabout urbanhh using Tables_hh_comps.xls [fweight=hhweight], oneway cells(mean hhsize) sum append
 
 //Percentage of households with orphans and foster children under 18
 local lvars ph_orph_double ph_orph_single ph_foster ph_orph_foster
 foreach lv of local lvars {
-tab `lv' hv025 [iweight=hv005/1000000], col
-tabout `lv' hv025 using Tables_hh_comps.xls [iw=wt] , c(col) f(1) append 
+tab `lv' urbanhh [iweight=hhweight/1000000], col
+tabout `lv' urbanhh using Tables_hh_comps.xls [iw=perweight] , c(col) f(1) append 
 }
 
 ****************************************************
