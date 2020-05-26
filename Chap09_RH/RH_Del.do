@@ -26,7 +26,7 @@ rh_del_stay		"Duration of stay following recent birth"
 /----------------------------------------------------------------------------*/
 
 //Place of delivery
-Replace delpl=. If delpl > 9997
+replace delpl=. If delpl > 9997
 
 //Place of delivery - by place type
 recode delpl  (2000/2905 = 1 "Health facility - public") (3000/3901 = 2 "Health facility - private") (1000/1901 = 3 "Home")(4000/4901 = 4 "NGO")(5000/5901 = 5 "NGO")(6000/9996 = 6 "other") (9997=7 “Don’t Know”)(9998=9 "Missing"), gen(delpltype)
@@ -37,12 +37,12 @@ label var delpltype "Live births by type of health facility"
 **Note: Assitance during delivery and skilled provider indicators are both country specific indicators. 
 **The table for these indicators in the final report would need to be checked to confirm the code below.
 Gen delprov=0
-Replace delprov=1 if deldoc==1
-Replace delprov=2 if delnurm==1
-Replace delprov=3 if deltba==1
-Replace delprov=4 if deloth==1
-Replace delprov=5 if delrel==1
-Replace delprov=6 if delnone==1
+replace delprov=1 if deldoc==1
+replace delprov=2 if delnurm==1
+replace delprov=3 if deltba==1
+replace delprov=4 if deloth==1
+replace delprov=5 if delrel==1
+replace delprov=6 if delnone==1
 replace delprov=7 if deldoc==8 | delnurm==8 | deltba==8 | deloth==8 | delrel==8 | delnone==8
 
 	label define delprov 			///
@@ -68,4 +68,4 @@ replace delcesr=. If delcesr > 7
 Replace delcesrdec=. If delceserdec > 7
 	
 //Duration of stay following recent birth
-Replace deltime=. If deltime > 997	
+replace deltime=. If deltime > 997	
