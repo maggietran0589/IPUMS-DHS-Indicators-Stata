@@ -1,20 +1,27 @@
 /*****************************************************************************************************
 Program: 			PH_POP.do
 Purpose: 			Code to compute population characteristics, birth registration, education levels, household composition, orphanhood, and living arrangments
-Data inputs: 		PR survey list
-Data outputs:		coded variables
-Author:			       Faduma Shaba
-Date last modified: May 2020 
+Data inputs: 			IPUMS DHS Variables
+Data outputs:			coded variables
+Author:			       	Faduma Shaba
+Date last modified: 		May 2020 
 Note:				In line 244 the code will collapse the data and therefore some indicators produced will be lost. However, they are saved in the file PR_temp_children.dta and this data file will be used to produce the tables for these indicators in the PH_table code. This code will produce the Tables_hh_comps for household composition. 
 *****************************************************************************************************/
 
+/* DIRECTIONS
+1. Create a data extract at dhs.ipums.org that includes the IPUMS variables listed below.
+	 
+2. On lines 324 and 327 below, replace "GEO-REGION" with your sample's region variable name. 
+	In IPUMS DHS, each survey's region variable has a unique name to facilitate 
+	pooling data. These variables can be found in the IPUMS drop down menu under:
+		GEOGRAPHY -> SINGLE SAMPLE GEOGRAPHY */
+
 /*----------------------------------------------------------------------------
-Variables created in this file:
-5yearagehh			"De facto population by five-year age groups"
+IPUMS Variables used in this file:
+5yearagehh		"De facto population by five-year age groups"
 dependagehh		"De facto population by dependency age groups"
 childagehh		"De facto population by child and adult populations"
 adolescentagehh		"De factor population that are adolesents"
-	
 birthrregcerthh		"Child under 5 with registered birth and birth certificate"
 birthnoregcerthh	"Child under 5 with registered birth and no birth certificate"
 ph_birthreg		"Child under 5 with registered birth"
@@ -26,26 +33,16 @@ ph_chld_liv_noprnt	"Child under 18 not living with a biological parent"
 ph_chld_orph		"Child under 18 with one or both parents dead"
 ph_hhhead_sex		"Sex of household head"
 ph_num_members		"Number of usual household members"
-	
 ph_orph_double		"Double orphans under age 18"
 ph_orph_single		"Single orphans under age 18"
-ph_foster			"Foster children under age 18"
+ph_foster		"Foster children under age 18"
 ph_orph_foster		"Orphans and/or foster children under age 18"
 ----------------------------------------------------------------------------*/
 Created Variables
 ph_chld_liv_arrang	"Living arrangement and parents survival status for child under 18"
 
-
 ----------------------------------------------------------------------------*/
-**********MAKE A NOTE ABOUT GEO-TYPE (HV024)***************
 
-
-/* DIRECTIONS
-1. Create a data extract at dhs.ipums.org that includes the variables listed below.
-	 
-2. On lines [SPECIFY]  below, replace "GEO-REGION" with your sample's region variable name. 
-	In IPUMS DHS, each survey's region variable has a unique name to facilitate 
-	pooling data. These variables can be found in the IPUMS drop down menu under: 
 
 cap label define yesno 0"No" 1"Yes"
 
