@@ -7,12 +7,12 @@ Author:			Faduma Shaba
 Date last modified: 		May 2020				
 *****************************************************************************************************/
 IPUMS DHS Variables
-Deldoc			“Doctor provided delivery care”
-Delnurm			“Nurse-midwife provided delivery care”
-Deltba			“Traditional birth attendent provided delivery care”
-Deltoth			“Other provider provided delivery care”
-Delrel			“Relative provided delivery care”
-Delnone			“Nobody provided delivery care”
+deldoc			“Doctor provided delivery care”
+delnurm			“Nurse-midwife provided delivery care”
+deltba			“Traditional birth attendent provided delivery care”
+deloth			“Other provider provided delivery care”
+delrel			“Relative provided delivery care”
+delnone			“Nobody provided delivery care”
 delpl			"Live births by place of delivery"
 delcesr			"Live births delivered by cesarean"
 
@@ -36,7 +36,7 @@ label var delpltype "Live births by type of health facility"
 //Assistance during delivery
 **Note: Assitance during delivery and skilled provider indicators are both country specific indicators. 
 **The table for these indicators in the final report would need to be checked to confirm the code below.
-Gen delprov=0
+gen delprov=0
 replace delprov=1 if deldoc==1
 replace delprov=2 if delnurm==1
 replace delprov=3 if deltba==1
