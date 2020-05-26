@@ -3,7 +3,7 @@ Completion list (this list will be updated periodically)
 
 Ch.	|Title |Ch. Acronym |	Began Stata code| Stata code Complete|
 |-|-------|--|------|-----|
-|2|Population & Housing|	PH| May 2020
+|2|Population & Housing|	PH| May 2020 | May 2020
 |3|	Respondents’ Characteristics|	RC|	March 2020| April 2020
 |4|	Marriage & Sexual Activity |MS | March 2020 | April 2020		
 |5|	Fertility	|FE| April 2020|			
