@@ -1,12 +1,17 @@
 /*****************************************************************************************************
 Program: 			RH_ANC.do
 Purpose: 			Code ANC indicators
-Data inputs: 		IR survey list
-Data outputs:		coded variables
-Author:				Shireen Assaf
-Date last modified: Dec 21 2018 by Shireen Assaf 
+Data inputs: 			IPUMS Women's Variables
+Data outputs:			coded variables
+Author:				Faduma Shaba
+Date last modified: 		May 2020 by Faduma Shaba
 *****************************************************************************************************/
 
+/*----------------------------------------------------------------------------//
+IPUMS Variables used in this file:
+perweight		"Sample weight for persons"
+urban			"Urban-rural status"
+birthsin5yrs		"Number of births in last 5 years
 /*----------------------------------------------------------------------------//
 Variables created in this file:
 rh_anc_pv			"Person providing assistance during ANC"
@@ -79,21 +84,21 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	recode m13_1 (98 99=.), gen(anctiming)
 		
 	* Total
-	summarize anctiming [fweight=v005], detail
+	summarize anctiming [fweight=perweight], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1
 	replace dummy=1 if anctiming<sp50 & ancany==1
-	summarize dummy [fweight=v005]
+	summarize dummy [fweight=perweight]
 	scalar sL=r(mean)
 	drop dummy
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1
 	replace dummy=1 if anctiming <=sp50 & ancany==1
-	summarize dummy [fweight=v005]
+	summarize dummy [fweight=perweight]
 	scalar sU=r(mean)
 	drop dummy
 
@@ -101,20 +106,20 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	label var rh_anc_median "Total- Median months pregnant at first visit"
 	
 	* Urban
-	summarize anctiming if v025==1 [fweight=v005], detail
+	summarize anctiming if urban==1 [fweight=perweight], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
-	replace dummy=0 if ancany==1 & v025==1 
-	replace dummy=1 if anctiming<sp50 & ancany==1 & v025==1 
-	summarize dummy [fweight=v005]
+	replace dummy=0 if ancany==1 & urban==1 
+	replace dummy=1 if anctiming<sp50 & ancany==1 & urban==1 
+	summarize dummy [fweight=perweight]
 	scalar sL=r(mean)
 
 	replace dummy=. 
-	replace dummy=0 if ancany==1 & v025==1 
-	replace dummy=1 if anctiming <=sp50 & ancany==1 & v025==1 
-	summarize dummy [fweight=v005]
+	replace dummy=0 if ancany==1 & urban==1 
+	replace dummy=1 if anctiming <=sp50 & ancany==1 & urban==1 
+	summarize dummy [fweight=perweight]
 	scalar sU=r(mean)
 	drop dummy
 
@@ -122,20 +127,20 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	label var rh_anc_median_urban "Urban- Median months pregnant at first visit"
 	
 	* Rural
-	summarize anctiming if v025==2 [fweight=v005], detail
+	summarize anctiming if urban==2 [fweight=perweight], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
-	replace dummy=0 if ancany==1  & v025==2 
-	replace dummy=1 if anctiming<sp50 & ancany==1  & v025==2 
-	summarize dummy [fweight=v005]
+	replace dummy=0 if ancany==1  & urban==2 
+	replace dummy=1 if anctiming<sp50 & ancany==1  & urban==2 
+	summarize dummy [fweight=perweight]
 	scalar sL=r(mean)
 
 	replace dummy=. 
-	replace dummy=0 if ancany==1  & v025==2 
-	replace dummy=1 if anctiming <=sp50 & ancany==1  & v025==2 
-	summarize dummy [fweight=v005]
+	replace dummy=0 if ancany==1  & urban==2 
+	replace dummy=1 if anctiming <=sp50 & ancany==1  & urban==2 
+	summarize dummy [fweight=perweight]
 	scalar sU=r(mean)
 	drop dummy
 
@@ -145,12 +150,12 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	
 *** ANC components ***	
 //Took iron tablets or syrup
-	recode m45_1 (1=1 "yes") (else=0 "No") if v208>0, gen(rh_anc_iron)
+	recode m45_1 (1=1 "yes") (else=0 "No") if birthsin5yrs>0, gen(rh_anc_iron)
 	replace rh_anc_iron=. if age>=period  
 	label var rh_anc_iron "Took iron tablet/syrup during pregnancy of last birth"
 	
 //Took intestinal parasite drugs 
-	cap recode m60_1 (1=1 "yes") (else=0 "No") if v208>0, gen(rh_anc_parast)
+	cap recode m60_1 (1=1 "yes") (else=0 "No") if birthsin5yrs>0, gen(rh_anc_parast)
 	cap replace rh_anc_parast=. if age>=period  
 	cap label var rh_anc_parast "Took intestinal parasite drugs during pregnancy of last birth"
 	* for surveys that do not have this variable
