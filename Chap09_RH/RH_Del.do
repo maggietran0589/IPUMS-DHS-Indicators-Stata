@@ -65,7 +65,7 @@ label var delskilled"Skilled assistance during delivery"
 replace delcesr=. If delcesr > 7
 	
 //Timing of decision for caesarean
-Replace delcesrdec=. If delceserdec > 7
+replace delcesrdec=. If delceserdec > 7
 	
 //Duration of stay following recent birth
 replace deltime=. If deltime > 997	
