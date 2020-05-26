@@ -1,23 +1,48 @@
 /*****************************************************************************************************
 Program: 			        PH_SCHOL.do
 Purpose: 			        Code to compute school attendance indicators
-Data inputs: 		      IPUMS DHS Household Variables
-Data outputs:		      coded variables
+Data inputs: 		      		IPUMS DHS Household Variables
+Data outputs:		      		coded variables
 Author:				        Faduma Shaba
-Date last modified:   May 26, 2020 
-Note:				To produce the net attendance ratios you need to provide country specific information on the year and month of the school calendar and the age range for school attendance. See lines 65-75
+Date last modified:   			May 26, 2020 
+Note:					To produce the net attendance ratios you need to provide country specific information on the year and month of the school calendar and the age range for school attendance. See lines 65-75
 *****************************************************************************************************/
 
+/* DIRECTIONS
+1. Create a data extract at dhs.ipums.org that includes the IPUMS variables listed below.
+	 
+2. On lines 211, 216, 221, and 226 below, replace "GEO-REGION" with your sample's region variable name. 
+	In IPUMS DHS, each survey's region variable has a unique name to facilitate 
+	pooling data. These variables can be found in the IPUMS drop down menu under:
+		GEOGRAPHY -> SINGLE SAMPLE GEOGRAPHY */
+/*----------------------------------------------------------------------------		
+IPUMS variables used in this file:
+GEO-REGION variables *see line 14*
+hhlineno
+hhweight
+wealthqhh
+urbanhh
+clusterno
+hhnum
+kiddobcmc_all
+linenokid_all
+clusternoall
+hhnumall
+hhage
+hhslept
+hhintcmc
+edlevelnow
+sex
 /*----------------------------------------------------------------------------
 Variables created in this file:
 ph_sch_nar_prim			"Primary school net attendance ratio (NAR)"
 ph_sch_nar_sec			"Secondary school net attendance ratio (NAR)"
 ph_sch_gar_prim			"Primary school gross attendance ratio (GAR)"
 ph_sch_gar_sec			"Secondary school gross attendance ratio (GAR)"
-ph_sch_nar_prim_*_gpi	"Gender parity index for NAR primary"
-ph_sch_nar_sec_*_gpi	"Gender parity index for NAR secondary"
-ph_sch_gar_prim_*_gpi	"Gender parity index for GAR primary"
-ph_sch_gar_sec_*_gpi	"Gender parity index for GAR secondary"	
+ph_sch_nar_prim_*_gpi		"Gender parity index for NAR primary"
+ph_sch_nar_sec_*_gpi		"Gender parity index for NAR secondary"
+ph_sch_gar_prim_*_gpi		"Gender parity index for GAR primary"
+ph_sch_gar_sec_*_gpi		"Gender parity index for GAR secondary"	
 ----------------------------------------------------------------------------*/
 
 * For net attendance rates (NAR) and gross attendance rates (GAR) we need to know the age of children at the start of the school year.
