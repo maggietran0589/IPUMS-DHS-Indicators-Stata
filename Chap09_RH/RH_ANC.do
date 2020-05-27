@@ -14,11 +14,11 @@ urban			"Urban-rural status"
 birthsin5yrs		"Number of births in last 5 years
 /*----------------------------------------------------------------------------//
 Variables created in this file:
-rh_anc_pv			"Person providing assistance during ANC"
-rh_anc_pvskill		"Skilled assistance during ANC"
-rh_anc_numvs		"Number of ANC visits"
-rh_anc_4vs			"Attended 4+ ANC visits"
-rh_anc_moprg		"Attended ANC <4 months of pregnancy"
+ancprov			"Person providing assistance during ANC"
+ancareskilled		"Skilled assistance during ANC"
+ancarevisfin		"Number of ANC visits (final report)"
+ancarefourpl			"Attended 4+ ANC visits"
+ancare1sttri		"Attended ANC <4 months of pregnancy"
 rh_anc_median		"Median months pregnant at first visit" (scalar not a variable)
 rh_anc_iron			"Took iron tablet/syrup during the pregnancy of last birth"
 rh_anc_parast		"Took intestinal parasite drugs during pregnancy of last birth"
@@ -33,187 +33,143 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 *** ANC visit indicators ***
 
 //ANC by type of provider
-** Note: Please check the final report for this indicator to determine the categories and adjust the code and label accordingly. 
-	gen rh_anc_pv = 6 if m2a_1! = .
-	replace rh_anc_pv 	= 4 	if m2f_1 == 1 | m2g_1 == 1 | m2h_1 == 1 | m2i_1 == 1 | m2j_1 == 1 | m2k_1 == 1 | m2l_1 == 1 | m2m_1 == 1
-	replace rh_anc_pv 	= 3 	if m2c_1 == 1 | m2d_1 == 1 | m2e_1 == 1
-	replace rh_anc_pv 	= 2 	if m2b_1 == 1
-	replace rh_anc_pv 	= 1 	if m2a_1 == 1
-	replace rh_anc_pv 	= 5 	if m2a_1 == 9
-	replace rh_anc_pv	= .		if age>=period
-	
+	gen ancareprov= 0 
+	replace ancareprov= 5 if ancarenone_01== 1
+	replace ancareprov= 4 if ancaretba_01== 1 
+	replace ancareprov= 3 if ancarehw_01== 1 
+	replace ancareprov= 2 if ancarenurm_01== 1
+	replace ancareprov= 1 if ancaredoc_01== 1
+
 	label define rh_anc_pv ///
 	1 "Doctor" 		///
 	2 "Nurse/midwife"	///
-	3 "Other health worker" ///
-	4 "TBA/other/relative"		///
-	5 "Missing" ///
-	6 "No ANC" 
-	label val rh_anc_pv rh_anc_pv
-	label var rh_anc_pv "Person providing assistance during ANC"
+	3 "Community Health Worker" ///
+	4 "Traditional Birth Attendent"		///
+	5 "No ANC" 
+	label val ancareprov ancareprov
+	label var ancareprov "Person providing assistance during ANC"
 	
 //ANC by skilled provider
 ** Note: Please check the final report for this indicator to determine what provider is considered skilled.
-	recode rh_anc_pv (1/3 = 1 "Skilled provider") (4/6 = 0 "Unskilled/no one") , gen(rh_anc_pvskill)
-	replace rh_anc_pvskill = . if age>=period
-	label var rh_anc_pvskill "Skilled assistance during ANC"	
+	recode ancareprov (1/2 = 1 "Skilled provider") (3/5 = 0 "Unskilled/no provider") , gen(ancareskilled)
+	label var ancareskilled "Skilled assistance during ANC"	
 	
 //Number of ANC visits in 4 categories that match the table in the final report
-	recode m14_1 (0=0 "none") (1=1) (2 3=2 "2-3") (4/90=3 "4+") (else=9 "don't know/missing"), gen(rh_anc_numvs)
-	replace rh_anc_numvs=. if age>=period  
-	label var rh_anc_numvs "Number of ANC visits"
+	recode anvisno_01 (0=0 "none") (1=1) (2/3=2 "2-3") (4/90=3 "4+") (else=9 "don't know/missing"), gen(ancarevisfin)  
+	label var ancarevisfin "Number of ANC visits"
 		
 //4+ ANC visits  
-	recode rh_anc_numvs (1 2 9=0 "no") (3=1 "yes"), gen(rh_anc_4vs)
-	lab var rh_anc_4vs "Attended 4+ ANC visits"
+	recode ancarevisfin (1 2 9=0 "no") (3=1 "yes"), gen(ancarefourpl)
+	lab var ancarefourpl "Attended 4+ ANC visits"
 	
 //Number of months pregnant at time of first ANC visit 
-	recode m13_1 (.=0 "no anc") (0/3=1 "<4") (4 5=2 "4-5") (6 7=3 "6-7") (8/90=4 "8+") (else=9 "don't know/missing"), gen(rh_anc_moprg)
-	replace rh_anc_moprg=. if age>=period  
-	label var rh_anc_moprg "Number of months pregnant at time of first ANC visit"
+	replace anvismo_01=. if anvismo_01 > 9
 
 //ANC before 4 months
-	recode rh_anc_moprg (0 2/5 9=0 "no") (1=1 "yes"), gen(rh_anc_4mo)
-	lab var rh_anc_4mo "Attended ANC <4 months of pregnancy"
+	recode anvismo_01 (5/9=0 "no") (0/4=1 "yes"), gen(ancare1sttri)
+	lab var ancare1sttri "Attended ANC <4 months of pregnancy"
 
 //Median number of months pregnant at time of 1st ANC
 	
 	* Any ANC visits (for denominator)
-	recode m14_1 (0 99 = 0 "None") (1/60 98 = 1 "1+ ANC visit"), g(ancany)
+	recode anvisno_01 (0=0 "None") (1/30= 1 "1+ ANC visit") (else=.), gen(ancany)
 	
-	recode m13_1 (98 99=.), gen(anctiming)
+	replace anvismo_01=. if anvismo_01 > 96 
 		
 	* Total
-	summarize anctiming [fweight=perweight], detail
+	summarize anvismo_01 [iw=perweight], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1
-	replace dummy=1 if anctiming<sp50 & ancany==1
-	summarize dummy [fweight=perweight]
+	replace dummy=1 if anvismo_01<sp50 & ancany==1
+	summarize dummy [iw=perweight]
 	scalar sL=r(mean)
 	drop dummy
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1
-	replace dummy=1 if anctiming <=sp50 & ancany==1
-	summarize dummy [fweight=perweight]
+	replace dummy=1 if anvismo_01 <=sp50 & ancany==1
+	summarize dummy [iw=perweight]
 	scalar sU=r(mean)
 	drop dummy
 
-	gen rh_anc_median=round(sp50+(.5-sL)/(sU-sL),.01)
-	label var rh_anc_median "Total- Median months pregnant at first visit"
+	gen ancmedian=round(sp50+(.5-sL)/(sU-sL),.01)
+	label var ancmedian "Total- Median months pregnant at first visit"
 	
 	* Urban
-	summarize anctiming if urban==1 [fweight=perweight], detail
+	summarize anvismo_01 if urban==1 [iw=perweight], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1 & urban==1 
-	replace dummy=1 if anctiming<sp50 & ancany==1 & urban==1 
-	summarize dummy [fweight=perweight]
+	replace dummy=1 if anvismo_01<sp50 & ancany==1 & urban==1 
+	summarize dummy [iw=perweight]
 	scalar sL=r(mean)
 
 	replace dummy=. 
 	replace dummy=0 if ancany==1 & urban==1 
-	replace dummy=1 if anctiming <=sp50 & ancany==1 & urban==1 
-	summarize dummy [fweight=perweight]
+	replace dummy=1 if anvismo_01 <=sp50 & ancany==1 & urban==1 
+	summarize dummy [iw=perweight]
 	scalar sU=r(mean)
 	drop dummy
 
-	gen rh_anc_median_urban=round(sp50+(.5-sL)/(sU-sL),.01)
-	label var rh_anc_median_urban "Urban- Median months pregnant at first visit"
+	gen ancmedurban=round(sp50+(.5-sL)/(sU-sL),.01)
+	label var ancmedurban "Urban- Median months pregnant at first visit"
 	
 	* Rural
-	summarize anctiming if urban==2 [fweight=perweight], detail
+	summarize anvismo_01 if urban==2 [iw=perweight], detail
 	* 50% percentile
 	scalar sp50=r(p50)
 	
 	gen dummy=. 
 	replace dummy=0 if ancany==1  & urban==2 
-	replace dummy=1 if anctiming<sp50 & ancany==1  & urban==2 
-	summarize dummy [fweight=perweight]
+	replace dummy=1 if anvismo_01<sp50 & ancany==1  & urban==2 
+	summarize dummy [iw=perweight]
 	scalar sL=r(mean)
 
 	replace dummy=. 
 	replace dummy=0 if ancany==1  & urban==2 
-	replace dummy=1 if anctiming <=sp50 & ancany==1  & urban==2 
-	summarize dummy [fweight=perweight]
+	replace dummy=1 if anvismo_01 <=sp50 & ancany==1  & urban==2 
+	summarize dummy [iw=perweight]
 	scalar sU=r(mean)
 	drop dummy
 
-	gen rh_anc_median_rural=round(sp50+(.5-sL)/(sU-sL),.01)
-	label var rh_anc_median_rural "Rural- Median months pregnant at first visit"
+	gen ancmedianrural=round(sp50+(.5-sL)/(sU-sL),.01)
+	label var ancmedianrural "Rural- Median months pregnant at first visit"
 	
 	
 *** ANC components ***	
 //Took iron tablets or syrup
-	recode m45_1 (1=1 "yes") (else=0 "No") if birthsin5yrs>0, gen(rh_anc_iron)
-	replace rh_anc_iron=. if age>=period  
-	label var rh_anc_iron "Took iron tablet/syrup during pregnancy of last birth"
+	replace aniron_01=. if aniron_01 > 7
 	
 //Took intestinal parasite drugs 
-	cap recode m60_1 (1=1 "yes") (else=0 "No") if birthsin5yrs>0, gen(rh_anc_parast)
-	cap replace rh_anc_parast=. if age>=period  
-	cap label var rh_anc_parast "Took intestinal parasite drugs during pregnancy of last birth"
-	* for surveys that do not have this variable
-	cap gen rh_anc_parast=.
-	
-* Among women who had ANC for their most recent birth	
+	replace ancaredeworm_01=. if ancaredeworm_01 > 7	
 
 //Informed of pregnancy complications
-	gen rh_anc_prgcomp = 0 if ancany==1
-	replace rh_anc_prgcomp = 1 if m43_1==1 & ancany==1
-	label values rh_anc_prgcomp yesno
-	label var rh_anc_prgcomp "Informed of pregnancy complications during ANC visit"
+	replace ancarecom_01=. if ancarecom_01 > 7
 	
 //Blood pressure measured
-	gen rh_anc_bldpres = 0 if ancany==1
-	replace rh_anc_bldpres=1 if m42c_1==1 & ancany==1
-	label values rh_anc_bldpres yesno
-	label var rh_anc_bldpres "Blood pressure was taken during ANC visit"
+	replace ancarebp=. if ancarebp > 7
 	
 //Urine sample taken
-	gen rh_anc_urine = 0 if ancany==1
-	replace rh_anc_urine=1 if m42d_1==1 & ancany==1
-	label values rh_anc_urine yesno
-	label var rh_anc_urine "Urine sample was taken during ANC visit"
+	replace ancareur=. if ancareur > 7
 	
 //Blood sample taken
-	gen rh_anc_bldsamp = 0 if ancany==1
-	replace rh_anc_bldsamp = 1 if m42e_1==1 & ancany==1
-	label values rh_anc_bldsamp yesno
-	label var rh_anc_bldsamp "Blood sample was taken during ANC visit"
+	replace ancarebld=. if ancarebld > 7
 	
 //tetnaus toxoid injections
-	recode m1_1 (0 1 8 9 . = 0 "No") (1/7 = 1 "Yes"), gen(rh_anc_toxinj)
-	replace rh_anc_toxinj = . if age>=period
-	label var rh_anc_toxinj "Received 2+ tetanus injections during last pregnancy"
+	replace antetnus_01=. if antetnus > 7
 	
 //neonatal tetanus
 	* this was copied from the DHS user forum. Code was prepared by Lindsay Mallick.
 	
-	*older surverys do not have this indicator. m1a_1 (number of tetanus injections before pregnancy) is needed to compute this indicator
-	scalar m1a_1_included=1
-		capture confirm numeric variable m1a_1, exact 
-		if _rc>0 {
-		* b19 is not present
-		scalar m1a_1_included=0
-		}
-		if _rc==0 {
-		* b19 is present; check for values
-		summarize m1a_1
-		  if r(sd)==0 | r(sd)==. {
-		  scalar m1a_1_included=0
-		  }
-		}
-		
-* for surveys that have this indicator
 if m1a_1_included==1 {	
 	gen tet2lastp = 0 
-    replace tet2lastp = 1 if m1_1 >1 & m1_1<8
+    	replace tet2lastp = 1 if m1_1 >1 & m1_1<8
+    	label var tet2lastp "Had 2 or more tetanus shots during last pregnancy"
 	
 	* temporary vars needed to compute the indicator
 	gen totet = 0 
@@ -225,7 +181,7 @@ if m1a_1_included==1 {
 	g lastinj = 9999
 	replace lastinj = 0 if (m1_1>0 & m1_1 <8)
 	gen int ageyr = (age)/12 
-	replace lastinj = (m1d_1 - ageyr) if m1d_1 <20 & (m1_1==0 | (m1_1>7 & m1_1<9996)) // years ago of last shot - (age at of child), yields some negatives
+	replace lastinj = (pretetnusago_01 - ageyr) if pretetnusago_01 <20 & (m1_1==0 | (m1_1>7 & m1_1<9996)) // years ago of last shot - (age at of child), yields some negatives
 
 	*now generate summary variable for protection against neonatal tetanus 
 	replace ttprotect = 1 if tet2lastp ==1 
