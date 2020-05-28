@@ -9,9 +9,23 @@ Date last modified: 		May 2020 by Faduma Shaba
 
 /*----------------------------------------------------------------------------//
 IPUMS Variables used in this file:
+ancarenone_01		"Nobody provided antenatal care"
+ancaretba_01		"Traditional birth attendent provided antenatal care"
+ancarehw_01		"Community health-worker provided antenatal care"
+ancarenurm_01		"Nurse-midwife provided antenatal care"
+ancaredoc_01		"Doctor provided antenatal care"
+anvisno_01		"Number of antenatal care visits"
+anvismo_01		"Number of months pregnant for first antenatal care visit"
+aniron_01		"Took iron tablet/syrup during the pregnancy of last birth"
+ancaredeworm_01		"Took intestinal parasite drugs during pregnancy of last birth"
+ancarecom_01		"Informed of pregnancy complications during ANC visit"
+ancarebp		"Blood pressure was taken during ANC visit"
+ancareur		"Urine sample was taken during ANC visit"
+ancarebld		"Blood sample was taken during ANC visit"
 perweight		"Sample weight for persons"
 urban			"Urban-rural status"
 birthsin5yrs		"Number of births in last 5 years
+antetnus_01		"Received 2+ tetanus injections during last pregnancy"
 /*----------------------------------------------------------------------------//
 Variables created in this file:
 ancprov			"Person providing assistance during ANC"
@@ -19,15 +33,10 @@ ancareskilled		"Skilled assistance during ANC"
 ancarevisfin		"Number of ANC visits (final report)"
 ancarefourpl			"Attended 4+ ANC visits"
 ancare1sttri		"Attended ANC <4 months of pregnancy"
-rh_anc_median		"Median months pregnant at first visit" (scalar not a variable)
-rh_anc_iron			"Took iron tablet/syrup during the pregnancy of last birth"
-rh_anc_parast		"Took intestinal parasite drugs during pregnancy of last birth"
-rh_anc_prgcomp		"Informed of pregnancy complications during ANC visit"
-rh_anc_bldpres		"Blood pressure was taken during ANC visit"
-rh_anc_urine		"Urine sample was taken during ANC visit"
-rh_anc_bldsamp		"Blood sample was taken during ANC visit"
-rh_anc_toxinj		"Received 2+ tetanus injections during last pregnancy"
-rh_anc_neotet		"Protected against neonatal tetanus"
+ancmedian		"Median months pregnant at first visit" (scalar not a variable)
+ancmedurban		"Urban- Median months pregnant at first visit" (scalar not a variable)
+ancmedrural		"Rural- Median months pregnant at first visit" (scalar not a variable)
+ancneotet		"Protected against neonatal tetanus"
 /----------------------------------------------------------------------------*/
 
 *** ANC visit indicators ***
@@ -137,8 +146,8 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 	scalar sU=r(mean)
 	drop dummy
 
-	gen ancmedianrural=round(sp50+(.5-sL)/(sU-sL),.01)
-	label var ancmedianrural "Rural- Median months pregnant at first visit"
+	gen ancmedrural=round(sp50+(.5-sL)/(sU-sL),.01)
+	label var ancmedrural "Rural- Median months pregnant at first visit"
 	
 	
 *** ANC components ***	
@@ -166,22 +175,21 @@ rh_anc_neotet		"Protected against neonatal tetanus"
 //neonatal tetanus
 	* this was copied from the DHS user forum. Code was prepared by Lindsay Mallick.
 	
-if m1a_1_included==1 {	
 	gen tet2lastp = 0 
-    	replace tet2lastp = 1 if m1_1 >1 & m1_1<8
+    	replace tet2lastp = 1 if antetnusno_01 >1 & antetnusno_01 <8
     	label var tet2lastp "Had 2 or more tetanus shots during last pregnancy"
 	
 	* temporary vars needed to compute the indicator
 	gen totet = 0 
 	gen ttprotect = 0 				   
-	replace totet = m1_1 if (m1_1>0 & m1_1<8)
-	replace totet = m1a_1 + totet if (m1a_1 > 0 & m1a_1 < 8)
+	replace totet = antetnusno_01 if (antetnusno_01>0 & antetnusno_01<8)
+	replace totet = pretetnusno_01 + totet if (pretetnusno_01 > 0 & pretetnusno_01 < 8)
 				   
 	*now generating variable for date of last injection - will be 0 for women with at least 1 injection at last pregnancy
-	g lastinj = 9999
-	replace lastinj = 0 if (m1_1>0 & m1_1 <8)
+	gen lastinj = 9999
+	replace lastinj = 0 if (antetnusno_01>0 & antetnusno_01 <8)
 	gen int ageyr = (age)/12 
-	replace lastinj = (pretetnusago_01 - ageyr) if pretetnusago_01 <20 & (m1_1==0 | (m1_1>7 & m1_1<9996)) // years ago of last shot - (age at of child), yields some negatives
+	replace lastinj = (pretetnusago_01 - ageyr) if pretetnusago_01 <20 & (antetnusno_01==0 | (antetnusno_01>7 & antetnusno_01<9996)) // years ago of last shot - (age at of child), yields some negatives
 
 	*now generate summary variable for protection against neonatal tetanus 
 	replace ttprotect = 1 if tet2lastp ==1 
@@ -191,15 +199,7 @@ if m1a_1_included==1 {
 	replace ttprotect = 1 if totet>=5  //at least 2 shots in lifetime
 	lab var ttprotect "Full neonatal tetanus Protection"
 				   
-	gen rh_anc_neotet = ttprotect
-	replace rh_anc_neotet = . if  bidx_01!=1 | age>=period 
-	label var rh_anc_neotet "Protected against neonatal tetanus"
+	gen ancneotet = ttprotect
+	replace ancneotet = . if  bidx_01!=1 | age>=period 
+	label var ancneotet "Protected against neonatal tetanus"
 	
-	}
-
-*for surveys that do not have this indicator, generate indicator as missing value. 
-if m1a_1_included==0 {	
-gen rh_anc_neotet=.
-}
-
-************************************************************************
