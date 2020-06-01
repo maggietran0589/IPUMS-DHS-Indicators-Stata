@@ -21,7 +21,7 @@ which can be used to export the results
 	So, for example, the region variable for Afghanistan's 2015 survey is geo_af2015. 
 	The region variable for Tanzania's 1996 survey is geo_tz1996.
 	
-3. Change the paths on lines [765, 784].
+3. Change the paths on lines [801, 820].
 	Save the file in the directory of your choosing. 
 	
 4. Run this .do file.
