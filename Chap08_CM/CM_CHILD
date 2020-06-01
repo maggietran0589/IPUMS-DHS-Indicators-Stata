@@ -798,7 +798,7 @@ scalar run_number=0
 
 ***********************
 * Specify the path to the log file and the output files as a scalar
-scalar soutpath="C:/Users//$user/ICF/Analysis - Shared Resources/Code/DHS-Indicators-Stata/Chap08_CM"
+scalar soutpath="C:/Users//$user/ICF/Analysis - Shared Resources/Code/IDHS-Indicators-Stata/Chap08_CM"
 local loutpath=soutpath
 cd "`loutpath'"
 ***********************
@@ -817,7 +817,7 @@ local llogfile=slogfile
 
 ***********************
 * Specify the path to the input data as a scalar
-scalar spath="C:/Users/$user/ICF/Analysis - Shared Resources/Data/DHSdata"
+scalar spath="C:/Users/$user/ICF/Analysis - Shared Resources/Data/IDHSdata"
 local lpath=spath
 ***********************
 
