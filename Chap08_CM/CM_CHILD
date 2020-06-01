@@ -1,17 +1,17 @@
 /*****************************************************************************
-Program: 			          CM_CHILD.do
-Purpose: 			          Produce child mortality indicators 
-Data inputs: 			      Child Variables
-Data outputs:			      coded variables
-Author:			            Faduma Shaba  
+Program: 			CM_CHILD.do
+Purpose: 			Produce child mortality indicators 
+Data inputs: 			Child Variables
+Data outputs:			coded variables
+Author:			        Faduma Shaba  
 Date last modified: 		June 2020
-Note:				            The program will produce a file "`CNPH'_mortality_rates_with_ci.dta" 
+Note:				The program will produce a file "`CNPH'_mortality_rates_with_ci.dta" 
 which can be used to export the results 
 *****************************************************************************/
 /* DIRECTIONS
 1. Create a data extract at dhs.ipums.org that includes the variables listed below.
 	 
-2. On lines [121, 370, 389, 582, 706, 724, 800]  below, replace "GEO-REGION" with your sample's region variable name. 
+2. On lines [85, 505, 743, 833, 875]  below, replace "GEO-REGION" with your sample's region variable name. 
 	In IPUMS DHS, each survey's region variable has a unique name to facilitate 
 	pooling data. These variables can be found in the IPUMS drop down menu under: 
 	
