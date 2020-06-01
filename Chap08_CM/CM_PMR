@@ -1,0 +1,145 @@
+/*****************************************************************************
+Program: 			        CM_PMR.do
+Purpose: 			        Code to compute perinatal mortality 
+Data inputs: 		      IPUMS Women's variables
+Data outputs:		      coded variables
+Author:				        Faduma Shaba
+Date last modified:   June 1 2020
+Notes:				Any background variable you would like to disaggregate the perinatal mortality by needs to be added to line 19.
+					    A file "CM_PMRdata.dta" will be produced that can be used to export the results. 
+*****************************************************************************/
+/* DIRECTIONS
+1. Create a data extract at dhs.ipums.org that includes the variables listed below.
+	 
+2. On lines [85, 505, 743, 833, 875]  below, replace "GEO-REGION" with your sample's region variable name. 
+	In IPUMS DHS, each survey's region variable has a unique name to facilitate 
+	pooling data. These variables can be found in the IPUMS drop down menu under: 
+	
+		GEOGRAPHY -> SINGLE SAMPLE GEOGRAPHY.
+	The single-sample region variables all follow the same naming convention: 
+		geo_[country abbreviation][survey year]
+	So, for example, the region variable for Afghanistan's 2015 survey is geo_af2015. 
+	The region variable for Tanzania's 1996 survey is geo_tz1996.
+		
+3. Run this .do file.
+*/
+/*****************************************************************************
+IPUMS DHS Variables used:
+clusterno
+hhnum
+lineno
+perweight
+indatecmc
+dobcmc
+age5year
+psu
+strata
+domain
+GEO-REGION
+urban
+educlvl
+wealthq
+pregtercmc
+Precaltermcmc
+*****************************************************************************/
+/*----------------------------------------------------------------------------
+Variables created in this file:
+cm_peri		"Perinatal mortality rate"
+----------------------------------------------------------------------------*/
+
+gen pregs = 0
+
+forvalues i = 1/80 {
+  gen cmc`i' = v017 + 80 - `i'
+  gen event`i' = substr(vcal_1, `i', 1)
+  gen type`i' = .
+  replace type`i' = 1 if substr(vcal_1,`i',1) == "B"
+  replace type`i' = 3 if substr(vcal_1,`i',1) == "T"
+  replace type`i' = 2 if substr(vcal_1,`i',7) == "TPPPPPP" 
+  replace pregs = pregs+1 if (substr(vcal_1,`i',1) == "B" | substr(vcal_1,`i',1) == "T")
+}
+* Drop cases with no pregnancies
+drop if pregs == 0
+
+* Decide what variables you want to keep first before the reshape, modify this list as you need to add extra variables.
+keep caseid clusterno hhnum lineno perweight indatecmc dobcmc age5year v017 v018 v019 psu strata domain GEO-REGION urban educlvl wealthq pregtermcmc precaltermcmc cmc* event* type* 
+
+* The reshape is really really really slow if you don't select variables and cases first, and will most likely fail otherwise.
+reshape long cmc event type, i(caseid) j(ix)
+
+lab def type 1 "Birth" 2 "Stillbirth" 3 "Miscarriage/abortion"
+lab val type type
+lab var type "Type of pregnancy"
+lab var cmc "Century month code of event"
+lab var event "Calendar event code"
+
+* Set length of calendar to use
+gen callen = v018 + 59
+* If calendar is aligned right (as in original dataset), use the following:
+gen beg = v018
+gen end = callen
+* If calendar is aligned left (as it is in some datasets), use the following:
+*gen beg = 1
+*gen end = 60
+
+* Include only the five year period
+keep if ix >= beg & ix <= end
+
+* check the pregnancy types 
+tab type [iw=perweight/1000000]
+
+* Note that this will not match the 5086 pregnancies of 7+ months as that includes twins.
+* This file excludes twins, but i believe that is what you really need.
+
+* keep only births and stillbirths
+keep if type == 1 | type == 2
+
+* sort by case identifiers and century month code of pregnancy end
+sort clusterno hhnum lineno cmc
+* save this file
+save "CM_PMRdata.dta", replace
+
+* merge in birth history variables
+
+* Open birth history
+use "$datapath//$brdata.dta", clear
+
+keep clusterno hhnum lineno b*
+
+* Sort according to ID and CMC of birth
+clonevar cmc = b3
+sort clusterno hhnum lineno cmc
+save "births.dta", replace
+
+* Reopen the pregnancies files and merge in the twins
+use "CM_PMRdata.dta",clear
+merge 1:m clusterno hhnum lineno cmc using "births.dta", keep(master match) keepusing(b*)
+
+tab type [iw=perweight/1000000]
+
+gen stillbirths = type==2
+gen earlyneonatal = (type==1 & b6>=100 & b6<= 106)
+
+* Perinatal mortality
+gen cm_peri = 1000*(type==2 | (type==1 & b6>=100 & b6<= 106))
+
+* code background variables
+
+* mother's age at birth (years): <20, 20-29, 30-39, 40-49 
+gen months_age=cmc-dobcmc
+gen mo_age_at_birth=1 if months_age<20*12
+replace mo_age_at_birth=2 if months_age>=20*12 & months_age<30*12
+replace mo_age_at_birth=3 if months_age>=30*12 & months_age<40*12
+replace mo_age_at_birth=4 if months_age>=40*12 & months_age<50*12
+drop months_age
+
+* save data to usee for tables
+save "CM_PMRdata.dta", replace
+
+erase births.dta
+
+*tab stillbirths [iw=perweight/1000000]
+*tab earlyneonatal [iw=perweight/1000000]
+*tab cm_peri [iw=perweight/1000000]
+
+*summ cm_peri [iw=perweight/1000000]
