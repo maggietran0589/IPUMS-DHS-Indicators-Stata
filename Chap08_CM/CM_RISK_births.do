@@ -1,9 +1,9 @@
 /*****************************************************************************
-Program: 			    CM_RISK_birth.do
-Purpose: 			    Code to compute high risk births
+Program: 			CM_RISK_birth.do
+Purpose: 			Code to compute high risk births
 Data inputs: 			Children and Women’s surveys
 Data outputs:			coded variables
-Author:			      Thomas Pullum and modified by Faduma Shaba 
+Author:			      	Faduma Shaba code provided by Thomas Pullum  
 Date last modified: 		June 3rd 2020 by Faduma Shaba 
 *****************************************************************************/
 /*----------------------------------------------------------------------------
