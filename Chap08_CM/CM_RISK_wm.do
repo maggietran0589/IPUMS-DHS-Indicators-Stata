@@ -1,13 +1,21 @@
-/*****************************************************************************************************
+/*****************************************************************************
 Program: 			CM_RISK_wm.do
 Purpose: 			Code to compute high risk birth in women
-Data inputs: 		IR survey list
-Data outputs:		coded variables
-Author:				Shireen Assaf and Thomas Pullum
-Date last modified: April 30, 2019 by Shireen Assaf 
+Data inputs: 			Women’s surveys
+Data outputs:			coded variables
+Author:				Faduma Shaba
+Date last modified:		June 3rd 2020  by Faduma Shaba 
 Note:				
-*****************************************************************************************************/
-
+*****************************************************************************/
+/*
+IPUMS Variables used in this file:
+currmarr "Woman never, currently, or formerly married"
+indatecmc “Century month date of interview”
+dobcmc “respondents date of birth, in century months”
+fpmethnow “Current method of FP”
+lastbirthtointomo “Interval between last birth and interview, in months”
+cheb “Total children ever born”
+*/
 /*----------------------------------------------------------------------------
 Variables created in this file:
 cm_riskw_none			"Currently married women not in any high-risk category"
@@ -29,15 +37,15 @@ cm_riskw_any_mult		"Currently married women in any multiple risk category"
 	
 cm_riskw_u18_avoid		"Currently married women with individual avoidable risk - less than 18 years"
 cm_riskw_o34_avoid		"Currently married women with individual avoidable risk - over 34 years"
-cm_riskw_interval_avoid	"Currently married women with individual avoidable risk - <24mos since preceding birth"
-cm_riskw_order_avoid	"Currently married women with individual avoidable risk - birth order 4 or higher"
+cm_riskw_interval_avoid		"Currently married women with individual avoidable risk - <24mos since preceding birth"
+cm_riskw_order_avoid		"Currently married women with individual avoidable risk - birth order 4 or higher"
 ----------------------------------------------------------------------------*/
 
 *** Indicators are computed for currently married women ***
-keep if v502==1
+keep if currmarr==1
 
 * woman's age
-gen age_of_mother=(v008-v011)
+gen age_of_mother=(indatecmc-dobcmc)
 
 *** Single risk categories, initial definition ***
 
@@ -49,12 +57,12 @@ gen many=0
 gen firstbirth=0
 
 * Women are assigned risk categories according to the status they would have at the birth of a child if they were to conceive at the time of the survey
-* Sterilzed women (v312==6) have no risk
-replace young=1	if age_of_mother<((17*12)+3) & (v312!=6)
-replace old=1	if age_of_mother>((34*12)+2) & (v312!=6)
-replace soon=1	if (v222<15) & (v312!=6)
-replace many=1	if (v201>2) & (v312!=6)
-replace firstbirth=1 if (v201==0) & (v312!=6)
+* Sterilzed women (fpmethnow==6) have no risk
+replace young=1	if age_of_mother<((17*12)+3) & (fpmethnow!=6)
+replace old=1	if age_of_mother>((34*12)+2) & (fpmethnow!=6)
+replace soon=1	if (lastbirthtointomo<15) & (fpmethnow!=6)
+replace many=1	if (cheb>2) & (fpmethnow!=6)
+replace firstbirth=1 if (cheb==0) & (fpmethnow!=6)
 
 //Currently married women with unavoidable risk- first birth order and mother age 18 and 34
 gen cm_riskw_unavoid=0
