@@ -91,12 +91,6 @@ label var ch_ari "ARI symptoms in the 2 weeks before the survey"
 *** Some surveys also exclude pharmacies, shop, or other sources.
 gen ch_ari_care=0 if ch_ari==1
 replace ch_ari_care=1 if ch_ari==1 & (fevtrpubhp==1 | fevtrprivdrug==1 | fevtrpubhos==1 | fevtrpubhc==1 | fevtrprivhos==1| fevtrprivdr==1) 
-
-/* If you want to also remove pharmacy for example as a source of treatment (country specific condition) you can remove 
-* the 'k in the list on line 79 or do the following.
-replace ch_ari_care=0 if ch_ari==1 & fevtrprivdrug ==1
-replace ch_ari_care =. if kidalive==0
-*/
 label var ch_ari_care "Advice or treatment sought for ARI symptoms"
 
 //ARI care-seeking same or next day
@@ -183,11 +177,6 @@ label var ch_fever "Fever symptoms in the 2 weeks before the survey"
 *** Some surveys also exclude pharmacies, shop, or other sources.
 gen ch_fev_care=0 if ch_fever==1
 replace ch_fev_care=1 if ch_fever==1 & (fevtrpubhp==1 | fevtrprivdrug==1 | fevtrpubhos==1 | fevtrpubhc==1 | fevtrprivhos==1| fevtrprivdr==1) 
-
-/* If you want to also remove pharmacy for example as a source of treatment (country specific condition) you can remove 
-* the 'k in the list on line 185 or do the following.
-replace ch_fev_care=0 if ch_fever==1 & fevtrprivdrug==1
-*/
 replace ch_fev_care =. if kidalive==0
 label var ch_fev_care "Advice or treatment sought for fever symptoms"
 
