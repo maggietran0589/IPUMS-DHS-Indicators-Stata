@@ -3,8 +3,8 @@ Program: 			CH_SIZE.do
 Purpose: 			Code child size variables.
 Data inputs: 		KR survey list
 Data outputs:		coded variables
-Author:				Shireen Assaf
-Date last modified: March 12 2019 by Shireen Assaf 
+Author:				Faduma Shaba
+Date last modified: June 2020
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
