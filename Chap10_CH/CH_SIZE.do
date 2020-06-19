@@ -15,10 +15,10 @@ ch_below_2p5	"Birth weight less than 2.5 kg"
 ----------------------------------------------------------------------------*/
 
 //Child's size at birth
-recode m18 (5=1 "Very small") (4=2 "Smaller than average") (1/2 =3 "Average or larger") (8/9=9 "Don't know/missing"), gen(ch_size_birth)
+recode birthsz (32=1 "Very small") (31=2 "Smaller than average") (10/20 =3 "Average or larger") (97/98=9 "Don't know/missing"), gen(ch_size_birth)
 
-//Child's reported birth weight
-recode m19 (0/9000=1) (else=0), gen(ch_report_bw)
+//Child's birth weight was reported
+recode birthwt (0/9995=1) (else=0), gen(ch_report_bw)
 
 //Child before 2.5kg
-recode m19 (0/2499=1) (else=0) if ch_report_bw==1, gen(ch_below_2p5)
+recode birthwt (0/2499=1) (else=0) if ch_report_bw==1, gen(ch_below_2p5)
