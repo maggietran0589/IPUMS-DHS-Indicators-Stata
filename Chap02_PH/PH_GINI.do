@@ -8,6 +8,7 @@ Date last modified: May 25, 2020 by Faduma Shaba
 Note:				This program will collapse the data and export the results to a talble called Table_gini.xls. 
 					The programs below contain many notes to describe how the Gini coefficient was computed. 
 *****************************************************************************************************/
+*Hi, how are you?
 
 program drop _all
 
