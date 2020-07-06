@@ -21,7 +21,13 @@ handwashany			        "Either fixed or mobile place for handwashing"
 hwbasic				          "Basic handwashing facility"
 hwlimited			          "Limited handwashing facility"
 ----------------------------------------------------------------------------*/
+*Making households into household members 
+by idhshid, sort: gen nvals=_n==1
+count if nvals
+keep if nvals==1 
+
 cap label define yesno 0"No" 1"Yes"
+
 
 //Fixed place for handwashing
 gen handwashfxd= handwashplobs==21 
