@@ -1,11 +1,11 @@
 /*****************************************************************************************************
 Program: 			  PH_HNDWSH.do
 Purpose: 			  Code to compute handwashing indicators
-Data inputs: 		PR survey list
+Data inputs: 		IPUMS DHS HH survey list
 Data outputs:		coded variables
 Author:				  Faduma Shaba
 Date last modified: May 2020 
-Note:				The HR file can also be used to code these indicators among households. The condition hv102 would need to be removed. 
+Note:				
 *****************************************************************************************************/
 
 /*----------------------------------------------------------------------------
