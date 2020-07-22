@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			  PH_HNDWSH.do
+Program: 			  IPUMS_PH_HNDWSH.do
 Purpose: 			  Code to compute handwashing indicators
 Data inputs: 		IPUMS DHS HH survey list
 Data outputs:		coded variables
