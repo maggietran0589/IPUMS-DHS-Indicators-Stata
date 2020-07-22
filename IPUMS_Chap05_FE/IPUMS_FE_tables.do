@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			FE_tables.do
+Program: 			IPUMS_FE_tables.do
 Purpose: 			produce tables for fertility indicators
 Author:				Courtney Allen
 Date last modified: Oct 21 2019 by Courtney Allen

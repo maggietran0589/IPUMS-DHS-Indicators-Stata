@@ -1,10 +1,10 @@
 /*******************************************************************************
-Program: 			        MS_SEX.do
+Program: 			        IPUMS_MS_SEX.do
 Purpose: 			        Code to use sexual activity indicators
 Data inputs: 		      IPUMS DHS First or ever sexual experience variables
 Data outputs:		      Variables with no missing values
 Author:			  	      Faduma Shaba
-Date last modified:   April 2020 
+Date last modified:   	April 2020 
 Note:				
 *********************************************************************************/
 

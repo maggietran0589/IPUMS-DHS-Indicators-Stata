@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			        FE_TFR.do
+Program: 			        IPUMS_FE_TFR.do
 Purpose: 			        Code to compute Age Specific Fertility Rate
 Data inputs: 		      IPUMS DHS Fertility Variables
 Data outputs:		      coded variables, .DTA file with rates and confidence intervals, 

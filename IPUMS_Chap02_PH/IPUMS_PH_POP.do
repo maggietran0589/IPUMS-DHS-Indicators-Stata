@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			PH_POP.do
+Program: 			IPUMS_PH_POP.do
 Purpose: 			Code to compute population characteristics, birth registration, education levels, household composition, orphanhood, and living arrangments
 Data inputs: 			IPUMS DHS Variables
 Data outputs:			coded variables

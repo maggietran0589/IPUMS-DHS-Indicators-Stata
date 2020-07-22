@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			RC_tables.do
+Program: 			IPUMS_RC_tables.do
 Purpose: 			produce tables for indicators
 Author:				Faduma SHaba
 Date last modified: March 2020 

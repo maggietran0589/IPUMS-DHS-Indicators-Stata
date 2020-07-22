@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			        PH_SCHOL.do
+Program: 			        IPUMS_PH_SCHOL.do
 Purpose: 			        Code to compute school attendance indicators
 Data inputs: 		      		IPUMS DHS Household Variables
 Data outputs:		      		coded variables

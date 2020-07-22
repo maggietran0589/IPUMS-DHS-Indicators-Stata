@@ -1,5 +1,5 @@
 /*******************************************************************************
-Program: 			      MS_MAR.do
+Program: 			      IPUMS_MS_MAR.do
 Purpose: 			      Code to use marital indicators
 Data inputs:			      IPUMS DHS marriage and cohabitation variables
 Data outputs:		    	      Variables with no missing values

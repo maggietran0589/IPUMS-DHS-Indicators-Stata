@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			RC_CHAR_IPUMS_DHS.do
+Program: 			IPUMS_RC_CHAR.do
 Purpose: 			Code to compute respondent characteristics in men and women using IPUMS DHS variables
 Credits:			This file replaces files created by The DHS Program, for use with IPUMS DHS
 				https://github.com/DHSProgram/DHS-Indicators-Stata/blob/master/Chap03_RC/RC_CHAR.do

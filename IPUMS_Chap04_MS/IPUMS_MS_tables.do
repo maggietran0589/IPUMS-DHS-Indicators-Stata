@@ -1,8 +1,8 @@
 /*****************************************************************************************************
-Program: 		  	          MS_tables.do
+Program: 		  	         IPUMS_MS_tables.do
 Purpose: 			            Produce tables for indicators
 Author:				            Faduma Shaba
-Date last modified:       Sept 16 2019 by Courtney Allen
+Date last modified:       		April 2020	
 *Note this do file will produce the following tables in excel:
 	1. 	Tables_Mar_wm:		Contains the tables for knowledge indicators for women
 	2. 	Tables_Mar_mn:		Contains the tables for knowledge indicators for men

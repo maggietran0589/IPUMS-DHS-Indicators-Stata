@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			FE_births.do
+Program: 			IPUMS_FE_births.do
 Purpose: 			Code fertility indicators from birth history
 Data inputs: 			IPUMS DHS Fertility files
 Data outputs:			coded variables
