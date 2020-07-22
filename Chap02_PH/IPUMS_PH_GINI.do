@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			      PH_GINI.do
+Program: 			      IPUMS_PH_GINI.do
 Purpose: 			      Code to compute the Gini coefficient
 Data inputs: 		    PR survey list
 Data outputs:		    coded variables
