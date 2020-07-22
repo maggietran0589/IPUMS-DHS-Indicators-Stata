@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			        FP_COMM.do
+Program: 			        IPUMS_FP_COMM.do
 Purpose: 			        Code communication related indicators: exposure to FP messages, decision on use/nonuse, discussions. 
 Data inputs: 		      Information on Family Planning Variables
 Data outputs:		      coded variables

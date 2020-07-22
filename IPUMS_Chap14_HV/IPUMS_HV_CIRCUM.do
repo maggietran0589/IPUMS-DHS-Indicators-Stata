@@ -1,7 +1,7 @@
 COULDN'T FIND HIV VARIABLE IN IPUMS DHS
 
 /*****************************************************************************************************
-Program: 			        HV_CIRCUM.do
+Program: 			        IPUMS_HV_CIRCUM.do
 Purpose: 			        Code for Circumcision and HIV
 Data inputs: 		      IPUMS DHS 
 Data outputs:		    coded variables

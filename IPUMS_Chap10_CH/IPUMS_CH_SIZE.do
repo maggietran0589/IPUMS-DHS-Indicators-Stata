@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			CH_SIZE.do
+Program: 			IPUMS_CH_SIZE.do
 Purpose: 			Code child size variables.
 Data inputs: 		KR survey list
 Data outputs:		coded variables

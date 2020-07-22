@@ -1,5 +1,5 @@
 /*****************************************************************************
-Program: 			HK_BHV_YNG.do
+Program: 			IPUMS_HK_BHV_YNG.do
 Purpose: 			Code for sexual behaviors among young people
 Data inputs: 			IPUMS DHS Women and Men Surveys
 Data outputs:			coded variables

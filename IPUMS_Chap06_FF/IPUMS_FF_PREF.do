@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			FF_PREF.do
+Program: 			IPUMS_FF_PREF.do
 Purpose: 			Code to compute fertility preferences in men and women
 Data inputs: 			IPUMS DHS Fertility variables
 Data outputs:			coded variables

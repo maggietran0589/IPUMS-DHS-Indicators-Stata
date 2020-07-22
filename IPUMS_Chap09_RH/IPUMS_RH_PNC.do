@@ -1,5 +1,5 @@
 /*****************************************************************************
-Program: 			        RH_PNC.do
+Program: 			        IPUMS_RH_PNC.do
 Purpose: 			        Code PNC indicators for women and newborns
 Data inputs: 			      	IPUMS Maternal and Child Variables
 Data outputs:			      	coded variables

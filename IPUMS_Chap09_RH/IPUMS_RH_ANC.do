@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			RH_ANC.do
+Program: 			IPUMS_RH_ANC.do
 Purpose: 			Code ANC indicators
 Data inputs: 			IPUMS Women's Variables
 Data outputs:			coded variables

@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			CH_KNOW_ORS.do
+Program: 			IPUMS_CH_KNOW_ORS.do
 Purpose: 			Code knowledge of ORS variable.
 Data inputs: 		IR survey list
 Data outputs:		coded variables

@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			RH_DEL.do
+Program: 			IPUMS_RH_DEL.do
 Purpose: 			Code Delivery Care indicators
 Data inputs: 			IPUMS DHS Children and Women’s Variables
 Data outputs:			coded variables

@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			CH_STOOL.do
+Program: 			IPUMS_CH_STOOL.do
 Purpose: 			Code disposal of child's stook variable
 Data inputs: 			IPUMS DHS Children's Variables
 Data outputs:			coded variables

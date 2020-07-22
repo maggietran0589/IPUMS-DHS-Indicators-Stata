@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			      CH_DIAR.do
+Program: 			      IPUMS_CH_DIAR.do
 Purpose: 			      Code diarrhea variables.
 Data inputs: 		    IPUMS Children's variables 
 Data outputs:		    coded variables

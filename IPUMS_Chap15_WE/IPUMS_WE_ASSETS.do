@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			  WE_ASSETS.do
+Program: 			  IPUMS_WE_ASSETS.do
 Purpose: 			  Code to compute employment, earnings, and asset ownership in men and women
 Data inputs: 		IPUMS DHS Work Variables
 Data outputs:		coded variables

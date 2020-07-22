@@ -1,7 +1,7 @@
 /*****************************************************************************************************
 This do file will produce a table of TFRs by background variables as shown in final report (Table_TFR.xls).
 
-Program: 			FE_TFR_IPUMS.do
+Program: 			IPUMS_FE_TFR_IPUMS.do
 Purpose: 			Code to compute fertility rates with IPUMS DHS variables
 Data inputs: 		IPUMS DHS data extract using WOMEN as unit of analysis, made at dhs.ipums.org
 Data outputs:		coded variables

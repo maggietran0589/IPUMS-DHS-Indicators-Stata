@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			FP_tables.do
+Program: 			IPUMS_FP_tables.do
 Purpose: 			produce tables for indicators
 Author:				Faduma Shaba
 Date last modified:  		April 2020 

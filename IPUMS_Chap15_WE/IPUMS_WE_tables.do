@@ -1,8 +1,8 @@
 /*****************************************************************************************************
-Program: 			        WE_tables.do
+Program: 			        IPUMS_WE_tables.do
 Purpose: 			        produce tables for indicators
 Author:				        Faduma Shaba
-Date last modified:   May 2020 
+Date last modified:   		May 2020 
 Note this do file will produce the following tables in excel:
 	1. 	Tables_emply_wm:	Contains the tables for employment and earning indicators for women
 	2.	Tables_emply_mn:	Contains the tables for employment and earning indicators for men

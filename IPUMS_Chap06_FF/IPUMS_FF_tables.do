@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			          FF_tables.do
+Program: 			          IPUMS_FF_tables.do
 Purpose: 			          produce tables for indicators of fertility preferences chapter
 Author:				          Faduma Shaba
 Date last modified:     April 2020

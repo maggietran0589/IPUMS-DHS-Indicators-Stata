@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			CH_ARI_FV.do
+Program: 			IPUMS_CH_ARI_FV.do
 Purpose: 			Code ARI and fever variables.
 Data inputs: 			Children Surveys
 Data outputs:			coded variables

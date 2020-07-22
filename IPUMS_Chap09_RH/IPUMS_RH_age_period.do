@@ -1,5 +1,5 @@
 /*****************************************************************************
-Program: 			RH_age_period.do
+Program: 			IPUMS_RH_age_period.do
 Purpose: 			compute the age variable and set the period for the analysis
 Author:			  Faduma Shaba
 Date last modified: 		May 2020 

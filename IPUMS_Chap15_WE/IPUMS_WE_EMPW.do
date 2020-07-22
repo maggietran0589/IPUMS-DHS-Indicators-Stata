@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			     WE_EMPW.do
+Program: 			     IPUMS_WE_EMPW.do
 Purpose: 			     Code to compute decision making and justification of violence among in men and women
 Data inputs: 			     IPUMS DHS Decision Making Variables
 Data outputs:		    	     coded variables
