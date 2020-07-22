@@ -1,5 +1,5 @@
 /*****************************************************************************************************
-Program: 			  PH_HOUS.do
+Program: 			  IPUMS_PH_HOUS.do
 Purpose: 			  Code to compute household characteristics, possessions, and smoking in the home
 Data inputs: 			IPUMS DHS Housing Variables
 Data outputs:			coded variables
