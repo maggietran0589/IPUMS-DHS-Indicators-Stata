@@ -1,0 +1,235 @@
+/*****************************************************************************************************
+Program: 			        IPUMS_HK_TEST_CONSL.do
+Purpose: 			        Code for indicators on HIV prior testing and counseling 
+Data inputs: 			    IPUMS DHS Women and Men’s Variables 
+Data outputs:			    coded variables
+Author:			          Faduma Shaba
+Date last modified:		August 2020 by Faduma Shaba 
+Note:				          The indicators below can be computed for men and women. 
+			
+*****************************************************************************************************/
+/* DIRECTIONS
+1. Create a data extract at dhs.ipums.org that includes the variables listed under ‘IPUMS Variables’.
+	Begin by going to dhs.ipums.org and click on Women for the unit of analysis
+Select the country samples and years that you will be using then include all the women’s variables listed below.
+After selecting all the women’s variables, change the unit of analysis to men’s and include all the men’s variables listed below.
+
+2. Run this .do file.
+*/
+/*----------------------------------------------------------------------------------------------------------------------------
+IPUMS DHS Variables used in this file:
+
+**********************
+**WOMEN’S VARIABLES**
+**********************
+age			        “Age”
+aidtestev		    "Ever been tested for AIDS"
+hplcaidstest		"Knows of place to get AIDS test"
+aidltgotres		  “Received results from last HIV test”
+aidstestmoago		“Number of months ago respondent had most recent HIV test”
+aidtestkit		  "Knowledge and use of HIV test kits	"
+intdatecmc		  “Century month date of interview”
+kiddobcmc		    “Child's date of birth (CMC)”
+kidcuragemo		  “Current age of child in months”
+kidcuragemo_01	“Current age of most recent child in months
+aidantalk		    "During antenatal visit talked about: HIV transmitted mother to child"
+aidantalkprev		“During antenatal visit talked about: Preventing getting HIV”
+aidtantalk		  “During antenatal visit talked about: Getting tested for HIV”
+aidtangotres		"Got results of HIV test as part of antenatal care"
+aidtancounsel		"Received counseling after antenatal AIDS test"
+aidtancare		  "Tested for HIV as part of antenatal visit"
+aidtbet			    "Tested for HIV while in labor at health facility"
+aidtbgotres		  “Got results of HIV test when tested during labor at health facility”
+
+*******************
+**MEN’S VARIABLES**
+*******************
+agemn			      "Age"
+aidtestevmn		  "Ever been tested for HIV"
+hplcaidstestmn	"Know a place to get HIV test	"
+aidltgotresmn		“Received result from last HIV test”
+aidstestmoagomn	“Months since last tested for HIV”
+aidtestkitmn		"Knowledge and use of HIV test kits"
+
+----------------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------
+Variables created in this file:
+hk_test_where			      "Know where to get an HIV test"
+hk_test_prior			      "Prior HIV testing status and whether received test result"
+hk_test_ever			      "Ever been tested for HIV"
+hk_test_12m				      "Tested for HIV in the past 12 months and received results of the last test"
+hk_hiv_selftest_heard	  "Ever heard of HIV self-test kits"
+hk_hiv_selftest_use		  "Ever used a HIV self-test kit"
+* for women only	
+hk_hiv_consl_anc		    "Received counseling on HIV during ANC visit among women with a birth 2 years before the survey"
+hk_test_consl_anc		    "Received HIV test during ANC visit and received results and post-test counseling among women with a birth 2 years before the survey"
+hk_test_noconsl_anc		   "Received HIV test during ANC visit and received results but no post-test counseling among women with a birth 2 years before the survey"
+hk_test_noresult_anc	  "Received HIV test during ANC visit and did not receive test results among women with a birth 2 years before the survey"
+hk_hiv_receivedall_anc	"Received HIV counseling, HIV test, and test results during ANC visit among women with a birth 2 years before the survey"
+hk_test_anclbr_result	  "Received HIV test during ANC visit or labor and received results among women with a birth 2 years before the survey"
+hk_test_anclbr_result	  "Received HIV test during ANC visit or labor but did not receive results among women with a birth 2 years before the survey"
+	
+----------------------------------------------------------------------------*/
+
+**********************
+**WOMEN’S VARIABLES**
+**********************
+
+* limiting to women age 15-49
+drop if age>49
+
+cap label define yesno 0"No" 1"Yes"
+
+*** Coverage of Prior HIV Testing ***
+
+//Know where to get HIV test
+gen hk_test_where= aidtestev==1 | hplcaidstest==1
+label values hk_test_where yesno
+label var hk_test_where "Know where to get an HIV test"
+
+//Had prior HIV test and whether they received results
+gen hk_test_prior = .
+replace hk_test_prior = 1 if aidtestev==1 & aidltgotres==1
+replace hk_test_prior = 2 if aidtestev==1 & aidltgotres!=1
+replace hk_test_prior = 3 if aidtestev!=1 & aidltgotres!=1
+label define hk_test_prior 1"Tested and received results" 2"Tested and did not receive results" 3"Never tested"
+label values hk_test_prior hk_test_prior
+label var hk_test_prior "Prior HIV testing status and whether received test result"
+
+//Ever tested
+gen hk_test_ever= aidtestev==1
+label values hk_test_ever yesno
+label var hk_test_ever "Ever been tested for HIV"
+
+//Tested in last 12 months and received test results
+gen hk_test_12m= aidltgotres==1 & inrange(aidstestmoago,0,11)
+label values hk_test_12m yesno
+label var hk_test_12m "Tested for HIV in the past 12 months and received results of the last test"
+
+//Heard of self-test kits
+gen hk_hiv_selftest_heard= inrange(aidtestkit,1,3)
+label values hk_hiv_selftest_heard yesno
+label var hk_hiv_selftest_heard "Ever heard of HIV self-test kits"
+
+//Ever used a self-test kit
+gen hk_hiv_selftest_use= aidtestkit==1
+label values hk_hiv_selftest_use yesno
+label var hk_hiv_selftest_use "Ever used a HIV self-test kit"
+
+*** Pregnant Women Counseled and Tested for HIV ***
+
+* Indicators are among women with a live birth in the two years preceiding the survey. 
+* To make this restriction we need to compute the age of most recent child (agec).
+gen agec = intdatecmc - kiddobcmc_01
+	* to check if survey has kidcuragemo, which should be used instead to compute age. 
+	scalar kidcuragemo_included=1
+		capture confirm numeric variable kidcuragemo_01, exact 
+		if _rc>0 {
+		* kidcuragemo is not present
+		scalar kidcuragemo_included=0
+		}
+		if _rc==0 {
+		* kidcuragemo is present; check for values
+		summarize kidcuragemo_01
+		  if r(sd)==0 | r(sd)==. {
+		  scalar kidcuragemo_included=0
+		  }
+		}
+
+	if kidcuragemo_included==1 {
+	drop agec
+	gen agec=kidcuragemo_01
+	}
+***	
+
+//Received counseling on HIV during ANC visit
+gen hk_hiv_consl_anc= aidantalk==1 & aidantalkprev==1 & aidtantalk==1
+replace hk_hiv_consl_anc=. if agec>=24	
+label values hk_hiv_consl_anc yesno
+label var hk_hiv_consl_anc "Received counseling on HIV during ANC visit among women with a birth 2 years before the survey"
+
+//Tested for HIV during ANC visit and received results and post-test counseling
+gen hk_test_consl_anc= aidtangotres==1 & aidtancounsel==1
+replace hk_test_consl_anc= . if agec>=24	
+label values hk_test_consl_anc yesno
+label var hk_test_consl_anc "Received HIV test during ANC visit and received results and post-test counseling among women with a birth 2 years before the survey"
+
+//Tested for HIV during ANC visit and received results but no post-test counseling
+gen hk_test_noconsl_anc= aidtangotres==1 & aidtancounsel!=1
+replace hk_test_noconsl_anc= . if agec>=24	
+label values hk_test_noconsl_anc yesno
+label var hk_test_noconsl_anc "Received HIV test during ANC visit and received results but no post-test counseling among women with a birth 2 years before the survey"
+
+//Tested for HIV during ANC visit and did not receive test results
+gen hk_test_noresult_anc= aidtangotres==0 
+replace hk_test_noresult_anc= . if agec>=24	
+label values hk_test_noresult_anc yesno
+label var hk_test_noresult_anc "Received HIV test during ANC visit and did not receive test results among women with a birth 2 years before the survey"
+
+//Received HIV counseling, test, and results
+gen hk_hiv_receivedall_anc= aidantalk ==1 & aidantalkprev ==1 & aidtantalk ==1 & aidtancare ==1 & aidtangotres ==1
+replace hk_hiv_receivedall_anc= . if agec>=24	
+label values hk_hiv_receivedall_anc yesno
+label var hk_hiv_receivedall_anc "Received HIV counseling, HIV test, and test results during ANC visit among women with a birth 2 years before the survey"
+
+//Received HIV test during ANC or labor and received results
+gen hk_test_anclbr_result= (aidtancare==1 | aidtbet==1) & (aidtangotres==1 | aidtbgotres==1) 
+replace hk_test_anclbr_result= . if agec>=24	
+label values hk_test_anclbr_result yesno
+label var hk_test_anclbr_result	"Received HIV test during ANC visit or labor and received results among women with a birth 2 years before the survey"
+
+//Received HIV test during ANC or labor but did not receive results
+gen hk_test_anclbr_noresult= (aidtancare==1 | aidtbet==1) & (aidtangotres!=1 & aidtbgotres!=1) 
+replace hk_test_anclbr_noresult= . if agec>=24
+label values hk_test_anclbr_noresult yesno
+label var hk_test_anclbr_result "Received HIV test during ANC visit or labor but did not receive results among women with a birth 2 years before the survey"
+
+
+
+*******************
+**MEN’S VARIABLES**
+*******************
+
+* limiting to men age 15-49
+drop if agemn>49
+
+cap label define yesno 0"No" 1"Yes"
+
+*** Coverage of Prior HIV Testing ***
+
+//Know where to get HIV test
+gen hk_test_where= aidtestevmn==1 | hplcaidstestmn==1
+label values hk_test_where yesno
+label var hk_test_where "Know where to get an HIV test"
+
+//Had prior HIV test and whether they received results
+gen hk_test_prior = .
+replace hk_test_prior = 1 if aidtestevmn==1 & aidltgotresmn==1
+replace hk_test_prior = 2 if aidtestevmn==1 & aidltgotresmn!=1
+replace hk_test_prior = 3 if aidtestevmn!=1 & aidltgotresmn!=1
+label define hk_test_prior 1"Tested and received results" 2"Tested and did not receive results" 3"Never tested"
+label values hk_test_prior hk_test_prior
+label var hk_test_prior "Prior HIV testing status and whether received test result"
+
+//Ever tested
+gen hk_test_ever= aidtestevmn==1
+label values hk_test_ever yesno
+label var hk_test_ever "Ever been tested for HIV"
+
+//Tested in last 12 months and received test results
+gen hk_test_12m= aidltgotresmn==1 & inrange(aidstestmoagomn,0,11)
+label values hk_test_12m yesno
+label var hk_test_12m "Tested for HIV in the past 12 months and received results of the last test"
+
+//Heard of self-test kits
+gen hk_hiv_selftest_heard= inrange(aidtestkitmn,1,3)
+label values hk_hiv_selftest_heard yesno
+label var hk_hiv_selftest_heard "Ever heard of HIV self-test kits"
+
+//Ever used a self-test kit
+gen hk_hiv_selftest_use= aidtestkitmn==1
+label values hk_hiv_selftest_use yesno
+label var hk_hiv_selftest_use "Ever used a HIV self-test kit"
+
+
