@@ -3,7 +3,7 @@ Program: 			 IPUMS_NT_CH_MICRO.do
 Purpose: 		 	Code to compute micronutrient indicators in children
 Data inputs: 			IPUMS DHS Children’s Variables
 Data outputs:			coded variables
-Author:			Faduma Shaba
+Author:				Faduma Shaba
 Date last modified: 		August 2020
 Note:				The indicators below can be computed for children 
 				
@@ -36,7 +36,7 @@ nt_ch_food_ther		"Children age 6-35 mos given therapeutic food"
 nt_ch_food_supp		"Children age 6-35 mos given supplemental food"
 ----------------------------------------------------------------------------*/
 
-*Changing Household member variables to only include household members
+*Changing Household variables to only include household members
 by idhshid, sort: gen nvals=_n==1
 count if nvals
 keep if nvals==1 
