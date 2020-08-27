@@ -3,7 +3,7 @@ Program: 			      IPUMS_PH_GINI.do
 Purpose: 			      Code to compute the Gini coefficient
 Data inputs: 		    PR survey list
 Data outputs:		    coded variables
-Author:				      Tom Pullum, modified by Faduma Shaba for this project
+Author:				      Tom Pullum and Shireen Assaf, modified by Faduma Shaba for this project
 Date last modified: May 25, 2020 by Faduma Shaba 
 Note:				This program will collapse the data and export the results to a talble called Table_gini.xls. 
 					The programs below contain many notes to describe how the Gini coefficient was computed. 
